@@ -28,7 +28,8 @@ a:active {
 
 .intro {
   background: url(../image/intro.jpg) 50% 0 fixed;
-  height: 100vh;
+  min-height: 100vh;
+  max-height: auto;
 }
 
 .hello-world {
