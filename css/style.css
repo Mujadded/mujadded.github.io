@@ -125,8 +125,13 @@ a:hover.btn-default {
   background-size: cover;
 }
 
+#three
+{
+  background: url(https://lh3.googleusercontent.com/P8MCaSTVUThwDq6ax3yK8G_r2KLMrBDNbUVslDadKXwv3Th5ixsGuYdxZ1FP4nFjTdlrmMjOZk8Mzrv5UKlVqD-JmAAI7rmAK7vQPxHYqpNh-AAaJjwwXKNCMLbyeUc_ulQtv8cYecKhBGUDn6lY0Iq7UbDws5mIPd0pORyJ2ejux415a8GyzFZttk-Tl7crxg-MGZBmalsWTqLNaPBb8onOBLUSL0R3N7A7MtS-gbfIuMUqY-Sm7yc0PBxTAkwTwF4cZbsrOHpxPX3e83XI7xyltLR-92fagYtka3IGBG6_lC7kwKSgcvpX5Ui2sIRdFbYFjkAV0CKjieQN6SYULqfd5QO4EZdrPBC-vs8vX3oHZrk5WYwhPbUzYfErrVr6B60UJOmME_l643H3l1IAL5r5gbTA7P3k8wUEYjzRJ6--BGAOpblaki0G4Lrq92zVxWclsz7vQkk3i28KmJGNp-lv5uO2c0idDY4Rej93Eb7F7mSODZI7cuv-Ebpk6t6cJMU6kl2GyQRjemDnpGSqUtB4hfeB6Ef7YNIQyCOoAkQ=w949-h593-no);
+  background-size: cover;
+}
 .description {
-  margin: 0 0 0 0;
+  /*margin: 0 0 0 0;*/
   background: rgba(0, 0, 0, .6);
   margin-top: 40%;
   padding-top: 1%;
@@ -137,6 +142,7 @@ a:hover.btn-default {
   display: none;
   text-align: center;
 }
+
 
 .portfolio a:link,
 a:active,
