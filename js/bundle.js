@@ -38338,8 +38338,7 @@
 	          accepts: [".json"],
 	          multiple: false,
 	          clickable: true },
-	        _react2.default.createElement("i", { className: "fa fa-close" }),
-	        "Upload queue"
+	        "Click to Upload queue or Drop file here"
 	      )
 	    )
 	  );
@@ -38405,7 +38404,7 @@
 	            _react2.default.createElement(
 	                "div",
 	                { className: "col-md-7 hidden-md-down queue_title" },
-	                "Song Queue"
+	                "Play Queue"
 	            ),
 	            _react2.default.createElement(
 	                "div",
