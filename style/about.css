@@ -28,7 +28,7 @@ a:active {
 
 .intro {
 	height: 90vh;
-	background: linear-gradient(-45deg, #f35d5d, #EE7752, rgb(227, 241, 100),rgb(186, 250, 90), #23D5AB, #4ebde5);
+	background: linear-gradient(-45deg, #f35d5d, #EE7752,rgb(186, 250, 90), #23D5AB, #4ebde5);
 	background-size: 400% 400%;
 	-webkit-animation: Gradient 15s ease infinite;
 	-moz-animation: Gradient 15s ease infinite;
