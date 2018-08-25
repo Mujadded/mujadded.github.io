@@ -1,5 +1,5 @@
 a {
-  text-decoration: none !important;
+  text-decoration: none;
 }
 
 .navigation {
@@ -14,7 +14,7 @@ a {
 .navigation a:link,
 a:visited,
 a:active {
-  color: rgba(123, 220, 2110, 1);
+  color: rgba(123, 220, 211, 1);
 }
 
 .navigation a:hover {
@@ -33,11 +33,15 @@ a:active {
 }
 
 .hello-world {
-  margin: 20% auto auto auto;
+  margin-top: 50px;
   padding-top: 2%;
   font-family: monospace;
   font-size: 30px;
   color: rgba(0, 0, 0, 1);
+}
+
+.write {
+  color:gold;
 }
 
 .btn-default {
@@ -96,79 +100,4 @@ a:hover.btn-default {
   box-shadow: 10px 3px 22px black;
   border-radius: 50%;
   width: 400px;
-}
-
-.portfolio {
-  background: url(../image/portfolio.jpg) 50% 0 fixed;
-  background-size: cover;
-  min-height: 100vh;
-  max-height: auto;
-}
-
-.project {
-  margin-top: 5%;
-  margin-left: 20%;
-  margin-bottom: 5%;
-  height: 300px;
-  width: 300px;
-  background: white;
-  border-radius: 4%;
-}
-
-#one {
-  background: url(https://lh3.googleusercontent.com/0_4cGCHTC4GgDTpsab9paZnc4ebYkJDwS2AMNLAiAkI=w470-h249-no);
-  background-size: cover;
-}
-
-#two {
-  background: url(https://lh3.googleusercontent.com/F8q_2cMdDtyf0x3c2JZP8wcrtwHKiO0g-6bcPy8gHVQ=w1917-h982-no);
-  background-size: cover;
-}
-
-#three
-{
-  background: url(https://lh3.googleusercontent.com/P8MCaSTVUThwDq6ax3yK8G_r2KLMrBDNbUVslDadKXwv3Th5ixsGuYdxZ1FP4nFjTdlrmMjOZk8Mzrv5UKlVqD-JmAAI7rmAK7vQPxHYqpNh-AAaJjwwXKNCMLbyeUc_ulQtv8cYecKhBGUDn6lY0Iq7UbDws5mIPd0pORyJ2ejux415a8GyzFZttk-Tl7crxg-MGZBmalsWTqLNaPBb8onOBLUSL0R3N7A7MtS-gbfIuMUqY-Sm7yc0PBxTAkwTwF4cZbsrOHpxPX3e83XI7xyltLR-92fagYtka3IGBG6_lC7kwKSgcvpX5Ui2sIRdFbYFjkAV0CKjieQN6SYULqfd5QO4EZdrPBC-vs8vX3oHZrk5WYwhPbUzYfErrVr6B60UJOmME_l643H3l1IAL5r5gbTA7P3k8wUEYjzRJ6--BGAOpblaki0G4Lrq92zVxWclsz7vQkk3i28KmJGNp-lv5uO2c0idDY4Rej93Eb7F7mSODZI7cuv-Ebpk6t6cJMU6kl2GyQRjemDnpGSqUtB4hfeB6Ef7YNIQyCOoAkQ=w949-h593-no);
-  background-size: cover;
-}
-.description {
-  /*margin: 0 0 0 0;*/
-  background: rgba(0, 0, 0, .6);
-  margin-top: 40%;
-  padding-top: 1%;
-  padding-left: 2%;
-  padding-right: 2%;
-  padding-bottom: 3%;
-  border-radius: 5%;
-  display: none;
-  text-align: center;
-}
-
-
-.portfolio a:link,
-a:active,
-a:visited {
-  color: white;
-}
-
-.portfolio a:hover {
-  color: white;
-  text-decoration: none;
-}
-
-.contacts {
-  background: url(../image/me.jpg) 50% 0 fixed;
-  min-height: 100vh;
-  max-height: auto;
-  background-size: cover;
-}
-
-.information {
-  margin-top: 15%;
-  margin-right: 4%;
-  font-family: times new roman;
-  font-size: 20px;
-  color: white;
-  padding: 2%;
-  border-radius: 2%;
-  background: rgba(0, 0, 0, .3);
 }
