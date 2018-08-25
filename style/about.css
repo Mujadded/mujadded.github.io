@@ -14,7 +14,7 @@ a {
 .navigation a:link,
 a:visited,
 a:active {
-  color: rgba(123, 220, 211, 1);
+  color: rgb(123, 173, 220);
 }
 
 .navigation a:hover {
@@ -38,10 +38,6 @@ a:active {
   font-family: monospace;
   font-size: 30px;
   color: rgba(0, 0, 0, 1);
-}
-
-.write {
-  color:gold;
 }
 
 .btn-default {
