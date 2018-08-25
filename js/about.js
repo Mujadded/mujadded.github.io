@@ -73,7 +73,7 @@ var showQuote = function() {
       var quote = response.query.results.json.quoteText;
       var author = response.query.results.json.quoteAuthor;
       quote = quote.slice(0,-1);
-      txt = '"'+ quote +'"'+"-"+author;
+      txt = '"'+ quote +'"'+" - "+author;
       
       typeIt(".writer",txt,0);
     }
