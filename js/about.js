@@ -21,14 +21,6 @@ $(document).ready(function() {
     }); // end window scroll
   }); // end section function
 
-  $('.project').hover(function() {
-    $(this).children(".description").fadeIn(500);
-  });
-
-  $('.project').on("mouseleave", function() {
-    $(this).children(".description").fadeOut(500);
-  });
-
   $('a[href*=#]:not([href=#])').click(function() {
     if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
       var target = $(this.hash);
