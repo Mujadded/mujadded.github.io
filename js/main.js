@@ -259,6 +259,7 @@ const blogData = [{
 const navbar = document.getElementById('navbar');
 const hamburger = document.getElementById('hamburger');
 const navMenu = document.getElementById('nav-menu');
+const navOverlay = document.getElementById('nav-overlay');
 const navLinks = document.querySelectorAll('.nav-link');
 const contactForm = document.getElementById('contact-form');
 const themeToggle = document.getElementById('theme-toggle');
@@ -282,16 +283,40 @@ document.addEventListener('DOMContentLoaded', function() {
 function initializeNavigation() {
     // Mobile menu toggle
     hamburger.addEventListener('click', () => {
+        const isActive = hamburger.classList.contains('active');
         hamburger.classList.toggle('active');
         navMenu.classList.toggle('active');
+        if (navOverlay) navOverlay.classList.toggle('active');
+
+        // Prevent body scroll when menu is open
+        document.body.style.overflow = isActive ? 'auto' : 'hidden';
     });
+
+    // Close mobile menu when overlay is clicked
+    if (navOverlay) {
+        navOverlay.addEventListener('click', closeMobileMenu);
+    }
 
     // Close mobile menu when link is clicked
     navLinks.forEach(link => {
         link.addEventListener('click', () => {
-            hamburger.classList.remove('active');
-            navMenu.classList.remove('active');
+            closeMobileMenu();
         });
+    });
+
+    // Close mobile menu function
+    function closeMobileMenu() {
+        hamburger.classList.remove('active');
+        navMenu.classList.remove('active');
+        if (navOverlay) navOverlay.classList.remove('active');
+        document.body.style.overflow = 'auto';
+    }
+
+    // Close mobile menu on escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && navMenu.classList.contains('active')) {
+            closeMobileMenu();
+        }
     });
 
     // Active link highlighting and smooth scrolling
@@ -502,6 +527,65 @@ function populateExperience() {
                 }, 100); // Small delay to ensure content is visible before scrolling
             }
         });
+    });
+    
+    // Add swipe gesture support for mobile
+    if (window.innerWidth <= 768) {
+        addSwipeGestures();
+    }
+}
+
+// Swipe gesture support for experience tabs
+function addSwipeGestures() {
+    const experienceContent = document.querySelector('.experience-content');
+    if (!experienceContent) return;
+    
+    let startX = 0;
+    let startY = 0;
+    let isSwipe = false;
+    
+    experienceContent.addEventListener('touchstart', (e) => {
+        startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
+        isSwipe = false;
+    });
+    
+    experienceContent.addEventListener('touchmove', (e) => {
+        if (!startX || !startY) return;
+        
+        const diffX = Math.abs(e.touches[0].clientX - startX);
+        const diffY = Math.abs(e.touches[0].clientY - startY);
+        
+        // Determine if this is a horizontal swipe
+        if (diffX > diffY && diffX > 50) {
+            isSwipe = true;
+            e.preventDefault(); // Prevent scrolling
+        }
+    });
+    
+    experienceContent.addEventListener('touchend', (e) => {
+        if (!isSwipe || !startX) return;
+        
+        const endX = e.changedTouches[0].clientX;
+        const diffX = startX - endX;
+        
+        const activeTab = document.querySelector('.experience-tab.active');
+        const allTabs = document.querySelectorAll('.experience-tab');
+        const currentIndex = Array.from(allTabs).indexOf(activeTab);
+        
+        // Swipe left - next tab
+        if (diffX > 50 && currentIndex < allTabs.length - 1) {
+            allTabs[currentIndex + 1].click();
+        }
+        // Swipe right - previous tab
+        else if (diffX < -50 && currentIndex > 0) {
+            allTabs[currentIndex - 1].click();
+        }
+        
+        // Reset values
+        startX = 0;
+        startY = 0;
+        isSwipe = false;
     });
 }
 

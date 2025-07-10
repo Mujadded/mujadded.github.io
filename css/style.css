@@ -1100,28 +1100,69 @@ a:hover {
     }
     .nav-menu {
         position: fixed;
-        top: 70px;
-        left: -100%;
-        width: 100%;
-        height: calc(100vh - 70px);
+        top: 0;
+        right: -300px;
+        width: 280px;
+        height: 100vh;
         background: var(--navbar-mobile-bg);
         backdrop-filter: blur(20px);
         flex-direction: column;
         justify-content: start;
-        align-items: center;
-        padding-top: 50px;
+        align-items: flex-start;
+        padding: 80px 30px 30px;
         transition: var(--transition-medium);
+        box-shadow: -5px 0 20px rgba(0, 0, 0, 0.1);
+        z-index: 1001;
     }
     .nav-menu.active {
-        left: 0;
+        right: 0;
+    }
+    .nav-menu li {
+        width: 100%;
+        margin-bottom: 8px;
+    }
+    .nav-link {
+        width: 100%;
+        padding: 12px 16px;
+        border-radius: var(--border-radius);
+        transition: var(--transition-fast);
+        font-size: 16px;
+        font-weight: 500;
+    }
+    .nav-link:hover {
+        background: var(--tertiary-bg);
     }
     .theme-toggle {
-        width: 35px;
-        height: 35px;
-        font-size: 14px;
+        width: 44px;
+        height: 44px;
+        font-size: 16px;
+        min-width: 44px;
+        /* Ensure minimum touch target */
     }
     .hamburger {
         display: flex;
+        width: 44px;
+        height: 44px;
+        align-items: center;
+        justify-content: center;
+        z-index: 1002;
+    }
+    /* Mobile Navigation Overlay */
+    .nav-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.5);
+        opacity: 0;
+        visibility: hidden;
+        transition: var(--transition-fast);
+        z-index: 1000;
+    }
+    .nav-overlay.active {
+        opacity: 1;
+        visibility: visible;
     }
     .hamburger.active span:nth-child(1) {
         transform: rotate(45deg) translate(5px, 5px);
@@ -1165,9 +1206,38 @@ a:hover {
     .experience-content {
         order: 0;
         min-height: auto;
+        position: relative;
+        overflow: hidden;
+        /* Enable for swipe gestures */
     }
     .experience-panel {
         padding: 25px;
+    }
+    /* Mobile Section Spacing */
+    .hero {
+        padding: 80px 0 60px;
+    }
+    .about,
+    .experience,
+    .skills,
+    .achievements,
+    .publications,
+    .blog,
+    .contact {
+        padding: 60px 0;
+    }
+    .section-header {
+        margin-bottom: 40px;
+    }
+    /* Mobile Performance - Reduce animations */
+    .skill-category,
+    .achievement-item,
+    .publication-card,
+    .blog-card {
+        animation: none;
+        /* Remove complex animations on mobile */
+        opacity: 1;
+        transform: none;
     }
     .contact-content {
         grid-template-columns: 1fr;
@@ -1184,22 +1254,87 @@ a:hover {
     .container {
         padding: 0 15px;
     }
+    /* Enhanced Touch Targets */
+    .btn {
+        min-height: 48px;
+        width: 100%;
+        justify-content: center;
+        max-width: 320px;
+        font-size: 16px;
+        padding: 14px 24px;
+    }
     .hero-buttons {
         flex-direction: column;
         align-items: center;
+        gap: 16px;
     }
-    .btn {
-        width: 100%;
-        justify-content: center;
-        max-width: 280px;
+    /* Improved Typography */
+    .hero-title {
+        font-size: clamp(2.2rem, 8vw, 3.5rem);
+        line-height: 1.1;
+        margin-bottom: 16px;
     }
+    .hero-subtitle {
+        font-size: clamp(1.1rem, 4vw, 1.4rem);
+        margin-bottom: 24px;
+    }
+    .section-title {
+        font-size: clamp(2rem, 6vw, 2.5rem);
+    }
+    /* Better Mobile Layout */
     .about-stats {
         grid-template-columns: 1fr;
+        gap: 16px;
+    }
+    .stat-card {
+        padding: 24px 20px;
+        text-align: center;
     }
     .skills-grid,
     .publications-grid,
     .blog-grid {
         grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    /* Enhanced Experience Tabs for Mobile */
+    .experience-tabs {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+    .experience-tab {
+        min-height: 60px;
+        padding: 16px;
+        border-radius: 12px;
+        touch-action: manipulation;
+        /* Improve touch response */
+    }
+    .tab-title {
+        font-size: 15px;
+        font-weight: 600;
+    }
+    .tab-duration {
+        font-size: 13px;
+        margin-top: 4px;
+    }
+    /* Better Mobile Forms */
+    .form-group input,
+    .form-group textarea {
+        min-height: 48px;
+        font-size: 16px;
+        /* Prevent zoom on iOS */
+        padding: 14px 16px;
+    }
+    .contact-form .btn {
+        width: 100%;
+        margin-top: 16px;
+    }
+    /* Publication Cards */
+    .publication-card {
+        padding: 20px 16px;
+    }
+    .publication-title {
+        font-size: 16px;
+        line-height: 1.4;
     }
 }
 
