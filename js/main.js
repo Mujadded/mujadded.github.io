@@ -482,7 +482,25 @@ function populateExperience() {
             
             // Add active class to clicked tab and corresponding panel
             tab.classList.add('active');
-            document.querySelector(`[data-panel="${tabIndex}"]`).classList.add('active');
+            const activePanel = document.querySelector(`[data-panel="${tabIndex}"]`);
+            activePanel.classList.add('active');
+            
+            // Auto-scroll to content on mobile/tablet for better UX
+            if (window.innerWidth <= 1024) {
+                setTimeout(() => {
+                    const experienceContent = document.querySelector('.experience-content');
+                    if (experienceContent) {
+                        const yOffset = -80; // Account for navbar height
+                        const elementPosition = experienceContent.getBoundingClientRect().top;
+                        const offsetPosition = elementPosition + window.pageYOffset + yOffset;
+                        
+                        window.scrollTo({
+                            top: offsetPosition,
+                            behavior: 'smooth'
+                        });
+                    }
+                }, 100); // Small delay to ensure content is visible before scrolling
+            }
         });
     });
 }
