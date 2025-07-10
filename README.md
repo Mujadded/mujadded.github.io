@@ -88,8 +88,8 @@ open http://localhost:8000
 ### Color Palette
 - **Primary Background**: `#0a0a0a` (Deep Black)
 - **Secondary Background**: `#1a1a1a` (Dark Gray)
-- **Accent Primary**: `#00f5ff` (Cyan)
-- **Accent Secondary**: `#ff6b6b` (Coral)
+- **Accent Primary**: `#8B5CF6` (Purple)
+- **Accent Secondary**: `#3B82F6` (Blue)
 - **Text Primary**: `#ffffff` (White)
 - **Text Secondary**: `#b0b0b0` (Light Gray)
 
