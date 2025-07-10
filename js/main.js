@@ -255,7 +255,7 @@ function initializeNavigation() {
 
 // Update active navigation link based on scroll position
 function updateActiveNavLink() {
-    const sections = ['hero', 'about', 'experience', 'skills', 'publications', 'blog', 'contact'];
+    const sections = ['hero', 'about', 'experience', 'skills', 'achievements', 'publications', 'blog', 'contact'];
     const scrollPosition = window.scrollY + 150;
 
     sections.forEach(sectionId => {
