@@ -130,34 +130,81 @@ const skillsData = [{
 ];
 
 const publicationsData = [{
-        title: "Boltvision: A Comparative Analysis of CNN, CCT, and ViT in Achieving High Accuracy for Missing Bolt Classification in Train Components",
-        journal: "MDPI Machines Journal",
-        date: "January 2024",
-        type: "Journal Article"
-    },
-    {
-        title: "Comparative Analysis of YOLOv8 and YOLOv10 in Vehicle Detection: Performance Metrics and Model Efficacy",
-        journal: "MDPI Vehicles Journal",
-        date: "August 2024",
-        type: "Journal Article"
+        title: "YOLOv1 to YOLOv10: A comprehensive review of YOLO variants and their application in the agricultural domain",
+        journal: "arXiv preprint arXiv:2406.10139",
+        date: "2024",
+        type: "Research Paper",
+        citations: "111 citations"
     },
     {
         title: "Isolated Bangla handwritten character recognition with convolutional neural network",
-        journal: "IEEE Conference",
-        date: "December 2017",
-        type: "Conference Paper"
+        journal: "2017 20th International Conference of Computer and Information Technology",
+        date: "2017",
+        type: "Conference Paper",
+        citations: "104 citations"
     },
     {
-        title: "Lightweight Convolutional Network with Integrated Attention Mechanism for Missing Bolt Detection in Railways",
-        journal: "MDPI Metrology",
-        date: "January 2024",
-        type: "Journal Article"
+        title: "YOLOv11 for vehicle detection: Advancements, performance, and applications in intelligent transportation systems",
+        journal: "arXiv preprint arXiv:2410.22898",
+        date: "2024",
+        type: "Research Paper",
+        citations: "38 citations"
     },
     {
-        title: "Attention-based automated pallet racking damage detection",
-        journal: "IJSRT",
-        date: "January 2024",
-        type: "Journal Article"
+        title: "Comparative Analysis of YOLOv8 and YOLOv10 in Vehicle Detection: Performance Metrics and Model Efficacy",
+        journal: "Vehicles 6 (3), 1364-1382",
+        date: "2024",
+        type: "Journal Article",
+        citations: "26 citations"
+    },
+    {
+        title: "Lightweight convolutional network with integrated attention mechanism for missing bolt detection in railways",
+        journal: "Metrology 4 (2), 254-278",
+        date: "2024",
+        type: "Journal Article",
+        citations: "12 citations"
+    },
+    {
+        title: "BoltVision: A comparative analysis of CNN, CCT, and ViT in achieving high accuracy for missing bolt classification in train components",
+        journal: "Machines 12 (2), 93",
+        date: "2024",
+        type: "Journal Article",
+        citations: "11 citations"
+    },
+    {
+        title: "Attention-Based Automated Pallet Racking Damage Detection",
+        journal: "Research Publication",
+        date: "2024",
+        type: "Research Paper",
+        citations: "9 citations"
+    },
+    {
+        title: "YOLOv12: A breakdown of the key architectural features",
+        journal: "arXiv preprint arXiv:2502.14740",
+        date: "2025",
+        type: "Research Paper",
+        citations: "8 citations"
+    },
+    {
+        title: "State-of-the-Art Bangla Handwritten Character Recognition Using a Modified ResNet-34 Architecture",
+        journal: "International Journal of Innovative Science and Research Technology 9 (1)",
+        date: "2024",
+        type: "Journal Article",
+        citations: "8 citations"
+    },
+    {
+        title: "Enhancing diabetic retinopathy diagnosis: A lightweight CNN architecture for efficient exudate detection in retinal fundus images",
+        journal: "arXiv preprint arXiv:2408.06784",
+        date: "2024",
+        type: "Research Paper",
+        citations: "6 citations"
+    },
+    {
+        title: "Enhancing Construction Site Safety: A Lightweight Convolutional Network for Effective Helmet Detection",
+        journal: "arXiv preprint arXiv:2409.12669",
+        date: "2024",
+        type: "Research Paper",
+        citations: "2 citations"
     }
 ];
 
@@ -340,7 +387,7 @@ function populatePublications() {
         <div class="publication-card fade-in-up" style="animation-delay: ${index * 0.1}s">
             <h3 class="publication-title">${pub.title}</h3>
             <p class="publication-journal">${pub.journal}</p>
-            <p class="publication-date">${pub.date} • ${pub.type}</p>
+            <p class="publication-date">${pub.date} • ${pub.type}${pub.citations ? ' • <span class="citation-count">' + pub.citations + '</span>' : ''}</p>
         </div>
     `).join('');
 }

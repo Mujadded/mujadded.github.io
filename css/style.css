@@ -812,6 +812,17 @@ a:hover {
     font-family: var(--font-mono);
 }
 
+.citation-count {
+    color: var(--accent-primary);
+    font-weight: 600;
+    background: rgba(139, 92, 246, 0.1);
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    display: inline-block;
+    margin-left: 5px;
+}
+
 
 /* Blog Section */
 
