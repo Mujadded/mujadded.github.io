@@ -254,8 +254,20 @@
                 <h2 class="section-title">Achievements & Recognition</h2>
                 <div class="section-line"></div>
                 <p class="section-subtitle">Professional accomplishments and academic honors</p>
+                
+                <!-- View Toggle -->
+                <div class="achievements-view-toggle">
+                    <button class="view-toggle-btn active" data-view="category">
+                        <i class="fas fa-th-large"></i> Category View
+                    </button>
+                    <button class="view-toggle-btn" data-view="timeline">
+                        <i class="fas fa-clock"></i> Timeline View
+                    </button>
+                </div>
             </div>
-            <div class="achievements-grid">
+            
+            <!-- Category View (Current) -->
+            <div class="achievements-grid" id="achievements-category-view">
                 <div class="achievement-category">
                     <div class="achievement-category-header">
                         <h3><i class="fas fa-trophy"></i> Academic Excellence</h3>
@@ -353,6 +365,147 @@
                                 <p>Pallet racking damage detection using attention CNN</p>
                                 <span class="achievement-metric"><i class="fas fa-search-plus"></i> Detection Enhancement</span>
                                 <span class="achievement-date">2024</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Timeline View (New) -->
+            <div class="achievements-timeline" id="achievements-timeline-view" style="display: none;">
+                <div class="timeline-container">
+                    <div class="timeline-line"></div>
+                    
+                    <!-- 2017 -->
+                    <div class="timeline-item" data-year="2017">
+                        <div class="timeline-marker">
+                            <div class="timeline-year">2017</div>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="timeline-achievement">
+                                <div class="achievement-icon"><i class="fas fa-bullseye"></i></div>
+                                <div class="achievement-content">
+                                    <h4>98% Accuracy Achievement</h4>
+                                    <p>Handwritten digit recognition using convolutional neural networks</p>
+                                    <span class="achievement-metric"><i class="fas fa-percentage"></i> High Precision</span>
+                                </div>
+                            </div>
+                            <div class="timeline-achievement">
+                                <div class="achievement-icon"><i class="fas fa-star"></i></div>
+                                <div class="achievement-content">
+                                    <h4>Dean's List Achievement</h4>
+                                    <p>Beginning of consistent academic excellence journey</p>
+                                    <span class="achievement-metric"><i class="fas fa-trophy"></i> Academic Excellence</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 2020 -->
+                    <div class="timeline-item" data-year="2020">
+                        <div class="timeline-marker">
+                            <div class="timeline-year">2020</div>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="timeline-achievement">
+                                <div class="achievement-icon"><i class="fas fa-medal"></i></div>
+                                <div class="achievement-content">
+                                    <h4>Vice Chancellor Award</h4>
+                                    <p>Outstanding academic performance - Brac University</p>
+                                    <span class="achievement-metric"><i class="fas fa-trophy"></i> Top Honor</span>
+                                </div>
+                            </div>
+                            <div class="timeline-achievement">
+                                <div class="achievement-icon"><i class="fas fa-users"></i></div>
+                                <div class="achievement-content">
+                                    <h4>Leadership Journey Begins</h4>
+                                    <p>Started leading teams - transition from individual contributor to leader</p>
+                                    <span class="achievement-metric"><i class="fas fa-user-tie"></i> Leadership</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 2022 -->
+                    <div class="timeline-item" data-year="2022">
+                        <div class="timeline-marker">
+                            <div class="timeline-year">2022</div>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="timeline-achievement">
+                                <div class="achievement-icon"><i class="fas fa-users"></i></div>
+                                <div class="achievement-content">
+                                    <h4>Led 60+ Team Members</h4>
+                                    <p>Successfully managed three teams across multiple projects</p>
+                                    <span class="achievement-metric"><i class="fas fa-user-tie"></i> Leadership Scale</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 2023 -->
+                    <div class="timeline-item" data-year="2023">
+                        <div class="timeline-marker">
+                            <div class="timeline-year">2023</div>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="timeline-achievement">
+                                <div class="achievement-icon"><i class="fas fa-rocket"></i></div>
+                                <div class="achievement-content">
+                                    <h4>40% Performance Optimization</h4>
+                                    <p>Web application optimization leading cross-functional teams</p>
+                                    <span class="achievement-metric"><i class="fas fa-tachometer-alt"></i> Performance Boost</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 2024 -->
+                    <div class="timeline-item" data-year="2024">
+                        <div class="timeline-marker">
+                            <div class="timeline-year">2024</div>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="timeline-achievement">
+                                <div class="achievement-icon"><i class="fas fa-graduation-cap"></i></div>
+                                <div class="achievement-content">
+                                    <h4>Master's Degree with Distinction</h4>
+                                    <p>Artificial Intelligence - University of Huddersfield</p>
+                                    <span class="achievement-metric"><i class="fas fa-star"></i> Academic Excellence</span>
+                                </div>
+                            </div>
+                            <div class="timeline-achievement">
+                                <div class="achievement-icon"><i class="fas fa-arrow-trend-up"></i></div>
+                                <div class="achievement-content">
+                                    <h4>18% Detection Improvement</h4>
+                                    <p>Enhanced AI model performance for railway safety systems</p>
+                                    <span class="achievement-metric"><i class="fas fa-chart-bar"></i> AI Research</span>
+                                </div>
+                            </div>
+                            <div class="timeline-achievement">
+                                <div class="achievement-icon"><i class="fas fa-crosshairs"></i></div>
+                                <div class="achievement-content">
+                                    <h4>15% Detection Accuracy Improvement</h4>
+                                    <p>Pallet racking damage detection using attention CNN</p>
+                                    <span class="achievement-metric"><i class="fas fa-search-plus"></i> Computer Vision</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 2025 -->
+                    <div class="timeline-item" data-year="2025">
+                        <div class="timeline-marker">
+                            <div class="timeline-year">2025</div>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="timeline-achievement">
+                                <div class="achievement-icon"><i class="fas fa-book-open"></i></div>
+                                <div class="achievement-content">
+                                    <h4>11 Research Publications</h4>
+                                    <p>Published in arXiv, IEEE, MDPI, and other prestigious venues with 300+ total citations</p>
+                                    <span class="achievement-metric"><i class="fas fa-quote-right"></i> Research Impact</span>
+                                </div>
                             </div>
                         </div>
                     </div>

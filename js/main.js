@@ -1108,6 +1108,147 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ================================
+// ACHIEVEMENTS TIMELINE TOGGLE
+// ================================
+
+function initializeAchievementsToggle() {
+    const toggleButtons = document.querySelectorAll('.view-toggle-btn');
+    const categoryView = document.getElementById('achievements-category-view');
+    const timelineView = document.getElementById('achievements-timeline-view');
+    
+    if (!toggleButtons.length || !categoryView || !timelineView) {
+        console.warn('Achievement toggle elements not found');
+        return;
+    }
+    
+    // Add click handlers to toggle buttons
+    toggleButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const view = button.getAttribute('data-view');
+            switchAchievementView(view, toggleButtons, categoryView, timelineView);
+            
+            // Add haptic feedback if available
+            if (typeof haptic !== 'undefined') {
+                haptic.toggle();
+            }
+        });
+    });
+    
+    console.log('✅ Achievement timeline toggle initialized');
+}
+
+function switchAchievementView(targetView, buttons, categoryView, timelineView) {
+    // Update button states
+    buttons.forEach(btn => {
+        if (btn.getAttribute('data-view') === targetView) {
+            btn.classList.add('active');
+        } else {
+            btn.classList.remove('active');
+        }
+    });
+    
+    // Switch views with smooth transition
+    if (targetView === 'timeline') {
+        // Hide category view
+        categoryView.style.opacity = '0';
+        categoryView.style.transform = 'translateY(-20px)';
+        
+        setTimeout(() => {
+            categoryView.style.display = 'none';
+            timelineView.style.display = 'block';
+            timelineView.style.opacity = '0';
+            timelineView.style.transform = 'translateY(20px)';
+            
+            // Trigger timeline animations
+            requestAnimationFrame(() => {
+                timelineView.style.opacity = '1';
+                timelineView.style.transform = 'translateY(0)';
+                
+                // Re-trigger timeline item animations
+                const timelineItems = timelineView.querySelectorAll('.timeline-item');
+                timelineItems.forEach((item, index) => {
+                    item.style.animation = 'none';
+                    setTimeout(() => {
+                        item.style.animation = `timelineSlideIn 0.6s ease-out forwards`;
+                        item.style.animationDelay = `${index * 0.1}s`;
+                    }, 100);
+                });
+            });
+        }, 300);
+        
+    } else {
+        // Hide timeline view
+        timelineView.style.opacity = '0';
+        timelineView.style.transform = 'translateY(-20px)';
+        
+        setTimeout(() => {
+            timelineView.style.display = 'none';
+            categoryView.style.display = 'grid';
+            categoryView.style.opacity = '0';
+            categoryView.style.transform = 'translateY(20px)';
+            
+            // Show category view
+            requestAnimationFrame(() => {
+                categoryView.style.opacity = '1';
+                categoryView.style.transform = 'translateY(0)';
+                
+                // Re-trigger category animations
+                const achievementCategories = categoryView.querySelectorAll('.achievement-category');
+                achievementCategories.forEach((category, index) => {
+                    category.style.animation = 'none';
+                    setTimeout(() => {
+                        category.style.animation = `fadeInUp 0.6s ease-out forwards`;
+                        category.style.animationDelay = `${(index + 1) * 0.1}s`;
+                    }, 100);
+                });
+            });
+        }, 300);
+    }
+    
+    // Update URL hash for deep linking (optional)
+    const newHash = targetView === 'timeline' ? '#achievements-timeline' : '#achievements';
+    if (window.location.hash !== newHash) {
+        history.replaceState(null, null, newHash);
+    }
+}
+
+// Check URL hash on page load to show correct view
+function checkInitialAchievementView() {
+    const hash = window.location.hash;
+    if (hash === '#achievements-timeline') {
+        const timelineButton = document.querySelector('[data-view="timeline"]');
+        if (timelineButton) {
+            setTimeout(() => {
+                timelineButton.click();
+            }, 500); // Wait for page to load
+        }
+    }
+}
+
+// Enhanced haptic feedback for achievement toggles
+function addHapticToAchievementToggle() {
+    if (typeof haptic === 'undefined' || !haptic.isEnabled) return;
+    
+    document.querySelectorAll('.view-toggle-btn').forEach(button => {
+        button.addEventListener('touchstart', () => haptic.tap(), { passive: true });
+    });
+    
+    // Timeline achievement hover haptic
+    document.querySelectorAll('.timeline-achievement').forEach(achievement => {
+        achievement.addEventListener('touchstart', () => haptic.tap(), { passive: true });
+    });
+}
+
+// Initialize achievement timeline functionality
+document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(() => {
+        initializeAchievementsToggle();
+        checkInitialAchievementView();
+        addHapticToAchievementToggle();
+    }, 200);
+});
+
+// ================================
 // IMAGE OPTIMIZATION MODULE
 // ================================
 
