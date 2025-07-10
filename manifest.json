@@ -1,77 +1,62 @@
 {
-    "name": "MJ Alif - AI Technologist Portfolio",
+    "name": "MJ Alif - AI Research Scientist & Software Engineer",
     "short_name": "MJ Alif",
-    "description": "AI Technologist specializing in LLMs, Computer Vision, and Generative AI",
+    "description": "Professional portfolio of MJ Alif - AI Research Scientist, Software Engineer, and Technology Leader with 10+ years of experience",
     "start_url": "/",
-    "display": "standalone",
-    "background_color": "#0a0a0a",
-    "theme_color": "#8B5CF6",
-    "orientation": "portrait-primary",
     "scope": "/",
+    "display": "standalone",
+    "orientation": "portrait-primary",
+    "theme_color": "#8B5CF6",
+    "background_color": "#0F0F23",
     "lang": "en",
-    "categories": ["portfolio", "technology", "ai", "research"],
-    "screenshots": [{
-            "src": "assets/images/screenshot-wide.png",
-            "sizes": "1280x720",
-            "type": "image/png",
-            "form_factor": "wide",
-            "label": "AI Technologist Portfolio - Desktop View"
-        },
-        {
-            "src": "assets/images/screenshot-narrow.png",
-            "sizes": "750x1334",
-            "type": "image/png",
-            "form_factor": "narrow",
-            "label": "AI Technologist Portfolio - Mobile View"
-        }
-    ],
+    "categories": ["portfolio", "professional", "technology", "research"],
     "icons": [{
-            "src": "assets/images/icon-192x192.png",
+            "src": "image/favicon-music.ico",
+            "sizes": "16x16 32x32",
+            "type": "image/x-icon"
+        },
+        {
+            "src": "image/favicon-music.ico",
             "sizes": "192x192",
-            "type": "image/png",
+            "type": "image/x-icon",
             "purpose": "maskable any"
         },
         {
-            "src": "assets/images/icon-512x512.png",
+            "src": "image/favicon-music.ico",
             "sizes": "512x512",
-            "type": "image/png",
+            "type": "image/x-icon",
             "purpose": "maskable any"
-        },
-        {
-            "src": "assets/images/apple-touch-icon.png",
-            "sizes": "180x180",
-            "type": "image/png"
         }
     ],
+    "screenshots": [{
+        "src": "image/intro.jpg",
+        "sizes": "1280x720",
+        "type": "image/jpeg",
+        "platform": "wide",
+        "label": "Professional Portfolio Homepage"
+    }],
+    "prefer_related_applications": false,
+    "related_applications": [],
     "shortcuts": [{
-            "name": "View Publications",
-            "short_name": "Research",
-            "description": "View my research publications and papers",
+            "name": "About",
+            "short_name": "About",
+            "description": "Learn about MJ Alif's background and experience",
+            "url": "/#about",
+            "icons": [{ "src": "image/favicon-music.ico", "sizes": "96x96" }]
+        },
+        {
+            "name": "Experience",
+            "short_name": "Experience",
+            "description": "View professional work experience",
+            "url": "/#experience",
+            "icons": [{ "src": "image/favicon-music.ico", "sizes": "96x96" }]
+        },
+        {
+            "name": "Publications",
+            "short_name": "Publications",
+            "description": "Browse research publications",
             "url": "/#publications",
-            "icons": [{
-                "src": "assets/images/icon-192x192.png",
-                "sizes": "192x192"
-            }]
-        },
-        {
-            "name": "Contact Me",
-            "short_name": "Contact",
-            "description": "Get in touch for AI projects and collaborations",
-            "url": "/#contact",
-            "icons": [{
-                "src": "assets/images/icon-192x192.png",
-                "sizes": "192x192"
-            }]
-        },
-        {
-            "name": "Read Blog",
-            "short_name": "Blog",
-            "description": "Latest insights on AI and technology",
-            "url": "/blog/",
-            "icons": [{
-                "src": "assets/images/icon-192x192.png",
-                "sizes": "192x192"
-            }]
+            "icons": [{ "src": "image/favicon-music.ico", "sizes": "96x96" }]
         }
     ]
 }

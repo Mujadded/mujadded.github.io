@@ -31,11 +31,22 @@
     <link rel="canonical" href="https://mujaddedalif.github.io/">
     
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
-    <link rel="apple-touch-icon" sizes="180x180" href="assets/images/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon-16x16.png">
+    <link rel="icon" type="image/x-icon" href="image/favicon-music.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="image/favicon-music.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="image/favicon-music.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="image/favicon-music.ico">
+    
+    <!-- PWA Manifest -->
     <link rel="manifest" href="manifest.json">
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#8B5CF6">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="MJ Alif">
+    <meta name="application-name" content="MJ Alif Portfolio">
+    <meta name="msapplication-TileColor" content="#8B5CF6">
+    <meta name="msapplication-config" content="browserconfig.xml">
     
     <!-- Preload critical resources -->
     <link rel="preload" href="css/style.css" as="style">
@@ -515,5 +526,82 @@
 
     <!-- Scripts -->
     <script src="js/main.js"></script>
+    
+    <!-- PWA Service Worker Registration -->
+    <script>
+        // Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then((registration) => {
+                        console.log('✅ SW registered successfully:', registration.scope);
+                        
+                        // Check for updates
+                        registration.addEventListener('updatefound', () => {
+                            const newWorker = registration.installing;
+                            if (newWorker) {
+                                newWorker.addEventListener('statechange', () => {
+                                    if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                                        // New content available
+                                        if (confirm('New version available! Reload to update?')) {
+                                            window.location.reload();
+                                        }
+                                    }
+                                });
+                            }
+                        });
+                    })
+                    .catch((error) => {
+                        console.warn('❌ SW registration failed:', error);
+                    });
+            });
+        }
+
+        // PWA Install Prompt
+        let deferredPrompt;
+        const installButton = document.createElement('button');
+        installButton.className = 'install-pwa-btn';
+        installButton.style.cssText = `
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #8B5CF6, #A855F7);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(139, 92, 246, 0.3);
+            display: none;
+            z-index: 1000;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        `;
+        installButton.innerHTML = '<i class="fas fa-download"></i> Install App';
+        document.body.appendChild(installButton);
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            installButton.style.display = 'block';
+        });
+
+        installButton.addEventListener('click', async () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                console.log(`PWA install outcome: ${outcome}`);
+                deferredPrompt = null;
+                installButton.style.display = 'none';
+            }
+        });
+
+        // Hide install button after successful install
+        window.addEventListener('appinstalled', () => {
+            installButton.style.display = 'none';
+            console.log('✅ PWA installed successfully');
+        });
+    </script>
 </body>
 </html> 

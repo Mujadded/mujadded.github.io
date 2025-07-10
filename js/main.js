@@ -890,6 +890,572 @@ function optimizeAnimations() {
 // Initialize performance optimizations
 optimizeAnimations();
 
+// ================================
+// HAPTIC FEEDBACK MODULE
+// ================================
+
+class HapticFeedback {
+    constructor() {
+        this.isSupported = 'vibrate' in navigator;
+        this.isEnabled = this.isSupported && this.isMobileDevice();
+        this.patterns = {
+            light: [10],
+            medium: [20],
+            heavy: [50],
+            success: [20, 50, 20],
+            error: [100, 50, 100],
+            tap: [5],
+            longPress: [30],
+            swipe: [15],
+            toggle: [10, 10, 20]
+        };
+        
+        console.log(`🔄 Haptic feedback ${this.isEnabled ? 'enabled' : 'disabled'}`);
+    }
+    
+    isMobileDevice() {
+        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    }
+    
+    vibrate(pattern = 'light') {
+        if (!this.isEnabled) return;
+        
+        try {
+            if (typeof pattern === 'string' && this.patterns[pattern]) {
+                navigator.vibrate(this.patterns[pattern]);
+            } else if (Array.isArray(pattern)) {
+                navigator.vibrate(pattern);
+            } else if (typeof pattern === 'number') {
+                navigator.vibrate(pattern);
+            }
+        } catch (error) {
+            console.warn('Haptic feedback failed:', error);
+        }
+    }
+    
+    // Convenience methods for common interactions
+    tap() { this.vibrate('tap'); }
+    lightTap() { this.vibrate('light'); }
+    mediumTap() { this.vibrate('medium'); }
+    heavyTap() { this.vibrate('heavy'); }
+    success() { this.vibrate('success'); }
+    error() { this.vibrate('error'); }
+    toggle() { this.vibrate('toggle'); }
+    swipe() { this.vibrate('swipe'); }
+    longPress() { this.vibrate('longPress'); }
+}
+
+// Initialize haptic feedback
+const haptic = new HapticFeedback();
+
+// Add haptic feedback to navigation interactions
+function addHapticToNavigation() {
+    // Nav links
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('touchstart', () => haptic.tap(), { passive: true });
+        link.addEventListener('click', () => haptic.lightTap());
+    });
+    
+    // Theme toggle
+    const themeToggle = document.getElementById('theme-toggle');
+    if (themeToggle) {
+        themeToggle.addEventListener('touchstart', () => haptic.toggle(), { passive: true });
+    }
+    
+    // Hamburger menu
+    const hamburger = document.getElementById('hamburger');
+    if (hamburger) {
+        hamburger.addEventListener('touchstart', () => haptic.mediumTap(), { passive: true });
+    }
+}
+
+// Add haptic feedback to buttons
+function addHapticToButtons() {
+    // All buttons
+    document.querySelectorAll('.btn').forEach(button => {
+        button.addEventListener('touchstart', () => haptic.lightTap(), { passive: true });
+        button.addEventListener('click', () => {
+            if (button.classList.contains('btn-primary')) {
+                haptic.mediumTap();
+            } else {
+                haptic.lightTap();
+            }
+        });
+    });
+    
+    // Experience tabs
+    document.querySelectorAll('.experience-tab').forEach(tab => {
+        tab.addEventListener('touchstart', () => haptic.tap(), { passive: true });
+        tab.addEventListener('click', () => haptic.lightTap());
+    });
+}
+
+// Add haptic feedback to form interactions
+function addHapticToForms() {
+    // Form inputs
+    document.querySelectorAll('input, textarea').forEach(input => {
+        input.addEventListener('focus', () => haptic.tap());
+    });
+    
+    // Form submission
+    const contactForm = document.getElementById('contact-form');
+    if (contactForm) {
+        contactForm.addEventListener('submit', (e) => {
+            if (contactForm.checkValidity()) {
+                haptic.success();
+            } else {
+                haptic.error();
+            }
+        });
+    }
+}
+
+// Add haptic feedback to achievement cards
+function addHapticToAchievements() {
+    document.querySelectorAll('.achievement-item').forEach(item => {
+        item.addEventListener('touchstart', () => haptic.tap(), { passive: true });
+        
+        // Long press for additional info
+        let pressTimer;
+        item.addEventListener('touchstart', (e) => {
+            pressTimer = setTimeout(() => {
+                haptic.longPress();
+            }, 500);
+        }, { passive: true });
+        
+        item.addEventListener('touchend', () => {
+            clearTimeout(pressTimer);
+        }, { passive: true });
+    });
+}
+
+// Add haptic feedback to swipe gestures
+function enhanceSwipeWithHaptic() {
+    const experienceContent = document.querySelector('.experience-content');
+    if (!experienceContent) return;
+    
+    let startX = 0;
+    let isSwipeRegistered = false;
+    
+    experienceContent.addEventListener('touchstart', (e) => {
+        startX = e.touches[0].clientX;
+        isSwipeRegistered = false;
+    }, { passive: true });
+    
+    experienceContent.addEventListener('touchmove', (e) => {
+        if (isSwipeRegistered) return;
+        
+        const currentX = e.touches[0].clientX;
+        const diffX = startX - currentX;
+        
+        // Register swipe when movement exceeds threshold
+        if (Math.abs(diffX) > 50) {
+            haptic.swipe();
+            isSwipeRegistered = true;
+        }
+    }, { passive: true });
+}
+
+// Add haptic feedback to scroll interactions
+function addHapticToScroll() {
+    let lastScrollY = window.scrollY;
+    let scrollDirection = 'down';
+    let isScrolling = false;
+    
+    // Debounced scroll handler
+    const handleScroll = debounce(() => {
+        const currentScrollY = window.scrollY;
+        const newDirection = currentScrollY > lastScrollY ? 'down' : 'up';
+        
+        // Only trigger haptic on direction change
+        if (newDirection !== scrollDirection && Math.abs(currentScrollY - lastScrollY) > 100) {
+            haptic.tap();
+            scrollDirection = newDirection;
+        }
+        
+        lastScrollY = currentScrollY;
+        isScrolling = false;
+    }, 100);
+    
+    window.addEventListener('scroll', () => {
+        if (!isScrolling) {
+            isScrolling = true;
+            handleScroll();
+        }
+    }, { passive: true });
+}
+
+// Initialize all haptic feedback
+function initializeHapticFeedback() {
+    if (!haptic.isEnabled) return;
+    
+    // Add haptic feedback to various interactions
+    addHapticToNavigation();
+    addHapticToButtons();
+    addHapticToForms();
+    addHapticToAchievements();
+    enhanceSwipeWithHaptic();
+    
+    // Optional: Add subtle scroll haptic (may be too frequent for some users)
+    // addHapticToScroll();
+    
+    console.log('✅ Haptic feedback initialized for all touch interactions');
+}
+
+// Initialize haptic feedback after DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(initializeHapticFeedback, 100);
+});
+
+// ================================
+// IMAGE OPTIMIZATION MODULE
+// ================================
+
+class ImageOptimizer {
+    constructor() {
+        this.webpSupported = this.checkWebPSupport();
+        this.intersectionObserver = null;
+        this.isMobile = window.innerWidth < 768;
+        this.init();
+    }
+    
+    // Check if WebP format is supported
+    checkWebPSupport() {
+        const canvas = document.createElement('canvas');
+        canvas.width = 1;
+        canvas.height = 1;
+        return canvas.toDataURL('image/webp').indexOf('data:image/webp') === 0;
+    }
+    
+    init() {
+        this.setupLazyLoading();
+        this.optimizeExistingImages();
+        this.preloadCriticalImages();
+        console.log(`📸 Image optimization initialized (WebP: ${this.webpSupported})`);
+    }
+    
+    // Setup Intersection Observer for lazy loading
+    setupLazyLoading() {
+        if ('IntersectionObserver' in window) {
+            const options = {
+                root: null,
+                rootMargin: '50px',
+                threshold: 0.1
+            };
+            
+            this.intersectionObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        this.loadImage(entry.target);
+                        this.intersectionObserver.unobserve(entry.target);
+                    }
+                });
+            }, options);
+            
+            // Observe all images with data-src
+            document.querySelectorAll('img[data-src]').forEach(img => {
+                this.intersectionObserver.observe(img);
+            });
+        }
+    }
+    
+    // Load image with optimal format
+    loadImage(img) {
+        const src = img.dataset.src;
+        if (!src) return;
+        
+        // Create optimized image URL
+        const optimizedSrc = this.getOptimizedImageURL(src);
+        
+        // Preload the image
+        const imageLoader = new Image();
+        imageLoader.onload = () => {
+            img.src = optimizedSrc;
+            img.classList.add('loaded');
+            
+            // Remove placeholder if exists
+            const placeholder = img.previousElementSibling;
+            if (placeholder && placeholder.classList.contains('image-placeholder')) {
+                placeholder.style.opacity = '0';
+                setTimeout(() => placeholder.remove(), 300);
+            }
+        };
+        
+        imageLoader.onerror = () => {
+            // Fallback to original image
+            img.src = src;
+            img.classList.add('loaded');
+        };
+        
+        imageLoader.src = optimizedSrc;
+    }
+    
+    // Get optimized image URL based on device and format support
+    getOptimizedImageURL(src) {
+        const url = new URL(src, window.location.origin);
+        const extension = url.pathname.split('.').pop().toLowerCase();
+        
+        // If WebP is supported and original is not WebP, try WebP version
+        if (this.webpSupported && extension !== 'webp') {
+            const webpUrl = url.pathname.replace(/\.(jpg|jpeg|png)$/i, '.webp');
+            return webpUrl;
+        }
+        
+        // For mobile, try to get smaller versions
+        if (this.isMobile) {
+            const mobileUrl = url.pathname.replace(/(\.[^.]+)$/, '_mobile$1');
+            return mobileUrl;
+        }
+        
+        return src;
+    }
+    
+    // Optimize existing images in the DOM
+    optimizeExistingImages() {
+        document.querySelectorAll('img:not([data-src])').forEach(img => {
+            if (img.src && !img.classList.contains('optimized')) {
+                this.makeImageResponsive(img);
+            }
+        });
+    }
+    
+    // Make an image responsive and optimized
+    makeImageResponsive(img) {
+        const originalSrc = img.src;
+        
+        // Add responsive attributes
+        img.loading = 'lazy';
+        img.decoding = 'async';
+        img.classList.add('optimized');
+        
+        // Create picture element for better format support
+        if (this.webpSupported && !img.parentElement.matches('picture')) {
+            this.convertToPictureElement(img);
+        }
+        
+        // Add responsive sizing
+        if (!img.style.maxWidth) {
+            img.style.maxWidth = '100%';
+            img.style.height = 'auto';
+        }
+    }
+    
+    // Convert img to picture element with WebP support
+    convertToPictureElement(img) {
+        const picture = document.createElement('picture');
+        const webpSource = document.createElement('source');
+        const fallbackSource = document.createElement('source');
+        
+        const originalSrc = img.src;
+        const webpSrc = originalSrc.replace(/\.(jpg|jpeg|png)$/i, '.webp');
+        
+        // WebP source
+        webpSource.srcset = webpSrc;
+        webpSource.type = 'image/webp';
+        
+        // Fallback source
+        fallbackSource.srcset = originalSrc;
+        fallbackSource.type = this.getMimeType(originalSrc);
+        
+        // Clone the img element
+        const newImg = img.cloneNode(true);
+        newImg.src = originalSrc;
+        
+        // Build picture element
+        picture.appendChild(webpSource);
+        picture.appendChild(fallbackSource);
+        picture.appendChild(newImg);
+        
+        // Replace original img
+        img.parentNode.replaceChild(picture, img);
+    }
+    
+    // Get MIME type from file extension
+    getMimeType(src) {
+        const extension = src.split('.').pop().toLowerCase();
+        const mimeTypes = {
+            'jpg': 'image/jpeg',
+            'jpeg': 'image/jpeg',
+            'png': 'image/png',
+            'webp': 'image/webp',
+            'svg': 'image/svg+xml'
+        };
+        return mimeTypes[extension] || 'image/jpeg';
+    }
+    
+    // Preload critical images
+    preloadCriticalImages() {
+        const criticalImages = [
+            // Add paths to critical images here
+            '/image/intro.jpg',
+            '/image/about.jpg',
+            '/image/me.jpg'
+        ];
+        
+        criticalImages.forEach(src => {
+            if (this.imageExists(src)) {
+                const link = document.createElement('link');
+                link.rel = 'preload';
+                link.as = 'image';
+                link.href = this.getOptimizedImageURL(src);
+                document.head.appendChild(link);
+            }
+        });
+    }
+    
+    // Check if image exists
+    imageExists(src) {
+        const img = new Image();
+        img.src = src;
+        return img.complete && img.naturalHeight !== 0;
+    }
+    
+    // Create optimized image placeholder
+    createImagePlaceholder(width = '100%', height = '200px') {
+        const placeholder = document.createElement('div');
+        placeholder.className = 'image-placeholder';
+        placeholder.style.cssText = `
+            width: ${width};
+            height: ${height};
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+            border-radius: 8px;
+        `;
+        return placeholder;
+    }
+    
+    // Add image to lazy load queue
+    addImageToLazyLoad(imgElement, src) {
+        imgElement.dataset.src = src;
+        imgElement.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB2aWV3Qm94PSIwIDAgMSAxIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InRyYW5zcGFyZW50Ii8+PC9zdmc+';
+        imgElement.classList.add('lazy-image');
+        
+        if (this.intersectionObserver) {
+            this.intersectionObserver.observe(imgElement);
+        }
+    }
+}
+
+// Initialize image optimizer
+const imageOptimizer = new ImageOptimizer();
+
+// Add CSS for image optimization
+const imageOptimizationCSS = `
+/* Image optimization styles */
+.lazy-image {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.lazy-image.loaded {
+    opacity: 1;
+}
+
+.image-placeholder {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+/* Responsive images */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+picture img {
+    width: 100%;
+    height: auto;
+}
+
+/* Dark mode adjustments for image placeholders */
+[data-theme="dark"] .image-placeholder {
+    background: linear-gradient(90deg, #2a2a2a 25%, #1a1a1a 50%, #2a2a2a 75%);
+    background-size: 200% 100%;
+}
+
+/* Mobile-specific image optimizations */
+@media (max-width: 768px) {
+    img, picture img {
+        border-radius: 8px;
+    }
+    
+    .image-placeholder {
+        min-height: 150px;
+    }
+}
+`;
+
+// Add image optimization styles to head
+const imageStyle = document.createElement('style');
+imageStyle.textContent = imageOptimizationCSS;
+document.head.appendChild(imageStyle);
+
+// Utility function to create optimized images
+function createOptimizedImage(src, alt = '', className = '') {
+    const img = document.createElement('img');
+    img.alt = alt;
+    img.className = className;
+    
+    // Add to lazy loading
+    imageOptimizer.addImageToLazyLoad(img, src);
+    
+    return img;
+}
+
+// Utility function to create responsive image with WebP support
+function createResponsiveImage(src, alt = '', sizes = '100vw') {
+    const picture = document.createElement('picture');
+    
+    // WebP source
+    if (imageOptimizer.webpSupported) {
+        const webpSource = document.createElement('source');
+        webpSource.srcset = src.replace(/\.(jpg|jpeg|png)$/i, '.webp');
+        webpSource.type = 'image/webp';
+        picture.appendChild(webpSource);
+    }
+    
+    // Fallback
+    const img = document.createElement('img');
+    img.src = src;
+    img.alt = alt;
+    img.loading = 'lazy';
+    img.decoding = 'async';
+    
+    picture.appendChild(img);
+    return picture;
+}
+
+// Initialize image optimization when DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+    // Re-initialize for any dynamically added images
+    const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+            mutation.addedNodes.forEach((node) => {
+                if (node.nodeType === 1) { // Element node
+                    const images = node.querySelectorAll ? node.querySelectorAll('img') : [];
+                    images.forEach(img => {
+                        if (!img.classList.contains('optimized')) {
+                            imageOptimizer.makeImageResponsive(img);
+                        }
+                    });
+                }
+            });
+        });
+    });
+    
+    observer.observe(document.body, {
+        childList: true,
+        subtree: true
+    });
+});
+
 // Add CSS for notifications
 const notificationCSS = `
 .notification {
