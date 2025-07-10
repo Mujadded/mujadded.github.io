@@ -66,6 +66,30 @@ const experienceData = [{
             "Successfully mentored and onboarded 15 engineers in Ruby on Rails",
             "Improved team performance and delivery by 25%"
         ]
+    },
+    {
+        title: "Software Engineer",
+        company: "MyCash Online, Malaysia",
+        duration: "2015-08 - 2016-12",
+        description: "Coordinating with engineering teams to evaluate and improve software and hardware interfaces",
+        achievements: [
+            "Worked with software development and testing team members to design robust solutions meeting client requirements for functionality, scalability, and performance",
+            "Reviewed project specifications and designed technology solutions that met or exceeded performance expectations",
+            "Coordinated efficient large-scale software deployments",
+            "Enhanced software and hardware interface integration"
+        ]
+    },
+    {
+        title: "Junior Software Engineer",
+        company: "PixeLizard, Malaysia",
+        duration: "2014-06 - 2015-07",
+        description: "Learning fundamentals through hands-on projects and backend development",
+        achievements: [
+            "Developed backend systems and APIs for various client projects",
+            "Created and maintained websites using modern web technologies",
+            "Gained experience with WordPress development and customization",
+            "Solved diverse technical issues while building foundational engineering skills"
+        ]
     }
 ];
 
@@ -342,25 +366,56 @@ function initializeTypewriter() {
     }
 }
 
-// Populate experience timeline
+// Populate experience tabs
 function populateExperience() {
-    const timeline = document.querySelector('.timeline');
-    if (!timeline) return;
+    const tabsContainer = document.querySelector('.experience-tabs');
+    const contentContainer = document.querySelector('.experience-content');
 
-    timeline.innerHTML = experienceData.map((exp, index) => `
-        <div class="timeline-item fade-in-up" style="animation-delay: ${index * 0.2}s">
-            <div class="timeline-content">
-                <div class="timeline-dot"></div>
+    if (!tabsContainer || !contentContainer) return;
+
+    // Create tabs
+    tabsContainer.innerHTML = experienceData.map((exp, index) => `
+        <button class="experience-tab ${index === 0 ? 'active' : ''}" data-tab="${index}">
+            <div class="tab-title">${exp.title}</div>
+            <div class="tab-duration">${exp.duration.split(' - ')[0]} - ${exp.duration.split(' - ')[1]}</div>
+        </button>
+    `).join('');
+
+    // Create content
+    contentContainer.innerHTML = experienceData.map((exp, index) => `
+        <div class="experience-panel ${index === 0 ? 'active' : ''}" data-panel="${index}">
+            <div class="experience-header">
                 <h3 class="job-title">${exp.title}</h3>
                 <h4 class="company">${exp.company}</h4>
                 <p class="duration">${exp.duration}</p>
-                <p class="job-description">${exp.description}</p>
-                <ul class="job-achievements">
+            </div>
+            <p class="job-description">${exp.description}</p>
+            <div class="job-achievements">
+                <h5>Key Achievements:</h5>
+                <ul>
                     ${exp.achievements.map(achievement => `<li>${achievement}</li>`).join('')}
                 </ul>
             </div>
         </div>
     `).join('');
+
+    // Add tab click handlers
+    const tabs = document.querySelectorAll('.experience-tab');
+    const panels = document.querySelectorAll('.experience-panel');
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const tabIndex = tab.dataset.tab;
+            
+            // Remove active class from all tabs and panels
+            tabs.forEach(t => t.classList.remove('active'));
+            panels.forEach(p => p.classList.remove('active'));
+            
+            // Add active class to clicked tab and corresponding panel
+            tab.classList.add('active');
+            document.querySelector(`[data-panel="${tabIndex}"]`).classList.add('active');
+        });
+    });
 }
 
 // Populate skills section
