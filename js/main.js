@@ -261,10 +261,13 @@ const hamburger = document.getElementById('hamburger');
 const navMenu = document.getElementById('nav-menu');
 const navLinks = document.querySelectorAll('.nav-link');
 const contactForm = document.getElementById('contact-form');
+const themeToggle = document.getElementById('theme-toggle');
+const themeIcon = document.getElementById('theme-icon');
 
 // Initialize everything when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
     initializeNavigation();
+    initializeThemeToggle();
     initializeTypewriter();
     populateExperience();
     populateSkills();
@@ -313,12 +316,7 @@ function initializeNavigation() {
 
     // Navbar background on scroll
     window.addEventListener('scroll', () => {
-        if (window.scrollY > 100) {
-            navbar.style.background = 'rgba(10, 10, 10, 0.98)';
-        } else {
-            navbar.style.background = 'rgba(10, 10, 10, 0.95)';
-        }
-
+        updateNavbarBackground();
         // Update active nav link based on scroll position
         updateActiveNavLink();
     });
@@ -343,6 +341,53 @@ function updateActiveNavLink() {
             }
         }
     });
+}
+
+// Theme Toggle Functionality
+function initializeThemeToggle() {
+    // Check for saved theme preference or default to 'dark'
+    const currentTheme = localStorage.getItem('theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', currentTheme);
+    updateThemeIcon(currentTheme);
+    updateNavbarBackground(); // Set initial navbar background
+
+    // Theme toggle event listener
+    if (themeToggle) {
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcon(newTheme);
+            updateNavbarBackground(); // Update navbar background immediately
+        });
+    }
+}
+
+function updateThemeIcon(theme) {
+    if (themeIcon) {
+        if (theme === 'dark') {
+            themeIcon.className = 'fas fa-sun';
+            themeToggle.setAttribute('aria-label', 'Switch to light mode');
+        } else {
+            themeIcon.className = 'fas fa-moon';
+            themeToggle.setAttribute('aria-label', 'Switch to dark mode');
+        }
+    }
+}
+
+function updateNavbarBackground() {
+    if (!navbar) return;
+
+    const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+    const isScrolled = window.scrollY > 100;
+
+    if (currentTheme === 'light') {
+        navbar.style.background = isScrolled ? 'rgba(255, 255, 255, 0.98)' : 'rgba(255, 255, 255, 0.95)';
+    } else {
+        navbar.style.background = isScrolled ? 'rgba(10, 10, 10, 0.98)' : 'rgba(10, 10, 10, 0.95)';
+    }
 }
 
 // Typewriter effect

@@ -174,5 +174,39 @@ RECENT UPDATES:
 - ✅ **Career evolution**: Junior → Software Engineer → Senior → Technical Lead → Principal → AI Engineer → Research Assistant
 - ✅ **Updated statistics**: 10+ years in tech, comprehensive international experience
 
-CURRENT STATUS: ENTERPRISE-LEVEL PROFESSIONAL WEBSITE WITH COMPLETE CAREER TIMELINE! 🚀
-LAST UPDATED: Added complete 10+ year career journey from Junior Engineer to AI Research positions across 3 countries
+## DARK/LIGHT MODE TOGGLE ADDED ✅
+
+### 🌓 **Professional Theme Switching**
+- ✅ **Added theme toggle button** in navigation with professional circular design
+- ✅ **Complete light mode theme** with carefully crafted color palette
+- ✅ **Smooth transitions** between themes with CSS animations
+- ✅ **Persistent user preference** saved in localStorage
+- ✅ **Accessible design** with proper ARIA labels and screen reader support
+- ✅ **Icon updates**: Moon/Sun icons that change based on current theme
+- ✅ **Mobile responsive** theme toggle button
+
+### 🎨 **Light Mode Design System**
+- ✅ **Background colors**: Clean whites and light grays
+- ✅ **Text colors**: Dark text for optimal readability
+- ✅ **Accent colors**: Maintained purple/blue theme consistency
+- ✅ **Border colors**: Subtle light gray borders
+- ✅ **Shadows**: Enhanced shadows for better depth in light mode
+- ✅ **Navigation**: Transparent white background with blur effect
+
+### 🔧 **Technical Implementation**
+- ✅ **CSS Variables**: Dynamic theme switching using CSS custom properties
+- ✅ **JavaScript functionality**: Smooth theme toggle with state management
+- ✅ **Local storage**: User preference persistence across sessions
+- ✅ **Blog page integration**: Theme toggle available on all pages
+- ✅ **Mobile optimization**: Responsive theme toggle button sizing
+- ✅ **Navbar fix**: Fixed sticky navigation background for light mode
+- ✅ **Variable optimization**: Navbar backgrounds now use CSS variables for seamless theme switching
+
+### ♿ **Accessibility Features**
+- ✅ **Screen reader support** with proper ARIA labels
+- ✅ **Keyboard navigation** compatible
+- ✅ **High contrast** maintained in both themes
+- ✅ **User preference respect** for system theme preferences
+
+CURRENT STATUS: ENTERPRISE-LEVEL PROFESSIONAL WEBSITE WITH DUAL THEME SUPPORT! 🚀
+LAST UPDATED: Added professional dark/light mode toggle for enhanced user accessibility and preference
