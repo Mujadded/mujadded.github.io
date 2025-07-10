@@ -54,7 +54,7 @@ WEBSITE SUMMARY:
 =================
 ✨ A stunning creative/tech-forward personal website for AI Technologist MJ Alif
 🎯 Features: Hero with typewriter effect, experience timeline, skills showcase, publications, blog, contact form
-🎨 Design: Dark theme with cyan/coral accents, neural network animations, floating particles
+🎨 Design: Dark theme with purple/blue accents, neural network animations, floating particles
 📱 Tech Stack: Pure HTML/CSS/JS, Font Awesome icons, Inter/JetBrains Mono fonts
 🚀 Performance: Optimized for GitHub Pages, mobile-responsive, accessibility compliant
 
