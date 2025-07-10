@@ -345,11 +345,35 @@ function updateActiveNavLink() {
 
 // Theme Toggle Functionality
 function initializeThemeToggle() {
-    // Check for saved theme preference or default to 'dark'
-    const currentTheme = localStorage.getItem('theme') || 'dark';
+    // Check for saved theme preference or detect system preference
+    let currentTheme = localStorage.getItem('theme');
+
+    if (!currentTheme) {
+        // No saved preference, check system preference
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            currentTheme = 'dark';
+        } else {
+            currentTheme = 'light'; // Default to light mode
+        }
+    }
+
     document.documentElement.setAttribute('data-theme', currentTheme);
     updateThemeIcon(currentTheme);
     updateNavbarBackground(); // Set initial navbar background
+
+    // Listen for system theme changes (when no manual preference is set)
+    if (window.matchMedia) {
+        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+        mediaQuery.addEventListener('change', (e) => {
+            // Only auto-switch if user hasn't manually set a preference
+            if (!localStorage.getItem('theme')) {
+                const systemTheme = e.matches ? 'dark' : 'light';
+                document.documentElement.setAttribute('data-theme', systemTheme);
+                updateThemeIcon(systemTheme);
+                updateNavbarBackground();
+            }
+        });
+    }
 
     // Theme toggle event listener
     if (themeToggle) {
@@ -380,13 +404,13 @@ function updateThemeIcon(theme) {
 function updateNavbarBackground() {
     if (!navbar) return;
 
-    const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+    const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
     const isScrolled = window.scrollY > 100;
 
-    if (currentTheme === 'light') {
-        navbar.style.background = isScrolled ? 'rgba(255, 255, 255, 0.98)' : 'rgba(255, 255, 255, 0.95)';
-    } else {
+    if (currentTheme === 'dark') {
         navbar.style.background = isScrolled ? 'rgba(10, 10, 10, 0.98)' : 'rgba(10, 10, 10, 0.95)';
+    } else {
+        navbar.style.background = isScrolled ? 'rgba(255, 255, 255, 0.98)' : 'rgba(255, 255, 255, 0.95)';
     }
 }
 

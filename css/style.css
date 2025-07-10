@@ -1,21 +1,21 @@
 /* CSS Variables */
 
 :root {
-    /* Colors - Dark Mode (Default) */
-    --primary-bg: #0a0a0a;
-    --secondary-bg: #1a1a1a;
-    --tertiary-bg: #2a2a2a;
+    /* Colors - Light Mode (Default) */
+    --primary-bg: #ffffff;
+    --secondary-bg: #f8f9fa;
+    --tertiary-bg: #e9ecef;
     --accent-primary: #8B5CF6;
     --accent-secondary: #3B82F6;
     --accent-gradient: linear-gradient(135deg, #8B5CF6, #3B82F6, #6366F1);
-    --text-primary: #ffffff;
-    --text-secondary: #b0b0b0;
-    --text-muted: #808080;
-    --border-color: #333333;
-    --shadow-color: rgba(139, 92, 246, 0.1);
-    --glow-color: rgba(139, 92, 246, 0.3);
-    --navbar-bg: rgba(10, 10, 10, 0.95);
-    --navbar-mobile-bg: rgba(10, 10, 10, 0.98);
+    --text-primary: #1a1a1a;
+    --text-secondary: #4a5568;
+    --text-muted: #718096;
+    --border-color: #e2e8f0;
+    --shadow-color: rgba(139, 92, 246, 0.15);
+    --glow-color: rgba(139, 92, 246, 0.2);
+    --navbar-bg: rgba(255, 255, 255, 0.95);
+    --navbar-mobile-bg: rgba(255, 255, 255, 0.98);
     /* Typography */
     --font-primary: 'Inter', sans-serif;
     --font-mono: 'JetBrains Mono', monospace;
@@ -31,23 +31,23 @@
 }
 
 
-/* Light Mode Theme */
+/* Dark Mode Theme */
 
-[data-theme="light"] {
-    --primary-bg: #ffffff;
-    --secondary-bg: #f8f9fa;
-    --tertiary-bg: #e9ecef;
+[data-theme="dark"] {
+    --primary-bg: #0a0a0a;
+    --secondary-bg: #1a1a1a;
+    --tertiary-bg: #2a2a2a;
     --accent-primary: #8B5CF6;
     --accent-secondary: #3B82F6;
     --accent-gradient: linear-gradient(135deg, #8B5CF6, #3B82F6, #6366F1);
-    --text-primary: #1a1a1a;
-    --text-secondary: #4a5568;
-    --text-muted: #718096;
-    --border-color: #e2e8f0;
-    --shadow-color: rgba(139, 92, 246, 0.15);
-    --glow-color: rgba(139, 92, 246, 0.2);
-    --navbar-bg: rgba(255, 255, 255, 0.95);
-    --navbar-mobile-bg: rgba(255, 255, 255, 0.98);
+    --text-primary: #ffffff;
+    --text-secondary: #b0b0b0;
+    --text-muted: #808080;
+    --border-color: #333333;
+    --shadow-color: rgba(139, 92, 246, 0.1);
+    --glow-color: rgba(139, 92, 246, 0.3);
+    --navbar-bg: rgba(10, 10, 10, 0.95);
+    --navbar-mobile-bg: rgba(10, 10, 10, 0.98);
 }
 
 
