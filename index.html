@@ -214,7 +214,7 @@
             </div>
             <div class="contact-content">
                 <div class="contact-form-container">
-                    <form class="contact-form" id="contact-form">
+                    <form class="contact-form" id="contact-form" action="https://formspree.io/f/mnnvennw" method="POST">
                         <div class="form-group">
                             <input type="text" id="name" name="name" required>
                             <label for="name">Your Name</label>
@@ -231,6 +231,8 @@
                             <textarea id="message" name="message" rows="5" required></textarea>
                             <label for="message">Message</label>
                         </div>
+                        <!-- Honeypot field for spam protection -->
+                        <input type="text" name="_gotcha" style="display:none !important">
                         <button type="submit" class="btn btn-primary">
                             <i class="fas fa-paper-plane"></i> Send Message
                         </button>

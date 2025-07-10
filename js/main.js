@@ -449,10 +449,10 @@ function animateCounter(element) {
 function initializeContactForm() {
     if (!contactForm) return;
 
+    // Check if using Formspree (has action attribute)
+    const isFormspree = contactForm.hasAttribute('action') && contactForm.getAttribute('action').includes('formspree');
+
     contactForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        
-        const formData = new FormData(contactForm);
         const submitButton = contactForm.querySelector('button[type="submit"]');
         const originalText = submitButton.innerHTML;
         
@@ -460,34 +460,44 @@ function initializeContactForm() {
         submitButton.innerHTML = '<div class="loading-dots"><span></span><span></span><span></span></div> Sending...';
         submitButton.disabled = true;
         
-        try {
-            // Simulate form submission (replace with actual endpoint)
-            await simulateFormSubmission(formData);
+        if (isFormspree) {
+            // Let Formspree handle the submission naturally
+            // Don't prevent default - let form submit normally
+            showNotification('Sending message...', 'info');
+            return; // Form will submit and redirect/reload
+        } else {
+            // Prevent default for demo/fallback
+            e.preventDefault();
             
-            // Success state
-            submitButton.innerHTML = '<i class="fas fa-check"></i> Message Sent!';
-            submitButton.style.background = '#4ecdc4';
+            try {
+                // Simulate form submission (for demo purposes)
+                await simulateFormSubmission(new FormData(contactForm));
+                
+                // Success state
+                submitButton.innerHTML = '<i class="fas fa-check"></i> Message Sent!';
+                submitButton.style.background = '#8B5CF6';
+                
+                // Reset form
+                contactForm.reset();
+                
+                // Show success message
+                showNotification('Message sent successfully! I\'ll get back to you soon.', 'success');
+                
+            } catch (error) {
+                // Error state
+                submitButton.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Failed to Send';
+                submitButton.style.background = '#ef4444';
+                
+                showNotification('Failed to send message. Please try again.', 'error');
+            }
             
-            // Reset form
-            contactForm.reset();
-            
-            // Show success message
-            showNotification('Message sent successfully! I\'ll get back to you soon.', 'success');
-            
-        } catch (error) {
-            // Error state
-            submitButton.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Failed to Send';
-            submitButton.style.background = '#ff6b6b';
-            
-            showNotification('Failed to send message. Please try again.', 'error');
+            // Reset button after 3 seconds
+            setTimeout(() => {
+                submitButton.innerHTML = originalText;
+                submitButton.disabled = false;
+                submitButton.style.background = '';
+            }, 3000);
         }
-        
-        // Reset button after 3 seconds
-        setTimeout(() => {
-            submitButton.innerHTML = originalText;
-            submitButton.disabled = false;
-            submitButton.style.background = '';
-        }, 3000);
     });
 }
 
