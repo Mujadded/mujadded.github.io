@@ -1,6 +1,6 @@
-const CACHE_NAME = 'mj-alif-portfolio-v1.1.0';
-const APP_SHELL_CACHE = 'app-shell-v1.1.0';
-const RUNTIME_CACHE = 'runtime-v1.1.0';
+const CACHE_NAME = 'mj-alif-portfolio-v1.2.0';
+const APP_SHELL_CACHE = 'app-shell-v1.2.0';
+const RUNTIME_CACHE = 'runtime-v1.2.0';
 
 // App Shell - Critical resources that should be cached immediately
 const APP_SHELL_FILES = [
@@ -10,6 +10,14 @@ const APP_SHELL_FILES = [
     '/css/animations.css',
     '/js/main.js',
     '/manifest.json',
+    // Favicon and PWA icons
+    '/assets/images/favicon.ico',
+    '/assets/images/favicon-32x32.png',
+    '/assets/images/favicon-16x16.png',
+    '/assets/images/apple-touch-icon.png',
+    '/assets/images/android-chrome-192x192.png',
+    '/assets/images/android-chrome-512x512.png',
+    '/assets/images/logo.png',
     // Add critical fonts
     'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap',
     'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css'
