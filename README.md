@@ -76,9 +76,6 @@ open http://localhost:8000
 │   └── animations.css      # Advanced animations and effects
 ├── js/
 │   └── main.js            # Interactive functionality
-├── blog/
-│   ├── index.html         # Blog listing page
-│   └── posts/             # Individual blog posts
 ├── assets/
 │   └── images/            # Images and media files
 ├── development.txt        # Development tracking log

@@ -238,7 +238,7 @@ const blogData = [{
         date: "2024-08-21",
         readTime: "12 min read",
         category: "Web Development",
-        url: "https://blog.mjalif.com",
+        url: "https://blog.mjalif.com/transitioning-from-rails-to-django-a-comprehensive-guide-for-rails-developers-9829aaf13cdd",
         pinned: true,
         image: "https://miro.medium.com/v2/resize:fit:720/format:webp/1*6HHIWgA84Es2FptaQFhDbA.png"
     },
@@ -248,7 +248,7 @@ const blogData = [{
         date: "2023-11-09",
         readTime: "15 min read",
         category: "AI & Computer Vision",
-        url: "https://blog.mjalif.com",
+        url: "https://blog.mjalif.com/setting-up-pose-detection-ai-with-raspberry-pi-4-coral-usb-accelerator-b29a38d5d780",
         image: "https://miro.medium.com/v2/resize:fit:720/format:webp/1*tfIEaYh49oWd0ATSdepL6Q.png"
     },
     {
@@ -257,7 +257,7 @@ const blogData = [{
         date: "2023-02-06",
         readTime: "8 min read",
         category: "Machine Learning",
-        url: "https://blog.mjalif.com",
+        url: "https://blog.mjalif.com/regularization-in-machine-learning-and-how-it-helps-fc3e78227ba9",
         image: "https://miro.medium.com/v2/resize:fit:720/format:webp/0*C_hTwT5GSNuLnj2h"
     },
     {
@@ -266,7 +266,7 @@ const blogData = [{
         date: "2023-02-04",
         readTime: "10 min read",
         category: "Machine Learning",
-        url: "https://blog.mjalif.com",
+        url: "https://blog.mjalif.com/loss-functions-and-what-it-does-behind-the-screen-9882ecbcdc66",
         image: "https://miro.medium.com/v2/resize:fit:720/format:webp/0*dnx2PKuTTQCGtlsp"
     }
 ];
@@ -653,7 +653,7 @@ function populateBlog() {
                     <span class="blog-read-time">${post.readTime}</span>
                 </div>
                 <div class="blog-external-link">
-                    <i class="fas fa-external-link-alt"></i> Read on My Blog
+                    <i class="fas fa-external-link-alt"></i> Read Article
                 </div>
             </div>
         </article>
