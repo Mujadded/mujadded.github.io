@@ -785,9 +785,12 @@
                         registration.addEventListener('updatefound', () => {
                             const newWorker = registration.installing;
                             if (newWorker) {
+                                console.log('🔄 New service worker found, installing...');
                                 newWorker.addEventListener('statechange', () => {
+                                    console.log('🔄 Service worker state changed to:', newWorker.state);
                                     if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
                                         // New content available
+                                        console.log('🆕 New version available!');
                                         if (confirm('New version available! Reload to update?')) {
                                             window.location.reload();
                                         }
@@ -795,11 +798,25 @@
                                 });
                             }
                         });
+                        
+                        // Listen for service worker messages
+                        navigator.serviceWorker.addEventListener('message', (event) => {
+                            console.log('📨 Message from SW:', event.data);
+                        });
                     })
                     .catch((error) => {
                         console.warn('❌ SW registration failed:', error);
+                        
+                        // Check if it's a network error or file not found
+                        if (error.message.includes('(404)')) {
+                            console.warn('🔍 Service worker file not found. PWA features disabled.');
+                        } else if (error.message.includes('network')) {
+                            console.warn('🌐 Network error during service worker registration.');
+                        }
                     });
             });
+        } else {
+            console.warn('⚠️ Service workers not supported in this browser');
         }
 
         // PWA Install Prompt

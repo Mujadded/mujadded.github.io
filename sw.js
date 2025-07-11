@@ -1,24 +1,26 @@
-const CACHE_NAME = 'mj-alif-portfolio-v1.0.0';
-const APP_SHELL_CACHE = 'app-shell-v1.0.0';
-const RUNTIME_CACHE = 'runtime-v1.0.0';
+const CACHE_NAME = 'mj-alif-portfolio-v1.1.0';
+const APP_SHELL_CACHE = 'app-shell-v1.1.0';
+const RUNTIME_CACHE = 'runtime-v1.1.0';
 
 // App Shell - Critical resources that should be cached immediately
 const APP_SHELL_FILES = [
     '/',
     '/index.html',
     '/css/style.css',
-    '/js/script.js',
+    '/css/animations.css',
+    '/js/main.js',
     '/manifest.json',
     // Add critical fonts
-    'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap',
-    'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css'
+    'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap',
+    'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css'
 ];
 
 // Runtime caching - Images and other assets
 const RUNTIME_CACHE_URLS = [
-    '/image/',
+    '/assets/',
     'https://fonts.gstatic.com/',
-    'https://cdnjs.cloudflare.com/'
+    'https://cdnjs.cloudflare.com/',
+    'https://miro.medium.com/'
 ];
 
 // Install event - Cache app shell
@@ -27,16 +29,38 @@ self.addEventListener('install', (event) => {
 
     event.waitUntil(
         Promise.all([
-            // Cache app shell
-            caches.open(APP_SHELL_CACHE).then((cache) => {
-                console.log('[SW] Caching app shell');
-                return cache.addAll(APP_SHELL_FILES);
-            }),
+            // Cache app shell with individual error handling
+            cacheAppShell(),
             // Skip waiting to activate immediately
             self.skipWaiting()
         ])
     );
 });
+
+// Cache app shell files individually to handle failures gracefully
+async function cacheAppShell() {
+    try {
+        const cache = await caches.open(APP_SHELL_CACHE);
+        console.log('[SW] Caching app shell files...');
+
+        // Cache files individually to prevent single failures from breaking everything
+        const cachePromises = APP_SHELL_FILES.map(async(url) => {
+            try {
+                console.log('[SW] Caching:', url);
+                await cache.add(url);
+                console.log('[SW] ✅ Cached successfully:', url);
+            } catch (error) {
+                console.warn('[SW] ⚠️ Failed to cache:', url, error.message);
+                // Continue with other files instead of failing completely
+            }
+        });
+
+        await Promise.allSettled(cachePromises);
+        console.log('[SW] App shell caching completed');
+    } catch (error) {
+        console.error('[SW] ❌ Error setting up app shell cache:', error);
+    }
+}
 
 // Activate event - Clean up old caches
 self.addEventListener('activate', (event) => {
@@ -78,7 +102,7 @@ self.addEventListener('fetch', (event) => {
     }
 
     // Handle images - Cache first with fallback
-    if (request.destination === 'image' || url.includes('/image/')) {
+    if (request.destination === 'image' || url.includes('/assets/')) {
         event.respondWith(cacheFirstWithFallback(request, RUNTIME_CACHE));
         return;
     }
