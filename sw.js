@@ -232,8 +232,6 @@ self.addEventListener('push', (event) => {
     if (event.data) {
         const options = {
             body: event.data.text(),
-            icon: '/image/favicon-music.ico',
-            badge: '/image/favicon-music.ico',
             vibrate: [200, 100, 200],
             tag: 'portfolio-notification',
             actions: [{

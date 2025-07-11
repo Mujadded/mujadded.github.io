@@ -1460,10 +1460,8 @@ class ImageOptimizer {
     // Preload critical images
     preloadCriticalImages() {
         const criticalImages = [
-            // Add paths to critical images here
-            '/image/intro.jpg',
-            '/image/about.jpg',
-            '/image/me.jpg'
+            // Add paths to critical images here when needed
+            // Currently no critical images to preload
         ];
         
         criticalImages.forEach(src => {
