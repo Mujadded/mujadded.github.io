@@ -2017,13 +2017,7 @@ a:hover {
         padding: 1px 6px;
         margin-left: 8px;
     }
-    /* Hide some publications on mobile to reduce scrolling */
-    .publication-card:nth-child(n+5) {
-        display: none;
-    }
-    .publication-card.show-more {
-        display: block;
-    }
+    /* Publication visibility is handled by JavaScript */
     /* Show More Button for Publications */
     .publications-show-more {
         text-align: center;
@@ -2048,15 +2042,7 @@ a:hover {
         background: var(--accent-primary);
         color: white;
     }
-    /* Hide show more button on desktop */
-    @media (min-width: 769px) {
-        .publications-show-more {
-            display: none;
-        }
-        .publication-card:nth-child(n+5) {
-            display: block !important;
-        }
-    }
+    /* Publications show more button styling handled by JavaScript */
     .section-header {
         margin-bottom: 40px;
     }

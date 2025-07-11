@@ -293,6 +293,11 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeScrollAnimations();
     initializeContactForm();
     initializeParticleEffects();
+
+    // Handle window resize for responsive elements
+    window.addEventListener('resize', debounce(() => {
+        handlePublicationsResize();
+    }, 250));
 });
 
 // Navigation functionality
@@ -634,29 +639,68 @@ function populatePublications() {
         </div>
     `).join('');
 
-    // Add show more button for mobile
-    const showMoreButton = `
+    // Only add show more button on mobile/tablet screens
+    const isMobileTablet = window.innerWidth <= 768;
+    const showMoreButton = isMobileTablet ? `
         <div class="publications-show-more">
             <button class="btn show-more-btn" onclick="togglePublications()">
                 <i class="fas fa-chevron-down"></i> Show More Publications
             </button>
         </div>
-    `;
+    ` : '';
 
     publicationsGrid.innerHTML = publicationsHTML + showMoreButton;
+    
+    // Handle window resize to show/hide button appropriately
+    handlePublicationsResize();
+}
+
+// Handle window resize for publications
+function handlePublicationsResize() {
+    const showMoreContainer = document.querySelector('.publications-show-more');
+    const isMobileTablet = window.innerWidth <= 768;
+    const allCards = document.querySelectorAll('.publication-card');
+    const hiddenCards = Array.from(allCards).slice(4); // Cards after the 4th one
+    
+    if (!isMobileTablet && showMoreContainer) {
+        // Hide the button on larger screens
+        showMoreContainer.style.display = 'none';
+        // Show all publications
+        hiddenCards.forEach(card => {
+            card.style.display = 'block';
+        });
+    } else if (isMobileTablet && showMoreContainer) {
+        // Show the button on mobile/tablet
+        showMoreContainer.style.display = 'block';
+        // Reset hidden publications if needed
+        const isExpanded = document.querySelector('.show-more-btn')?.classList.contains('show-less');
+        if (!isExpanded) {
+            hiddenCards.forEach(card => {
+                card.style.display = 'none';
+            });
+        }
+    }
+    
+    // If no show more container exists on mobile, initialize properly
+    if (isMobileTablet && !showMoreContainer) {
+        hiddenCards.forEach(card => {
+            card.style.display = 'none';
+        });
+    }
 }
 
 // Toggle publications visibility on mobile
 function togglePublications() {
-    const hiddenCards = document.querySelectorAll('.publication-card:nth-child(n+5)');
+    const allCards = document.querySelectorAll('.publication-card');
+    const hiddenCards = Array.from(allCards).slice(4); // Cards after the 4th one
     const showMoreBtn = document.querySelector('.publications-show-more .btn');
     const isExpanded = showMoreBtn.classList.contains('show-less');
 
     hiddenCards.forEach(card => {
         if (isExpanded) {
-            card.classList.remove('show-more');
+            card.style.display = 'none';
         } else {
-            card.classList.add('show-more');
+            card.style.display = 'block';
         }
     });
 
