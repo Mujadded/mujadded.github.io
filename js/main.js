@@ -625,13 +625,55 @@ function populatePublications() {
     const publicationsGrid = document.querySelector('.publications-grid');
     if (!publicationsGrid) return;
 
-    publicationsGrid.innerHTML = publicationsData.map((pub, index) => `
+    // Create publications HTML
+    const publicationsHTML = publicationsData.map((pub, index) => `
         <div class="publication-card fade-in-up" style="animation-delay: ${index * 0.1}s">
             <h3 class="publication-title">${pub.title}</h3>
             <p class="publication-journal">${pub.journal}</p>
             <p class="publication-date">${pub.date} • ${pub.type}${pub.citations ? ' • <span class="citation-count">' + pub.citations + '</span>' : ''}</p>
         </div>
     `).join('');
+
+    // Add show more button for mobile
+    const showMoreButton = `
+        <div class="publications-show-more">
+            <button class="btn show-more-btn" onclick="togglePublications()">
+                <i class="fas fa-chevron-down"></i> Show More Publications
+            </button>
+        </div>
+    `;
+
+    publicationsGrid.innerHTML = publicationsHTML + showMoreButton;
+}
+
+// Toggle publications visibility on mobile
+function togglePublications() {
+    const hiddenCards = document.querySelectorAll('.publication-card:nth-child(n+5)');
+    const showMoreBtn = document.querySelector('.publications-show-more .btn');
+    const isExpanded = showMoreBtn.classList.contains('show-less');
+
+    hiddenCards.forEach(card => {
+        if (isExpanded) {
+            card.classList.remove('show-more');
+        } else {
+            card.classList.add('show-more');
+        }
+    });
+
+    if (isExpanded) {
+        showMoreBtn.innerHTML = '<i class="fas fa-chevron-down"></i> Show More Publications';
+        showMoreBtn.classList.remove('show-less');
+        // Smooth scroll to publications section top when collapsing
+        setTimeout(() => {
+            document.getElementById('publications').scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }, 100);
+    } else {
+        showMoreBtn.innerHTML = '<i class="fas fa-chevron-up"></i> Show Less Publications';
+        showMoreBtn.classList.add('show-less');
+    }
 }
 
 // Populate blog section
