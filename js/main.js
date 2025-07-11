@@ -233,25 +233,41 @@ const publicationsData = [{
 ];
 
 const blogData = [{
-        title: "The Future of LLMs in Computer Vision: Multimodal AI Revolution",
-        excerpt: "Exploring how large language models are transforming computer vision tasks and enabling new forms of multimodal AI applications.",
-        date: "2024-01-15",
-        readTime: "8 min read",
-        category: "AI Research"
-    },
-    {
-        title: "YOLOv10 vs YOLOv8: A Deep Dive into Real-Time Object Detection",
-        excerpt: "Comprehensive comparison of the latest YOLO architectures, performance metrics, and real-world applications in transportation systems.",
-        date: "2024-01-10",
+        title: "Transitioning from Rails to Django: A Comprehensive Guide for Rails Developers",
+        excerpt: "As a Rails developer with years of experience, you might consider expanding your skill set by learning Django, a popular Python-based web framework. This comprehensive guide will help you understand the key differences and similarities between Rails and Django.",
+        date: "2024-08-21",
         readTime: "12 min read",
-        category: "Computer Vision"
+        category: "Web Development",
+        url: "https://blog.mjalif.com",
+        pinned: true,
+        image: "https://miro.medium.com/v2/resize:fit:720/format:webp/1*6HHIWgA84Es2FptaQFhDbA.png"
     },
     {
-        title: "Prompt Engineering Best Practices for Production LLM Systems",
-        excerpt: "Essential techniques and strategies for designing robust prompt engineering workflows in enterprise AI applications.",
-        date: "2024-01-05",
+        title: "Setting Up Pose-detection AI with Raspberry Pi 4 + Coral USB Accelerator",
+        excerpt: "In this blog post, we will explore how to set up a pose-detection AI system using a Raspberry Pi 4 and a Coral USB Accelerator. Learn how to deploy machine learning models on edge devices for real-time pose detection.",
+        date: "2023-11-09",
+        readTime: "15 min read",
+        category: "AI & Computer Vision",
+        url: "https://blog.mjalif.com",
+        image: "https://miro.medium.com/v2/resize:fit:720/format:webp/1*tfIEaYh49oWd0ATSdepL6Q.png"
+    },
+    {
+        title: "Why Regularization in Loss Function and How It Helps",
+        excerpt: "Whenever we run a simple machine learning model like linear classification, we can determine the measure of unhappiness through the loss function. But what happens when we add regularization? Let's explore why regularization is crucial and how it helps prevent overfitting.",
+        date: "2023-02-06",
+        readTime: "8 min read",
+        category: "Machine Learning",
+        url: "https://blog.mjalif.com",
+        image: "https://miro.medium.com/v2/resize:fit:720/format:webp/0*C_hTwT5GSNuLnj2h"
+    },
+    {
+        title: "Loss Functions and What It Does Behind the Screen",
+        excerpt: "What is the Loss function? Understanding the mathematical foundation behind machine learning model training and how loss functions guide the learning process to optimize model performance.",
+        date: "2023-02-04",
         readTime: "10 min read",
-        category: "LLM Engineering"
+        category: "Machine Learning",
+        url: "https://blog.mjalif.com",
+        image: "https://miro.medium.com/v2/resize:fit:720/format:webp/0*dnx2PKuTTQCGtlsp"
     }
 ];
 
@@ -624,8 +640,11 @@ function populateBlog() {
     if (!blogGrid) return;
 
     blogGrid.innerHTML = blogData.map((post, index) => `
-        <article class="blog-card fade-in-up" style="animation-delay: ${index * 0.1}s">
-            <div class="blog-image"></div>
+        <article class="blog-card fade-in-up" style="animation-delay: ${index * 0.1}s" onclick="window.open('${post.url}', '_blank')" role="button" tabindex="0">
+            <div class="blog-image" ${post.image ? `style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('${post.image}'); background-size: cover; background-position: center;"` : ''}>
+                ${post.pinned ? '<div class="blog-badge">Pinned</div>' : ''}
+                <div class="blog-category">${post.category}</div>
+            </div>
             <div class="blog-content">
                 <h3 class="blog-title">${post.title}</h3>
                 <p class="blog-excerpt">${post.excerpt}</p>
@@ -633,9 +652,23 @@ function populateBlog() {
                     <span class="blog-date">${formatDate(post.date)}</span>
                     <span class="blog-read-time">${post.readTime}</span>
                 </div>
+                <div class="blog-external-link">
+                    <i class="fas fa-external-link-alt"></i> Read on My Blog
+                </div>
             </div>
         </article>
     `).join('');
+
+    // Add keyboard support for blog cards
+    const blogCards = document.querySelectorAll('.blog-card');
+    blogCards.forEach(card => {
+        card.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                card.click();
+            }
+        });
+    });
 }
 
 // Format date utility

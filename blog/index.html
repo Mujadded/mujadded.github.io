@@ -33,6 +33,7 @@
                 <li><a href="../index.html#about" class="nav-link">About</a></li>
                 <li><a href="../index.html#experience" class="nav-link">Experience</a></li>
                 <li><a href="../index.html#skills" class="nav-link">Skills</a></li>
+                <li><a href="../index.html#achievements" class="nav-link">Achievements</a></li>
                 <li><a href="../index.html#publications" class="nav-link">Research</a></li>
                 <li><a href="../index.html#blog" class="nav-link">Blog</a></li>
                 <li><a href="../index.html#contact" class="nav-link">Contact</a></li>
@@ -54,12 +55,26 @@
     <!-- Blog Header -->
     <section class="blog-header">
         <div class="container">
+            <!-- Blog Moved Notice -->
+            <div class="blog-moved-notice">
+                <div class="notice-content">
+                    <i class="fas fa-info-circle"></i>
+                    <div class="notice-text">
+                        <h3>Blog Has Moved!</h3>
+                        <p>My blog is now available at <strong>blog.mjalif.com</strong> with a custom domain and better experience.</p>
+                        <a href="https://blog.mjalif.com" class="btn btn-primary" target="_blank">
+                            <i class="fas fa-external-link-alt"></i> Visit My Blog
+                        </a>
+                    </div>
+                </div>
+            </div>
+
             <div class="blog-header-content">
                 <h1 class="page-title">AI & Technology Blog</h1>
                 <p class="page-subtitle">Insights on AI Innovation, Research, and Technology Trends</p>
                 <div class="blog-stats">
                     <div class="stat-item">
-                        <span class="stat-number">15+</span>
+                        <span class="stat-number">4+</span>
                         <span class="stat-label">Articles</span>
                     </div>
                     <div class="stat-item">
@@ -132,6 +147,70 @@
 
     <style>
         /* Blog-specific styles */
+        .blog-moved-notice {
+            background: linear-gradient(135deg, #8B5CF6, #3B82F6);
+            border-radius: var(--border-radius);
+            padding: 25px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.3);
+        }
+
+        .notice-content {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            color: white;
+        }
+
+        .notice-content i {
+            font-size: 2.5rem;
+            color: rgba(255, 255, 255, 0.9);
+            flex-shrink: 0;
+        }
+
+        .notice-text h3 {
+            margin: 0 0 10px 0;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .notice-text p {
+            margin: 0 0 20px 0;
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.5;
+        }
+
+        .notice-text .btn {
+            background: rgba(255, 255, 255, 0.15);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .notice-text .btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .notice-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+
+            .notice-content i {
+                font-size: 2rem;
+            }
+
+            .notice-text h3 {
+                font-size: 1.3rem;
+            }
+        }
+
         .blog-header {
             padding: 120px 0 80px;
             background: var(--secondary-bg);

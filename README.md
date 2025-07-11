@@ -4,7 +4,9 @@ A modern, creative personal website showcasing AI expertise, research publicatio
 
 ## 🚀 Live Website
 
-Visit the live website: [https://mujaddedalif.github.io](https://mujaddedalif.github.io)
+Visit the live website: [https://mjalif.com](https://mjalif.com)
+
+Also check out my blog: [https://blog.mjalif.com](https://blog.mjalif.com)
 
 ## 🎯 Features
 
