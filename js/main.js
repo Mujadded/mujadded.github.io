@@ -841,33 +841,33 @@ function animateCounter(element) {
 function initializeContactForm() {
     if (!contactForm) return;
 
-    // Check if using Formspree (has action attribute)
-    const isFormspree = contactForm.hasAttribute('action') && contactForm.getAttribute('action').includes('formspree');
-
     contactForm.addEventListener('submit', async (e) => {
+        e.preventDefault(); // Always prevent default form submission
+        
         const submitButton = contactForm.querySelector('button[type="submit"]');
         const originalText = submitButton.innerHTML;
+        const formData = new FormData(contactForm);
+        const formAction = contactForm.getAttribute('action');
         
         // Show loading state
         submitButton.innerHTML = '<div class="loading-dots"><span></span><span></span><span></span></div> Sending...';
         submitButton.disabled = true;
+        showNotification('Sending message...', 'info');
         
-        if (isFormspree) {
-            // Let Formspree handle the submission naturally
-            // Don't prevent default - let form submit normally
-            showNotification('Sending message...', 'info');
-            return; // Form will submit and redirect/reload
-        } else {
-            // Prevent default for demo/fallback
-            e.preventDefault();
+        try {
+            // Submit to Formspree via AJAX
+            const response = await fetch(formAction, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
             
-            try {
-                // Simulate form submission (for demo purposes)
-                await simulateFormSubmission(new FormData(contactForm));
-                
+            if (response.ok) {
                 // Success state
                 submitButton.innerHTML = '<i class="fas fa-check"></i> Message Sent!';
-                submitButton.style.background = '#8B5CF6';
+                submitButton.style.background = '#10b981';
                 
                 // Reset form
                 contactForm.reset();
@@ -875,38 +875,37 @@ function initializeContactForm() {
                 // Show success message
                 showNotification('Message sent successfully! I\'ll get back to you soon.', 'success');
                 
-            } catch (error) {
-                // Error state
-                submitButton.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Failed to Send';
-                submitButton.style.background = '#ef4444';
+                // Reset button after 3 seconds
+                setTimeout(() => {
+                    submitButton.innerHTML = originalText;
+                    submitButton.disabled = false;
+                    submitButton.style.background = '';
+                }, 3000);
                 
-                showNotification('Failed to send message. Please try again.', 'error');
+            } else {
+                throw new Error('Form submission failed');
             }
             
-            // Reset button after 3 seconds
+        } catch (error) {
+            console.error('Form submission error:', error);
+            
+            // Error state
+            submitButton.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Failed to Send';
+            submitButton.style.background = '#ef4444';
+            
+            showNotification('Failed to send message. Please try again or contact me directly at mujadded.alif@gmail.com', 'error');
+            
+            // Reset button after 5 seconds
             setTimeout(() => {
                 submitButton.innerHTML = originalText;
                 submitButton.disabled = false;
                 submitButton.style.background = '';
-            }, 3000);
+            }, 5000);
         }
     });
 }
 
-// Simulate form submission
-function simulateFormSubmission(formData) {
-    return new Promise((resolve, reject) => {
-        // Simulate network delay
-        setTimeout(() => {
-            // Simulate success (90% chance)
-            if (Math.random() > 0.1) {
-                resolve();
-            } else {
-                reject(new Error('Network error'));
-            }
-        }, 2000);
-    });
-}
+
 
 // Show notification
 function showNotification(message, type = 'info') {
