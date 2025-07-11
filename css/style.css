@@ -1435,7 +1435,7 @@ a:hover {
 }
 
 .blog-category {
-    background: rgba(255, 255, 255, 0.95);
+    background: var(--tertiary-bg);
     color: var(--text-primary);
     padding: 8px 16px;
     border-radius: 25px;
