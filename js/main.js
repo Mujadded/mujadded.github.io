@@ -2,7 +2,7 @@
 
 // Data Objects
 const experienceData = [{
-        title: "Research Assistant – Computer Vision",
+        title: "Research Associate – Computer Vision",
         company: "University Of Huddersfield, United Kingdom",
         duration: "2024-05 - Current",
         description: "Leading computer vision research and AI model development",
@@ -158,42 +158,56 @@ const publicationsData = [{
         journal: "arXiv preprint arXiv:2406.10139",
         date: "2024",
         type: "Research Paper",
-        citations: "111 citations"
+        citations: "192 citations"
     },
     {
         title: "Isolated Bangla handwritten character recognition with convolutional neural network",
         journal: "2017 20th International Conference of Computer and Information Technology",
         date: "2017",
         type: "Conference Paper",
-        citations: "104 citations"
+        citations: "109 citations"
     },
     {
-        title: "YOLOv11 for vehicle detection: Advancements, performance, and applications in intelligent transportation systems",
+        title: "Yolov11 for vehicle detection: Advancements, performance, and applications in intelligent transportation systems",
         journal: "arXiv preprint arXiv:2410.22898",
         date: "2024",
         type: "Research Paper",
-        citations: "38 citations"
+        citations: "107 citations"
     },
     {
-        title: "Comparative Analysis of YOLOv8 and YOLOv10 in Vehicle Detection: Performance Metrics and Model Efficacy",
+        title: "Comparative analysis of YOLOv8 and YOLOv10 in vehicle detection: performance metrics and model efficacy",
         journal: "Vehicles 6 (3), 1364-1382",
         date: "2024",
         type: "Journal Article",
-        citations: "26 citations"
+        citations: "64 citations"
+    },
+    {
+        title: "Yolov12: A breakdown of the key architectural features",
+        journal: "arXiv preprint arXiv:2502.14740",
+        date: "2025",
+        type: "Research Paper",
+        citations: "35 citations"
     },
     {
         title: "Lightweight convolutional network with integrated attention mechanism for missing bolt detection in railways",
         journal: "Metrology 4 (2), 254-278",
         date: "2024",
         type: "Journal Article",
-        citations: "12 citations"
+        citations: "18 citations"
     },
     {
-        title: "BoltVision: A comparative analysis of CNN, CCT, and ViT in achieving high accuracy for missing bolt classification in train components",
+        title: "Boltvision: A comparative analysis of cnn, cct, and vit in achieving high accuracy for missing bolt classification in train components",
         journal: "Machines 12 (2), 93",
         date: "2024",
         type: "Journal Article",
-        citations: "11 citations"
+        citations: "16 citations"
+    },
+    {
+        title: "State-of-the-Art Bangla Handwritten Character Recognition Using a Modified Resnet-34 Architecture",
+        journal: "International Journal of Innovative Science and Research Technology 9 (1), 11",
+        date: "2024",
+        type: "Journal Article",
+        citations: "15 citations"
     },
     {
         title: "Attention-Based Automated Pallet Racking Damage Detection",
@@ -203,28 +217,14 @@ const publicationsData = [{
         citations: "9 citations"
     },
     {
-        title: "YOLOv12: A breakdown of the key architectural features",
-        journal: "arXiv preprint arXiv:2502.14740",
-        date: "2025",
-        type: "Research Paper",
-        citations: "8 citations"
-    },
-    {
-        title: "State-of-the-Art Bangla Handwritten Character Recognition Using a Modified ResNet-34 Architecture",
-        journal: "International Journal of Innovative Science and Research Technology 9 (1)",
-        date: "2024",
-        type: "Journal Article",
-        citations: "8 citations"
-    },
-    {
-        title: "Enhancing diabetic retinopathy diagnosis: A lightweight CNN architecture for efficient exudate detection in retinal fundus images",
+        title: "Enhancing diabetic retinopathy diagnosis: A lightweight cnn architecture for efficient exudate detection in retinal fundus images",
         journal: "arXiv preprint arXiv:2408.06784",
         date: "2024",
         type: "Research Paper",
-        citations: "6 citations"
+        citations: "7 citations"
     },
     {
-        title: "Enhancing Construction Site Safety: A Lightweight Convolutional Network for Effective Helmet Detection",
+        title: "Enhancing construction site safety: A lightweight convolutional network for effective helmet detection",
         journal: "arXiv preprint arXiv:2409.12669",
         date: "2024",
         type: "Research Paper",
