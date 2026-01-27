@@ -232,44 +232,10 @@ const publicationsData = [{
     }
 ];
 
-const blogData = [{
-        title: "Transitioning from Rails to Django: A Comprehensive Guide for Rails Developers",
-        excerpt: "As a Rails developer with years of experience, you might consider expanding your skill set by learning Django, a popular Python-based web framework. This comprehensive guide will help you understand the key differences and similarities between Rails and Django.",
-        date: "2024-08-21",
-        readTime: "12 min read",
-        category: "Web Development",
-        url: "https://blog.mjalif.com/transitioning-from-rails-to-django-a-comprehensive-guide-for-rails-developers-9829aaf13cdd",
-        pinned: true,
-        image: "https://miro.medium.com/v2/resize:fit:720/format:webp/1*6HHIWgA84Es2FptaQFhDbA.png"
-    },
-    {
-        title: "Setting Up Pose-detection AI with Raspberry Pi 4 + Coral USB Accelerator",
-        excerpt: "In this blog post, we will explore how to set up a pose-detection AI system using a Raspberry Pi 4 and a Coral USB Accelerator. Learn how to deploy machine learning models on edge devices for real-time pose detection.",
-        date: "2023-11-09",
-        readTime: "15 min read",
-        category: "AI & Computer Vision",
-        url: "https://blog.mjalif.com/setting-up-pose-detection-ai-with-raspberry-pi-4-coral-usb-accelerator-b29a38d5d780",
-        image: "https://miro.medium.com/v2/resize:fit:720/format:webp/1*tfIEaYh49oWd0ATSdepL6Q.png"
-    },
-    {
-        title: "Why Regularization in Loss Function and How It Helps",
-        excerpt: "Whenever we run a simple machine learning model like linear classification, we can determine the measure of unhappiness through the loss function. But what happens when we add regularization? Let's explore why regularization is crucial and how it helps prevent overfitting.",
-        date: "2023-02-06",
-        readTime: "8 min read",
-        category: "Machine Learning",
-        url: "https://blog.mjalif.com/regularization-in-machine-learning-and-how-it-helps-fc3e78227ba9",
-        image: "https://miro.medium.com/v2/resize:fit:720/format:webp/0*C_hTwT5GSNuLnj2h"
-    },
-    {
-        title: "Loss Functions and What It Does Behind the Screen",
-        excerpt: "What is the Loss function? Understanding the mathematical foundation behind machine learning model training and how loss functions guide the learning process to optimize model performance.",
-        date: "2023-02-04",
-        readTime: "10 min read",
-        category: "Machine Learning",
-        url: "https://blog.mjalif.com/loss-functions-and-what-it-does-behind-the-screen-9882ecbcdc66",
-        image: "https://miro.medium.com/v2/resize:fit:720/format:webp/0*dnx2PKuTTQCGtlsp"
-    }
-];
+// Blog posts are loaded from js/blogPosts.js (generated/updated over time)
+// Fallback to [] if the file isn't loaded.
+const blogData = window.blogPosts || [];
+
 
 // DOM Elements
 const navbar = document.getElementById('navbar');
