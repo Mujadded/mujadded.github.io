@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Edge CV Under Domain Shift: What Actually Breaks (and how to measure it) | MJ Alif</title>
+  <meta name="description" content="A practical, field-focused guide to domain shift, evaluation slices, and edge deployment trade-offs for inspection computer vision." />
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/animations.css" />
+  <link rel="icon" type="image/x-icon" href="../assets/images/favicon.ico" />
+  <style>
+    .prose { max-width: 900px; margin: 0 auto; }
+    .prose h2 { margin-top: 28px; }
+    .prose p, .prose li { line-height: 1.75; }
+    .callout { border: 1px solid rgba(139,92,246,0.25); background: rgba(139,92,246,0.08); padding: 14px 16px; border-radius: 12px; }
+    code { font-family: "JetBrains Mono", monospace; }
+  </style>
+</head>
+<body>
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a class="nav-logo" href="../index.html" style="text-decoration:none; color: inherit;">
+        <span class="logo-text">MJ</span>
+        <span class="logo-pulse"></span>
+      </a>
+      <ul class="nav-menu" id="nav-menu">
+        <li><a href="../index.html" class="nav-link">Home</a></li>
+        <li><a href="../case-studies/" class="nav-link">Case Studies</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <section class="blog" style="padding-top: 110px;">
+    <div class="container">
+      <div class="section-header">
+        <h1 class="section-title">Edge CV Under Domain Shift</h1>
+        <div class="section-line"></div>
+        <p class="section-subtitle">What actually breaks in the real world (and how to measure it)</p>
+      </div>
+
+      <div class="prose">
+        <div class="callout">
+          <p><strong>Context:</strong> In outdoor/industrial inspection, models rarely fail because the architecture is “wrong”. They fail because the <em>data distribution changes</em> and we were measuring the wrong thing.</p>
+        </div>
+
+        <h2>Domain shift is not a research buzzword — it’s the default</h2>
+        <p>
+          If you train a detector on “mostly sunny, stable camera, clean labels” and deploy it on “rain + motion blur + partial occlusion”,
+          you are not doing the same task anymore.
+          Your input distribution changed (sometimes subtly), and the failure mode usually appears as <strong>false negatives</strong>.
+        </p>
+
+        <h2>The trap: a single validation score</h2>
+        <p>
+          A single overall metric (like mAP) can hide the exact cases you care about. In inspection, the worst failures cluster in:
+        </p>
+        <ul>
+          <li><strong>Small objects</strong> (few pixels, easy to miss)</li>
+          <li><strong>Motion blur</strong> (fast movement, vibration, rolling shutter)</li>
+          <li><strong>Low light / harsh contrast</strong> (night, tunnels, glare)</li>
+          <li><strong>Occlusion</strong> (partial visibility, clutter)</li>
+          <li><strong>Rare classes</strong> (defects)</li>
+        </ul>
+
+        <h2>The fix: evaluate in slices</h2>
+        <p>
+          The best practical upgrade you can make is to stop treating the dataset as one bucket.
+          Create “slices” that mirror reality:
+        </p>
+        <ul>
+          <li>Day vs night</li>
+          <li>Rain/wet vs dry</li>
+          <li>High blur vs low blur</li>
+          <li>Occluded vs unoccluded</li>
+          <li>Small-object subset (area threshold)</li>
+        </ul>
+        <p>
+          Then track <strong>recall</strong> (or false-negative rate) per slice.
+          This makes model improvements measurable and prevents you from over-optimizing for the easy conditions.
+        </p>
+
+        <h2>Augmentations: useful, but only when targeted</h2>
+        <p>
+          Generic augmentation can help, but inspection problems benefit more from targeted, realistic transforms:
+        </p>
+        <ul>
+          <li>Motion blur (directional, variable kernel)</li>
+          <li>Low-light + noise</li>
+          <li>Exposure/contrast shifts</li>
+          <li>Weather overlays (careful: don’t create “synthetic artifacts” the model overfits to)</li>
+        </ul>
+
+        <h2>Synthetic-to-real: treat it like a hypothesis, not a guarantee</h2>
+        <p>
+          Synthetic data is powerful for rare defect coverage, but it’s easy to fool yourself.
+          The correct question is: <strong>does synthetic data improve real-world recall on the slices that matter?</strong>
+          If not, you may need better rendering realism, domain randomization, or fine-tuning on a small real set.
+        </p>
+
+        <h2>Edge deployment changes what “best model” means</h2>
+        <p>
+          On Jetson (or any edge target), you don’t optimize for benchmark leaderboards.
+          You optimize for:
+        </p>
+        <ul>
+          <li>Stable latency (not just average FPS)</li>
+          <li>Memory footprint</li>
+          <li>Precision mode (FP16/INT8) impact on small objects</li>
+          <li>Long-running stability (thermals, throttling)</li>
+        </ul>
+
+        <h2>A simple weekly routine that compounds</h2>
+        <ul>
+          <li>Pick one slice (e.g., blur + small objects)</li>
+          <li>Measure recall + FN count</li>
+          <li>Make one change (augmentation, data cleaning, thresholding, training schedule)</li>
+          <li>Re-measure and write a 5–10 line note</li>
+        </ul>
+        <p>
+          Do this weekly and you’ll build a proof portfolio that reads like real engineering, not generic AI hype.
+        </p>
+
+        <div style="margin-top: 28px; opacity: 0.85;">
+          <p><strong>If you want:</strong> I can turn this post into a LinkedIn version next week (shorter, punchier, with a “hook → 3 bullets → takeaway” format).</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Case Study: Edge CV for Outdoor Inspection Under Domain Shift | MJ Alif</title>
+  <meta name="description" content="Case study template: outdoor inspection CV with YOLO/RT-DETR, messy data, evaluation, and Jetson deployment constraints." />
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/animations.css" />
+  <link rel="icon" type="image/x-icon" href="../assets/images/favicon.ico" />
+  <style>
+    .prose { max-width: 900px; margin: 0 auto; }
+    .prose h2 { margin-top: 28px; }
+    .prose p, .prose li { line-height: 1.75; }
+    .callout { border: 1px solid rgba(139,92,246,0.25); background: rgba(139,92,246,0.08); padding: 14px 16px; border-radius: 12px; }
+    .kv { display: grid; grid-template-columns: 160px 1fr; gap: 10px 16px; }
+    .kv div { padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .kv strong { opacity: 0.9; }
+    code { font-family: "JetBrains Mono", monospace; }
+  </style>
+</head>
+<body>
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a class="nav-logo" href="../index.html" style="text-decoration:none; color: inherit;">
+        <span class="logo-text">MJ</span>
+        <span class="logo-pulse"></span>
+      </a>
+      <ul class="nav-menu" id="nav-menu">
+        <li><a href="../index.html" class="nav-link">Home</a></li>
+        <li><a href="./" class="nav-link">Case Studies</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <section class="blog" style="padding-top: 110px;">
+    <div class="container">
+      <div class="section-header">
+        <h1 class="section-title">Case Study #1 (Template)</h1>
+        <div class="section-line"></div>
+        <p class="section-subtitle">Edge CV for Outdoor Inspection Under Domain Shift (YOLO / RT-DETR + Jetson)</p>
+      </div>
+
+      <div class="prose">
+        <div class="callout">
+          <p><strong>Important:</strong> This is a <em>literature-based template</em> built from common patterns seen in real-world inspection CV. It is meant to be edited with your real project details. I’ve kept placeholders like <code>[X]</code> so you can swap in numbers later.</p>
+        </div>
+
+        <h2>1) Problem</h2>
+        <p>
+          Build a robust object detection system for <strong>outdoor inspection</strong> where targets are small, partially occluded, and safety-critical.
+          The system must perform consistently across real-world conditions (weather/lighting/motion blur) and run on an edge device (<strong>NVIDIA Jetson</strong>).
+        </p>
+
+        <h2>2) Dataset Reality (what makes it hard)</h2>
+        <div class="kv">
+          <div><strong>Type</strong></div><div>Images</div>
+          <div><strong>Source</strong></div><div>Mixed (multiple cameras / environments)</div>
+          <div><strong>Labels</strong></div><div>Bounding boxes</div>
+          <div><strong>Classes</strong></div><div>"Any" (replace with your real class list)</div>
+          <div><strong>Messy factors</strong></div><div>Weather, lighting, motion blur, occlusion, small objects, imbalance, label noise, synthetic→real shift</div>
+        </div>
+
+        <p>
+          In inspection problems, the hardest part is usually not "model selection"—it’s the gap between a clean benchmark and the real dataset:
+        </p>
+        <ul>
+          <li><strong>Domain shift:</strong> camera changes, seasonal effects, different backgrounds, exposure, and motion blur change the input distribution.</li>
+          <li><strong>Small objects:</strong> targets occupy few pixels; mAP can look okay while false negatives remain unacceptable.</li>
+          <li><strong>Label noise:</strong> inconsistent bounding boxes and missed positives inflate training loss and distort metrics.</li>
+          <li><strong>Imbalance:</strong> defects are rare; naive training optimizes for the majority class and misses the critical cases.</li>
+        </ul>
+
+        <h2>3) Model Choice (YOLO vs RT-DETR) — why these</h2>
+        <p>
+          You mentioned trying <strong>new YOLO</strong> and <strong>RT-DETR</strong>.
+          That pairing makes sense as a practical comparison:
+        </p>
+        <ul>
+          <li><strong>YOLO family</strong> is typically strong for real-time deployment and tooling (export, TensorRT, batching, etc.).</li>
+          <li><strong>RT-DETR</strong> (a real-time detection transformer) is attractive when you want transformer-style matching/architecture with an emphasis on speed.</li>
+        </ul>
+
+        <h3>Decision framing (what matters)</h3>
+        <ul>
+          <li>If your main constraint is <strong>edge throughput + stable latency</strong>, YOLO variants are often the fastest path to a shippable system.</li>
+          <li>If your main issue is <strong>hard scenes + crowded/occluded objects</strong>, transformer-based detectors can be worth testing—especially if you have enough data and careful training.</li>
+        </ul>
+
+        <h2>4) Metrics (what actually matters in inspection)</h2>
+        <p>
+          For inspection, the business metric is usually "don’t miss the defect". That means you should emphasize:
+        </p>
+        <ul>
+          <li><strong>Recall / false negative rate</strong> at an operating point (e.g., at precision ≥ [X]%).</li>
+          <li><strong>Per-condition performance</strong> (night vs day, rain vs dry, high blur vs low blur).</li>
+          <li><strong>Small-object slices</strong> (e.g., area &lt; 32×32 px) to avoid being fooled by aggregate mAP.</li>
+          <li><strong>Latency / FPS</strong> on the target device, not on a desktop GPU.</li>
+        </ul>
+        <p>
+          <strong>Template result statement:</strong> “We reduced false negatives by [X]% in the hardest conditions (rain + motion blur) while maintaining ≥ [Y] FPS on Jetson.”
+        </p>
+
+        <h2>5) Deployment Constraints (Jetson)</h2>
+        <p>
+          Edge deployment introduces constraints that often change the “best” model:
+        </p>
+        <ul>
+          <li><strong>Latency budget</strong>: [X] ms per frame end-to-end (preprocess + inference + postprocess).</li>
+          <li><strong>Memory limits</strong>: GPU memory and RAM are smaller; bigger backbones can thrash.</li>
+          <li><strong>Precision tradeoffs</strong>: FP16/INT8 quantization can improve speed but may reduce small-object recall unless calibrated carefully.</li>
+          <li><strong>Operational stability</strong>: thermal throttling and long-running performance matter.</li>
+        </ul>
+
+        <h2>6) One failure + one lesson (literature-backed)</h2>
+        <h3>Failure (common)</h3>
+        <p>
+          A model that looks strong on a validation set fails in the field due to <strong>domain shift</strong> (different camera, season, or weather).
+          Typical symptom: mAP is okay offline, but live deployment shows missed detections on blur/low-light.
+        </p>
+
+        <h3>Lesson</h3>
+        <p>
+          Don’t treat “test set” as a single bucket. Evaluate and train for the <strong>real distribution of conditions</strong>:
+        </p>
+        <ul>
+          <li>Stratify validation by condition (night/rain/blur/occlusion) and track recall per slice.</li>
+          <li>Use targeted augmentation (motion blur, low-light, weather) and/or synthetic data—but validate synthetic→real transfer explicitly.</li>
+          <li>Prefer deployment-driven model selection: the best paper metric is not the best field metric.</li>
+        </ul>
+
+        <h2>7) Reproducible demo (public/synthetic)</h2>
+        <p>
+          If the real dataset is private, a clean way to prove competency is a “mini” reproducible pipeline:
+        </p>
+        <ul>
+          <li>Public dataset (or synthetic generator) that mimics: small objects + blur + low-light.</li>
+          <li>Two training runs: YOLO vs RT-DETR baseline.</li>
+          <li>Export to ONNX/TensorRT and benchmark on Jetson (FPS, latency, memory).</li>
+          <li>Publish a concise README + one diagram showing the pipeline.</li>
+        </ul>
+
+        <h2>References (starting points)</h2>
+        <ul>
+          <li>Ultralytics YOLOv8 documentation + export/deployment guides (for ONNX/TensorRT).</li>
+          <li>RT-DETR: “Real-Time DEtection TRansformer” (paper + official implementation).</li>
+          <li>General literature on domain shift, dataset bias, and robustness evaluation in CV.</li>
+        </ul>
+
+        <div style="margin-top: 28px; opacity: 0.85;">
+          <p><strong>Next edit step:</strong> replace every <code>[X]</code>/<code>[Y]</code> with your real numbers, and swap “Classes: any” with your actual class list.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

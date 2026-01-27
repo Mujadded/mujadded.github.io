@@ -10,13 +10,21 @@
 
 window.blogPosts = [
   {
+    title: "Edge CV Under Domain Shift: What Actually Breaks (and how to measure it)",
+    excerpt: "A field-focused guide to evaluation slices, augmentation, and Jetson deployment trade-offs for inspection CV.",
+    date: "2026-01-27",
+    readTime: "7 min read",
+    category: "AI & Computer Vision",
+    url: "posts/2026-01-27-edge-cv-domain-shift.html",
+    pinned: true
+  },
+  {
     title: "Transitioning from Rails to Django: A Comprehensive Guide for Rails Developers",
     excerpt: "A practical comparison of Rails vs Django, with a migration mindset for engineers.",
     date: "2024-08-21",
     readTime: "12 min read",
     category: "Web Development",
     url: "https://blog.mjalif.com/transitioning-from-rails-to-django-a-comprehensive-guide-for-rails-developers-9829aaf13cdd",
-    pinned: true,
     image: "https://miro.medium.com/v2/resize:fit:720/format:webp/1*6HHIWgA84Es2FptaQFhDbA.png"
   },
   {
