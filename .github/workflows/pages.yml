@@ -28,6 +28,8 @@ jobs:
         run: |
           python3 tests/check_jekyll_build.py
           python3 tests/check_homepage.py
+          python3 tests/check_articles.py
+          python3 tests/check_seo.py
 
       - uses: actions/configure-pages@v5
 
