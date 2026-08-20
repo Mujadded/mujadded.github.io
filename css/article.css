@@ -205,3 +205,19 @@ code{font-family:var(--mono);font-size:0.9em}
   padding:8px 14px;min-height:44px;display:inline-flex;align-items:center}
 .ft-nav a:hover{color:var(--accent);border-color:var(--accent)}
 .ft-copy{font-family:var(--mono);font-size:11.5px;color:var(--ink3)}
+
+/* ---- inline SVG diagrams ----
+   Authored figures, not photographs: they take their colours from the theme
+   tokens so they stay legible in light and dark, and they scale with the
+   measure instead of being a fixed-width bitmap. */
+.diagram{display:block;width:100%;height:auto;background:var(--bg2);
+  border:1px solid var(--rule);border-radius:var(--r);padding:14px}
+.diagram .d-fill-2{fill:var(--bg3);stroke:var(--rule);stroke-width:1}
+.diagram .d-fill-accent{fill:var(--accent);stroke:none}
+.diagram .d-fill-accent-solid{fill:var(--accent);stroke:none}
+.diagram .d-ink{fill:var(--ink)}
+.diagram .d-ink2{fill:var(--ink2)}
+.diagram .d-ink3{fill:var(--ink3)}
+.diagram .d-ink-inv{fill:var(--accent-ink)}
+.diagram .d-stroke{stroke:var(--rule);stroke-width:1.5;fill:none}
+.diagram .d-stroke-accent{stroke:var(--accent);stroke-width:1.5;fill:none}

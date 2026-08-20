@@ -14,6 +14,7 @@ const APP_SHELL_FILES = [
     '/case-studies/',
     '/case-studies/index.html',
     '/case-studies/edge-cv-outdoor-inspection.html',
+    '/posts/2026-08-20-lightweight-by-constraint.html',
     '/posts/2026-01-27-edge-cv-domain-shift.html',
     '/manifest.json',
     // Favicon and PWA icons

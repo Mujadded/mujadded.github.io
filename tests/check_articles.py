@@ -18,6 +18,7 @@ STABLE_URLS = [
     "case-studies/index.html",
     "case-studies/edge-cv-outdoor-inspection.html",
     "posts/2026-01-27-edge-cv-domain-shift.html",
+    "posts/2026-08-20-lightweight-by-constraint.html",
 ]
 
 ARTICLE_PAGES = STABLE_URLS
