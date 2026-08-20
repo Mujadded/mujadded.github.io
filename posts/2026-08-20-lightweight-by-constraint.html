@@ -87,7 +87,7 @@
     <article class="post">
       <p class="kicker">20 Aug 2026 &middot; Notes</p>
       <h1>Lightweight by constraint</h1>
-      <p class="standfirst">Four of my applied papers have the word &ldquo;lightweight&rdquo; in the title. That is not a stylistic tic &mdash; it is what happens when the deployment target picks the model.</p>
+      <p class="standfirst">Four of my applied papers have the word &ldquo;lightweight&rdquo; in the title. That is not a stylistic tic. It&rsquo;s what happens when the deployment target picks the model.</p>
 
       <div class="rule"></div>
 
@@ -99,7 +99,7 @@
         collaborators, same adjective.
       </p>
       <p class="last">
-        I did not set out to specialise in small models. The constraint arrived first and the
+        I didn&rsquo;t set out to specialise in small models. The constraint arrived first and the
         architecture followed, every time. This post is about what that constraint actually consists
         of, because &ldquo;it has to run on the edge&rdquo; is where most discussions stop and where
         the interesting part starts.
@@ -115,7 +115,7 @@
         <svg class="diagram" viewBox="0 0 720 208" role="img"
              aria-labelledby="fig1-title fig1-desc">
           <title id="fig1-title">The per-frame budget on an edge device</title>
-          <desc id="fig1-desc">A horizontal bar divided into four segments — capture and decode,
+          <desc id="fig1-desc">A horizontal bar divided into four segments: capture and decode,
             preprocess, model inference, and postprocess including non-maximum suppression and
             tracking. Inference is one segment among four, not the whole bar. A bracket beneath
             marks the total as the per-frame budget, and an arrow shows that whatever the camera
@@ -140,7 +140,7 @@
             <text x="360" y="196" text-anchor="middle" class="d-ink3">structure only; segment widths are not measured timings</text>
           </g>
         </svg>
-        <figcaption class="figcap">Figure 1 &mdash; inference is one segment of the frame budget, not the budget itself. Shrinking the model only moves the accent-coloured block.</figcaption>
+        <figcaption class="figcap">Figure 1: inference is one segment of the frame budget, not the budget itself. Shrinking the model only moves the accent-coloured block.</figcaption>
       </figure>
 
       <p class="last">
@@ -153,7 +153,7 @@
       <h2>Average FPS is the wrong summary</h2>
       <p>
         A detector that averages comfortably inside its budget and occasionally spikes past it does
-        not degrade gracefully &mdash; it drops frames, and it drops them in bursts, because the
+        not degrade gracefully. It drops frames, and it drops them in bursts, because the
         conditions that cause a spike tend to persist for more than one frame. Crowded scenes produce
         more candidate boxes, and more candidate boxes make postprocessing slower exactly when the
         scene is hardest.
@@ -215,7 +215,7 @@
             <text x="8" y="200" class="d-ink3">Structure only &mdash; no performance claim is made by this diagram.</text>
           </g>
         </svg>
-        <figcaption class="figcap">Figure 2 &mdash; the three architectures compared in BoltVision differ mainly in how pixels become tokens. That choice, more than raw parameter count, drives how much data each one needs.</figcaption>
+        <figcaption class="figcap">Figure 2: the three architectures compared in BoltVision differ mainly in how pixels become tokens. That choice, more than raw parameter count, drives how much data each one needs.</figcaption>
       </figure>
 
       <p class="last">
@@ -227,7 +227,7 @@
       <h2>Quantisation is a trade, and small objects pay for it</h2>
       <p>
         Dropping to FP16 or INT8 is the standard move for edge throughput, and it is close to free
-        on large, well-separated objects. It is not free on the things inspection cares about. A
+        on large, well-separated objects. It isn&rsquo;t free on the things inspection cares about. A
         defect occupying a few dozen pixels has little signal to lose before it stops being
         detectable, and INT8 in particular can quietly cost you recall on exactly that slice while
         aggregate metrics barely move.
@@ -253,7 +253,7 @@
 
       <h2>What this means in practice</h2>
       <ul>
-        <li><span>Measure the whole frame loop before optimising the model &mdash; the win may not be where you think.</span></li>
+        <li><span>Measure the whole frame loop before optimising the model. The win may not be where you think.</span></li>
         <li><span>Report the tail, not the mean. p95 past budget is what your operators will actually experience.</span></li>
         <li><span>Choose the architecture by how it uses the data you have, not by parameter count alone.</span></li>
         <li><span>Calibrate quantisation on hard cases, then re-check recall per slice.</span></li>
