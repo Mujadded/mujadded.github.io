@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lightweight by constraint: what edge deployment does to model choice | MJ Alif</title>
+  <meta name="description" content="Why applied inspection models end up small: the per-frame budget, latency tails, quantisation trade-offs and thermal limits that decide which detector actually ships." />
+  <link rel="canonical" href="https://mjalif.com/posts/2026-08-20-lightweight-by-constraint.html" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Lightweight by constraint: what edge deployment does to model choice" />
+  <meta property="og:description" content="Why applied inspection models end up small: the per-frame budget, latency tails, quantisation trade-offs and thermal limits that decide which detector actually ships." />
+  <meta property="og:url" content="https://mjalif.com/posts/2026-08-20-lightweight-by-constraint.html" />
+  <meta property="og:site_name" content="Mujadded Al Rabbani Alif" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Lightweight by constraint: what edge deployment does to model choice" />
+  <meta name="twitter:description" content="Why applied inspection models end up small: the per-frame budget, latency tails, quantisation trade-offs and thermal limits that decide which detector actually ships." />
+
+  <link rel="icon" type="image/x-icon" href="../assets/images/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png" />
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="theme-color" content="#f8f9fd" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#111318" media="(prefers-color-scheme: dark)" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/article.css" />
+
+  <script>
+    (function(){try{var s=localStorage.getItem('mjalif-theme');if(!s){s=window.matchMedia('(prefers-color-scheme: light)').matches?'light':'dark';}document.documentElement.dataset.theme=s;}catch(e){document.documentElement.dataset.theme='dark';}})();
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Lightweight by constraint: what edge deployment does to model choice",
+    "description": "Why applied inspection models end up small: the per-frame budget, latency tails, quantisation trade-offs and thermal limits that decide which detector actually ships.",
+    "url": "https://mjalif.com/posts/2026-08-20-lightweight-by-constraint.html",
+    "datePublished": "2026-08-20",
+    "author": {
+      "@type": "Person",
+      "name": "Mujadded Al Rabbani Alif",
+      "url": "https://mjalif.com/"
+    },
+    "publisher": {
+      "@type": "Person",
+      "name": "Mujadded Al Rabbani Alif"
+    },
+    "mainEntityOfPage": "https://mjalif.com/posts/2026-08-20-lightweight-by-constraint.html"
+  }
+  </script>
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-955Y7L8VQJ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-955Y7L8VQJ');
+  </script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="hd">
+      <a class="brand" href="../index.html">
+        <span class="brand-mark">MJ</span>
+        <span class="brand-name">Mujadded Al Rabbani Alif</span>
+      </a>
+      <nav class="hd-nav" aria-label="Elsewhere on this site">
+        <a class="nav-back" href="../index.html#writing">&larr; Writing</a>
+        <a class="nav-alt" href="../index.html#research">Research</a>
+        <button class="toggle" type="button" id="theme-toggle" aria-label="Switch to light theme">Light</button>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <article class="post">
+      <p class="kicker">20 Aug 2026 &middot; Notes</p>
+      <h1>Lightweight by constraint</h1>
+      <p class="standfirst">Four of my applied papers have the word &ldquo;lightweight&rdquo; in the title. That is not a stylistic tic &mdash; it is what happens when the deployment target picks the model.</p>
+
+      <div class="rule"></div>
+
+      <p>
+        Look at the applied half of my publication list and a word keeps appearing. A
+        <a href="https://scholar.google.com/citations?user=2M71y1UAAAAJ&amp;hl=en">lightweight convolutional network with integrated attention for missing bolt detection</a>
+        in railways. A lightweight CNN for exudate detection in retinal fundus images. A lightweight
+        convolutional network for helmet detection on construction sites. Different domains, different
+        collaborators, same adjective.
+      </p>
+      <p class="last">
+        I did not set out to specialise in small models. The constraint arrived first and the
+        architecture followed, every time. This post is about what that constraint actually consists
+        of, because &ldquo;it has to run on the edge&rdquo; is where most discussions stop and where
+        the interesting part starts.
+      </p>
+
+      <h2>The budget is the frame, not the model</h2>
+      <p>
+        The number that matters is not how long inference takes. It is how long you have per frame,
+        minus everything that is not inference.
+      </p>
+
+      <figure class="fig">
+        <svg class="diagram" viewBox="0 0 720 208" role="img"
+             aria-labelledby="fig1-title fig1-desc">
+          <title id="fig1-title">The per-frame budget on an edge device</title>
+          <desc id="fig1-desc">A horizontal bar divided into four segments — capture and decode,
+            preprocess, model inference, and postprocess including non-maximum suppression and
+            tracking. Inference is one segment among four, not the whole bar. A bracket beneath
+            marks the total as the per-frame budget, and an arrow shows that whatever the camera
+            frame rate allows is the fixed ceiling. No measured values are shown; the segment widths
+            are illustrative of structure, not of timing.</desc>
+          <g font-family="Space Mono, monospace" font-size="11">
+            <rect x="8" y="36" width="150" height="46" rx="8" class="d-fill-2" />
+            <rect x="162" y="36" width="120" height="46" rx="8" class="d-fill-2" />
+            <rect x="286" y="36" width="230" height="46" rx="8" class="d-fill-accent" />
+            <rect x="520" y="36" width="192" height="46" rx="8" class="d-fill-2" />
+            <text x="83"  y="63" text-anchor="middle" class="d-ink">capture + decode</text>
+            <text x="222" y="63" text-anchor="middle" class="d-ink">preprocess</text>
+            <text x="401" y="63" text-anchor="middle" class="d-ink-inv">model inference</text>
+            <text x="616" y="58" text-anchor="middle" class="d-ink">postprocess</text>
+            <text x="616" y="72" text-anchor="middle" class="d-ink3">NMS, tracking</text>
+            <path d="M8 96 L8 106 L712 106 L712 96" fill="none" class="d-stroke" />
+            <text x="360" y="126" text-anchor="middle" class="d-ink3">one frame&rsquo;s budget</text>
+            <path d="M8 152 L712 152" class="d-stroke-accent" fill="none" />
+            <path d="M8 152 l10 -5 v10 z" class="d-fill-accent-solid" />
+            <path d="M712 152 l-10 -5 v10 z" class="d-fill-accent-solid" />
+            <text x="360" y="176" text-anchor="middle" class="d-ink2">fixed by the camera &mdash; miss it and you drop the frame</text>
+            <text x="360" y="196" text-anchor="middle" class="d-ink3">structure only; segment widths are not measured timings</text>
+          </g>
+        </svg>
+        <figcaption class="figcap">Figure 1 &mdash; inference is one segment of the frame budget, not the budget itself. Shrinking the model only moves the accent-coloured block.</figcaption>
+      </figure>
+
+      <p class="last">
+        This is why &ldquo;we got the model down to <em>n</em> milliseconds&rdquo; can be true and
+        still not ship. If capture, preprocessing and non-maximum suppression eat most of the frame,
+        halving inference buys you a fraction of what the headline suggests. Measure the loop, not
+        the layer.
+      </p>
+
+      <h2>Average FPS is the wrong summary</h2>
+      <p>
+        A detector that averages comfortably inside its budget and occasionally spikes past it does
+        not degrade gracefully &mdash; it drops frames, and it drops them in bursts, because the
+        conditions that cause a spike tend to persist for more than one frame. Crowded scenes produce
+        more candidate boxes, and more candidate boxes make postprocessing slower exactly when the
+        scene is hardest.
+      </p>
+      <p class="last">
+        So the useful summary is not the mean. It is the tail: the p95, and how far past the budget
+        it sits. Two models with identical average throughput can behave completely differently at
+        the ninety-fifth percentile, and only one of them is deployable.
+      </p>
+
+      <h2>Small is a design decision, not a compromise</h2>
+      <p>
+        Once the budget is the constraint, capacity has to be spent rather than simply added. That is
+        the question behind
+        <a href="https://scholar.google.com/citations?user=2M71y1UAAAAJ&amp;hl=en">BoltVision</a>,
+        where we compared a convolutional network, a compact convolutional transformer and a vision
+        transformer on the same missing-bolt classification task. The three differ mainly in how they
+        get from pixels to tokens and how much data they need before that choice pays off.
+      </p>
+
+      <figure class="fig">
+        <svg class="diagram" viewBox="0 0 720 216" role="img"
+             aria-labelledby="fig2-title fig2-desc">
+          <title id="fig2-title">Three ways to get from pixels to a prediction</title>
+          <desc id="fig2-desc">Three stacked pipelines. A convolutional network runs a stack of
+            convolutions into pooling and a classifier head. A compact convolutional transformer
+            uses a convolutional tokeniser, then a transformer encoder, then sequence pooling. A
+            vision transformer splits the image into fixed patches, embeds them, then runs a
+            transformer encoder with a class token. The diagram shows structure only; it makes no
+            claim about which performs better.</desc>
+          <g font-family="Space Mono, monospace" font-size="10.5">
+            <text x="8" y="20" class="d-ink" font-size="11.5">CNN</text>
+            <rect x="86"  y="6" width="150" height="26" rx="6" class="d-fill-2" />
+            <rect x="248" y="6" width="150" height="26" rx="6" class="d-fill-2" />
+            <rect x="410" y="6" width="150" height="26" rx="6" class="d-fill-2" />
+            <text x="161" y="23" text-anchor="middle" class="d-ink2">conv stack</text>
+            <text x="323" y="23" text-anchor="middle" class="d-ink2">pooling</text>
+            <text x="485" y="23" text-anchor="middle" class="d-ink2">classifier head</text>
+            <path d="M240 19 h4 M402 19 h4" class="d-stroke" />
+
+            <text x="8" y="90" class="d-ink" font-size="11.5">CCT</text>
+            <rect x="86"  y="76" width="150" height="26" rx="6" class="d-fill-accent" />
+            <rect x="248" y="76" width="150" height="26" rx="6" class="d-fill-2" />
+            <rect x="410" y="76" width="150" height="26" rx="6" class="d-fill-2" />
+            <text x="161" y="93" text-anchor="middle" class="d-ink-inv">conv tokeniser</text>
+            <text x="323" y="93" text-anchor="middle" class="d-ink2">transformer encoder</text>
+            <text x="485" y="93" text-anchor="middle" class="d-ink2">sequence pooling</text>
+            <path d="M240 89 h4 M402 89 h4" class="d-stroke" />
+
+            <text x="8" y="160" class="d-ink" font-size="11.5">ViT</text>
+            <rect x="86"  y="146" width="150" height="26" rx="6" class="d-fill-2" />
+            <rect x="248" y="146" width="150" height="26" rx="6" class="d-fill-2" />
+            <rect x="410" y="146" width="150" height="26" rx="6" class="d-fill-2" />
+            <text x="161" y="163" text-anchor="middle" class="d-ink2">fixed patches</text>
+            <text x="323" y="163" text-anchor="middle" class="d-ink2">transformer encoder</text>
+            <text x="485" y="163" text-anchor="middle" class="d-ink2">class token</text>
+            <path d="M240 159 h4 M402 159 h4" class="d-stroke" />
+
+            <text x="8" y="200" class="d-ink3">Structure only &mdash; no performance claim is made by this diagram.</text>
+          </g>
+        </svg>
+        <figcaption class="figcap">Figure 2 &mdash; the three architectures compared in BoltVision differ mainly in how pixels become tokens. That choice, more than raw parameter count, drives how much data each one needs.</figcaption>
+      </figure>
+
+      <p class="last">
+        The convolutional tokeniser in the middle row is the interesting one for inspection work: it
+        keeps the local inductive bias that convolutions give you for free, which matters when your
+        dataset is a few thousand images of one component rather than a web-scale corpus.
+      </p>
+
+      <h2>Quantisation is a trade, and small objects pay for it</h2>
+      <p>
+        Dropping to FP16 or INT8 is the standard move for edge throughput, and it is close to free
+        on large, well-separated objects. It is not free on the things inspection cares about. A
+        defect occupying a few dozen pixels has little signal to lose before it stops being
+        detectable, and INT8 in particular can quietly cost you recall on exactly that slice while
+        aggregate metrics barely move.
+      </p>
+      <p class="last">
+        The mitigation is not to avoid quantisation. It is to calibrate on data that contains the
+        hard cases, and to re-measure per slice afterwards rather than trusting the overall number.
+        I wrote about why aggregate metrics hide this in
+        <a href="2026-01-27-edge-cv-domain-shift.html">Edge CV under domain shift</a>.
+      </p>
+
+      <h2>The device gets hot, and then it gets slower</h2>
+      <p class="last">
+        A benchmark runs for thirty seconds. An inspection rig runs for a shift. Sustained throughput
+        on a thermally-constrained device is not the number you measured in the first minute, and a
+        model sized to fit the budget when cold will miss it when warm. Benchmark long, benchmark
+        warm, and leave headroom you do not think you need.
+      </p>
+
+      <blockquote class="pull">
+        <p>&ldquo;Lightweight&rdquo; in a title is not modesty. It is the deployment target showing through into the architecture.</p>
+      </blockquote>
+
+      <h2>What this means in practice</h2>
+      <ul>
+        <li><span>Measure the whole frame loop before optimising the model &mdash; the win may not be where you think.</span></li>
+        <li><span>Report the tail, not the mean. p95 past budget is what your operators will actually experience.</span></li>
+        <li><span>Choose the architecture by how it uses the data you have, not by parameter count alone.</span></li>
+        <li><span>Calibrate quantisation on hard cases, then re-check recall per slice.</span></li>
+        <li><span>Benchmark warm and long enough to see the throttle.</span></li>
+      </ul>
+      <p class="last">
+        None of this makes for an exciting leaderboard entry. It is, in my experience, most of the
+        difference between a model that demos and a model that runs.
+      </p>
+
+      <div class="post-foot">
+        <p>Written by Mujadded Al Rabbani Alif</p>
+        <div class="foot-links">
+          <a href="../index.html#writing">More notes</a>
+          <a href="../index.html#research">Papers</a>
+          <a href="../case-studies/">Case studies</a>
+          <a href="mailto:mujadded.alif@gmail.com">Email me</a>
+        </div>
+      </div>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="ft">
+      <p class="ft-name">Mujadded Al Rabbani Alif</p>
+      <nav class="ft-nav" aria-label="Elsewhere">
+        <a href="../index.html">Home</a>
+        <a href="https://blog.mjalif.com">Blog &#8599;</a>
+        <a href="https://scholar.google.com/citations?user=2M71y1UAAAAJ&amp;hl=en">Scholar &#8599;</a>
+      </nav>
+      <p class="ft-copy">&copy; 2026 Mujadded Al Rabbani Alif</p>
+    </div>
+  </footer>
+
+  <script src="../js/home.js"></script>
+</body>
+</html>

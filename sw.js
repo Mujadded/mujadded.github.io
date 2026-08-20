@@ -1,6 +1,6 @@
-const CACHE_NAME = 'mj-alif-portfolio-v1.4.1';
-const APP_SHELL_CACHE = 'app-shell-v1.4.1';
-const RUNTIME_CACHE = 'runtime-v1.4.1';
+const CACHE_NAME = 'mj-alif-portfolio-v1.4.3';
+const APP_SHELL_CACHE = 'app-shell-v1.4.3';
+const RUNTIME_CACHE = 'runtime-v1.4.3';
 
 // App Shell - Critical resources that should be cached immediately
 const APP_SHELL_FILES = [
@@ -14,6 +14,7 @@ const APP_SHELL_FILES = [
     '/case-studies/',
     '/case-studies/index.html',
     '/case-studies/edge-cv-outdoor-inspection.html',
+    '/posts/2026-08-20-lightweight-by-constraint.html',
     '/posts/2026-01-27-edge-cv-domain-shift.html',
     '/manifest.json',
     // Favicon and PWA icons
