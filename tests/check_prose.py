@@ -3,9 +3,12 @@
 
 An em dash everywhere is the loudest tell that copy was machine-written, and
 the founder called it out on the live site. This checks the rendered prose
-only: headings, code, SVG figures, tag attributes and the section rail labels
-are excluded, because those are structure rather than sentences. En dashes in
-number and date ranges are correct typography and are left alone.
+only. Headings and the section rail labels are in scope: the founder asked
+for those too, so a colon or a middot replaces the dash there. Code, tag
+attributes and the drawn parts of SVG figures are excluded as structure
+rather than sentences, but an SVG's <title> and <desc> are read aloud by a
+screen reader, so they count as prose. En dashes in number and date ranges
+are correct typography and are left alone.
 
 Run: python3 tests/check_prose.py
 """
@@ -29,9 +32,14 @@ fails = []
 def prose_of(html):
     """The sentences a reader actually reads."""
     body = html.split("<body", 1)[1] if "<body" in html else html
-    for pattern in (r"<pre.*?</pre>", r"<svg.*?</svg>", r"<script.*?</script>",
-                    r"<style.*?</style>", r"<h[1-4][^>]*>.*?</h[1-4]>",
-                    r'<p class="rail">.*?</p>', r'<p class="role-dates">.*?</p>'):
+    # An SVG's own title/desc are the accessible text, so keep them and drop
+    # only the shapes around them.
+    body = re.sub(r"<svg.*?</svg>",
+                  lambda m: " ".join(re.findall(r"<(?:title|desc)[^>]*>.*?</(?:title|desc)>",
+                                                m.group(0), flags=re.S)),
+                  body, flags=re.S)
+    for pattern in (r"<pre.*?</pre>", r"<script.*?</script>", r"<style.*?</style>",
+                    r'<p class="role-dates">.*?</p>'):
         body = re.sub(pattern, " ", body, flags=re.S)
     return re.sub(r"<[^>]+>", " ", body)   # drops attributes with the tags
 
