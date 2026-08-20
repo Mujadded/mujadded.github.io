@@ -1,6 +1,6 @@
-const CACHE_NAME = 'mj-alif-portfolio-v1.5.0';
-const APP_SHELL_CACHE = 'app-shell-v1.5.0';
-const RUNTIME_CACHE = 'runtime-v1.5.0';
+const CACHE_NAME = 'mj-alif-portfolio-v1.5.1';
+const APP_SHELL_CACHE = 'app-shell-v1.5.1';
+const RUNTIME_CACHE = 'runtime-v1.5.1';
 
 // App Shell - Critical resources that should be cached immediately
 const APP_SHELL_FILES = [
