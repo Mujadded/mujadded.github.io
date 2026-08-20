@@ -1,6 +1,6 @@
-const CACHE_NAME = 'mj-alif-portfolio-v1.3.0';
-const APP_SHELL_CACHE = 'app-shell-v1.3.0';
-const RUNTIME_CACHE = 'runtime-v1.3.0';
+const CACHE_NAME = 'mj-alif-portfolio-v1.4.0';
+const APP_SHELL_CACHE = 'app-shell-v1.4.0';
+const RUNTIME_CACHE = 'runtime-v1.4.0';
 
 // App Shell - Critical resources that should be cached immediately
 const APP_SHELL_FILES = [
@@ -8,9 +8,13 @@ const APP_SHELL_FILES = [
     '/index.html',
     '/css/home.css',
     '/js/home.js',
-    '/css/style.css',
-    '/css/animations.css',
-    '/js/main.js',
+    '/css/article.css',
+    // Article pages share article.css + home.js (home.js guards every block,
+    // so on these pages it is just the theme toggle and the sw registration).
+    '/case-studies/',
+    '/case-studies/index.html',
+    '/case-studies/edge-cv-outdoor-inspection.html',
+    '/posts/2026-01-27-edge-cv-domain-shift.html',
     '/manifest.json',
     // Favicon and PWA icons
     '/assets/images/favicon.ico',
@@ -21,8 +25,7 @@ const APP_SHELL_FILES = [
     '/assets/images/android-chrome-512x512.png',
     '/assets/images/logo.png',
     // Add critical fonts
-    'https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&family=Space+Mono:wght@400;700&display=swap',
-    'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css'
+    'https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&family=Space+Mono:wght@400;700&display=swap'
 ];
 
 // Runtime caching - Images and other assets

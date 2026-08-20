@@ -68,6 +68,29 @@
         <priority>0.5</priority>
     </url>
 
+    <!-- Case studies -->
+    <url>
+        <loc>https://mjalif.com/case-studies/</loc>
+        <lastmod>2026-01-27</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <url>
+        <loc>https://mjalif.com/case-studies/edge-cv-outdoor-inspection.html</loc>
+        <lastmod>2026-01-27</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+
+    <!-- Posts -->
+    <url>
+        <loc>https://mjalif.com/posts/2026-01-27-edge-cv-domain-shift.html</loc>
+        <lastmod>2026-01-27</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+
     <!-- External Blog -->
     <url>
         <loc>https://blog.mjalif.com/</loc>
