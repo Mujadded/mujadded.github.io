@@ -59,10 +59,22 @@ sw = open(os.path.join(ROOT, "sw.js"), encoding="utf-8").read()
 check("v1.2.0" not in sw, "sw.js cache version was not bumped past v1.2.0")
 check("/css/home.css" in sw and "/js/home.js" in sw, "sw.js app shell does not cache the new homepage assets")
 
-# 7. Every homepage anchor listed in the sitemap must exist on the page.
-sitemap = open(os.path.join(ROOT, "sitemap.xml"), encoding="utf-8").read()
-for anchor in re.findall(r"<loc>https://mjalif\.com/#([\w-]+)</loc>", sitemap):
-    check(f'id="{anchor}"' in html, f"sitemap points at #{anchor}, which is not a section on the page")
+# 7. Every in-page anchor the homepage links to must exist. This used to read
+#    the anchor URLs out of sitemap.xml; those were removed as SEO noise, which
+#    would have left this loop iterating nothing, so it now reads the page's own
+#    navigation - the links that actually have to resolve.
+for anchor in sorted(set(re.findall(r'href="#([\w-]+)"', html))):
+    check(f'id="{anchor}"' in html, f"the page links to #{anchor}, which is not a section on it")
+
+# 8. A citation figure quoted in the meta description must match the stat row,
+#    or the two drift apart the next time Scholar is refreshed.
+meta_desc = re.search(r'name="description" content="([^"]*)"', html)
+stat_cites = re.search(r'<div class="stat"><dd class="accent">([\d,]+)</dd><dt>Citations</dt></div>', html)
+if meta_desc and stat_cites:
+    quoted = re.search(r"([\d,]+) citations", meta_desc.group(1))
+    if quoted:
+        check(quoted.group(1) == stat_cites.group(1),
+              f"meta description says {quoted.group(1)} citations but the stat row says {stat_cites.group(1)}")
 
 # 8. Publication data integrity. The page once shipped a headline of 584 while
 #    the per-paper counts summed to 825. Scholar's official total is
