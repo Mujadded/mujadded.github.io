@@ -64,6 +64,24 @@ sitemap = open(os.path.join(ROOT, "sitemap.xml"), encoding="utf-8").read()
 for anchor in re.findall(r"<loc>https://mjalif\.com/#([\w-]+)</loc>", sitemap):
     check(f'id="{anchor}"' in html, f"sitemap points at #{anchor}, which is not a section on the page")
 
+# 8. Publication data integrity. The page once shipped a headline of 584 while
+#    the per-paper counts summed to 825. Scholar's official total is
+#    de-duplicated and legitimately differs from that sum, so the invariant is
+#    not "these add up" - it is "the stat matches the list, each row agrees with
+#    itself, and the figures carry a date".
+listed = len(re.findall(r'<li class="pub"', html))
+stat = re.search(r'<div class="stat"><dd>(\d+)</dd><dt>Publications</dt></div>', html)
+check(stat is not None, "no Publications stat found")
+if stat:
+    check(int(stat.group(1)) == listed,
+          f"Publications stat says {stat.group(1)} but {listed} papers are listed")
+check(re.search(r"as of \d{1,2} \w+ \d{4}", html) is not None,
+      "citation figures have no 'as of <date>' provenance line")
+for cites, shown in re.findall(
+        r'<li class="pub" data-year="\d+" data-cites="(\d+)">.*?<p class="cites">(\d+) cit\.</p>',
+        html, re.S):
+    check(cites == shown, f"data-cites {cites} does not match the displayed {shown} cit.")
+
 if fails:
     print("FAIL")
     for f in fails:
