@@ -1,11 +1,13 @@
-const CACHE_NAME = 'mj-alif-portfolio-v1.2.0';
-const APP_SHELL_CACHE = 'app-shell-v1.2.0';
-const RUNTIME_CACHE = 'runtime-v1.2.0';
+const CACHE_NAME = 'mj-alif-portfolio-v1.3.0';
+const APP_SHELL_CACHE = 'app-shell-v1.3.0';
+const RUNTIME_CACHE = 'runtime-v1.3.0';
 
 // App Shell - Critical resources that should be cached immediately
 const APP_SHELL_FILES = [
     '/',
     '/index.html',
+    '/css/home.css',
+    '/js/home.js',
     '/css/style.css',
     '/css/animations.css',
     '/js/main.js',
@@ -19,7 +21,7 @@ const APP_SHELL_FILES = [
     '/assets/images/android-chrome-512x512.png',
     '/assets/images/logo.png',
     // Add critical fonts
-    'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap',
+    'https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&family=Space+Mono:wght@400;700&display=swap',
     'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css'
 ];
 
