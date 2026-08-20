@@ -59,6 +59,11 @@ sw = open(os.path.join(ROOT, "sw.js"), encoding="utf-8").read()
 check("v1.2.0" not in sw, "sw.js cache version was not bumped past v1.2.0")
 check("/css/home.css" in sw and "/js/home.js" in sw, "sw.js app shell does not cache the new homepage assets")
 
+# 7. Every homepage anchor listed in the sitemap must exist on the page.
+sitemap = open(os.path.join(ROOT, "sitemap.xml"), encoding="utf-8").read()
+for anchor in re.findall(r"<loc>https://mjalif\.com/#([\w-]+)</loc>", sitemap):
+    check(f'id="{anchor}"' in html, f"sitemap points at #{anchor}, which is not a section on the page")
+
 if fails:
     print("FAIL")
     for f in fails:
