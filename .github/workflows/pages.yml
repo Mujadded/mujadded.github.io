@@ -30,6 +30,7 @@ jobs:
           python3 tests/check_homepage.py
           python3 tests/check_articles.py
           python3 tests/check_seo.py
+          python3 tests/check_prose.py
 
       - uses: actions/configure-pages@v5
 

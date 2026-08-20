@@ -108,7 +108,7 @@
           <section>
             <h2>The constraint &mdash; dataset reality (what makes it hard)</h2>
             <p>
-              In inspection problems, the hardest part is usually not "model selection"&mdash;it&rsquo;s the gap between a clean benchmark and the real dataset:
+              In inspection problems, the hardest part is usually not "model selection". It&rsquo;s the gap between a clean benchmark and the real dataset:
             </p>
             <ul class="bullets">
               <li><span><strong>Domain shift:</strong> camera changes, seasonal effects, different backgrounds, exposure, and motion blur change the input distribution.</span></li>
@@ -117,7 +117,7 @@
               <li><span><strong>Imbalance:</strong> defects are rare; naive training optimizes for the majority class and misses the critical cases.</span></li>
             </ul>
             <blockquote class="pull">
-              <p>The hardest part is not model selection &mdash; it is the gap between a clean benchmark and the real dataset.</p>
+              <p>The hardest part is not model selection. It&rsquo;s the gap between a clean benchmark and the real dataset.</p>
             </blockquote>
           </section>
 
@@ -134,7 +134,7 @@
             <h3>Decision framing (what matters)</h3>
             <ul class="bullets">
               <li><span>If your main constraint is <strong>edge throughput + stable latency</strong>, YOLO variants are often the fastest path to a shippable system.</span></li>
-              <li><span>If your main issue is <strong>hard scenes + crowded/occluded objects</strong>, transformer-based detectors can be worth testing&mdash;especially if you have enough data and careful training.</span></li>
+              <li><span>If your main issue is <strong>hard scenes + crowded/occluded objects</strong>, transformer-based detectors can be worth testing, especially if you have enough data and careful training.</span></li>
             </ul>
           </section>
 
@@ -179,7 +179,7 @@
             </p>
             <ul class="bullets">
               <li><span>Stratify validation by condition (night/rain/blur/occlusion) and track recall per slice.</span></li>
-              <li><span>Use targeted augmentation (motion blur, low-light, weather) and/or synthetic data&mdash;but validate synthetic&rarr;real transfer explicitly.</span></li>
+              <li><span>Use targeted augmentation (motion blur, low-light, weather) and/or synthetic data, but validate synthetic&rarr;real transfer explicitly.</span></li>
               <li><span>Prefer deployment-driven model selection: the best paper metric is not the best field metric.</span></li>
             </ul>
           </section>
@@ -211,7 +211,7 @@
               <div><dt>Type</dt><dd>Images</dd></div>
               <div><dt>Source</dt><dd>Mixed (multiple cameras / environments)</dd></div>
               <div><dt>Labels</dt><dd>Bounding boxes</dd></div>
-              <div><dt>Classes</dt><dd>Not fixed &mdash; the approach is class-agnostic</dd></div>
+              <div><dt>Classes</dt><dd>Not fixed; the approach is class-agnostic</dd></div>
               <div><dt>Messy factors</dt><dd>Weather, lighting, motion blur, occlusion, small objects, imbalance, label noise, synthetic&rarr;real shift</dd></div>
             </dl>
           </div>
