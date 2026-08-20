@@ -130,13 +130,20 @@ def check_page(rel):
         except ValueError as exc:
             fail("%s has JSON-LD that does not parse: %s" % (rel, exc))
 
-    # Every local asset the page references must exist.
-    page_dir = os.path.dirname(path)
-    for ref in re.findall(r'(?:href|src)="([^"#?:]+\.(?:css|js|ico|png|json))"', html):
-        target = os.path.normpath(os.path.join(page_dir, ref.lstrip("/")
-                                               if ref.startswith("/") else ref))
+    check_assets(rel, html)
+
+
+def check_assets(rel, html):
+    """Every local asset the page references, srcset candidates included, must exist."""
+    page_dir = os.path.dirname(os.path.join(ROOT, rel))
+    refs = re.findall(r'(?:href|src)="([^"#?:]+\.(?:css|js|ico|png|json|jpg|webp|svg))"', html)
+    for group in re.findall(r'srcset="([^"]+)"', html):
+        refs += [c.split()[0] for c in group.split(",") if c.strip()]
+    for ref in refs:
         if ref.startswith("/"):
             target = os.path.normpath(os.path.join(ROOT, ref.lstrip("/")))
+        else:
+            target = os.path.normpath(os.path.join(page_dir, ref))
         if not os.path.exists(target):
             fail("%s references %s which does not exist" % (rel, ref))
 
@@ -156,6 +163,7 @@ def main():
     # the homepage is not an article page, but the same rule applies to it
     home = open(os.path.join(ROOT, "index.html"), encoding="utf-8").read()
     check_placeholders("index.html", home)
+    check_assets("index.html", home)
     check_meta_notes("index.html",
                      open(os.path.join(ROOT, "index.html"), encoding="utf-8").read())
     check_service_worker()
