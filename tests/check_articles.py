@@ -22,6 +22,9 @@ STABLE_URLS = [
 
 ARTICLE_PAGES = STABLE_URLS
 
+# Every published page, for the checks that apply site-wide.
+PUBLISHED_PAGES = ["index.html"] + STABLE_URLS
+
 # Design-format constructs that must be resolved at author time - none of them
 # do anything in a browser.
 DESIGN_SYNTAX = ["{{", "sc-for", "sc-if", "<x-dc", "<helmet", "style-hover",
@@ -60,6 +63,27 @@ META_TELLS = [
 ]
 
 
+# Placeholder tokens. These were previously tolerated as deliberate "fill me in
+# later" flags, which is exactly how six [NEEDS DOI]s and a [PLACEHOLDER: ORCID]
+# reached the live site. Nothing scaffolded ships: render the field without the
+# missing part, or do not publish the item.
+PLACEHOLDER_TOKENS = [
+    "[placeholder", "[metric]", "[needs ", "[x]", "[y]", "[n%]",
+    "[&mdash;]", "[\u2014]", "case study pending", "placeholder",
+]
+
+
+def check_placeholders(rel, html):
+    lowered = html.lower()
+    for token in PLACEHOLDER_TOKENS:
+        idx = lowered.find(token)
+        if idx != -1:
+            line = html[:idx].count("\n") + 1
+            fail("%s:%d has a placeholder token %r - omit the field or unpublish "
+                 "the item; placeholders must not reach a published page"
+                 % (rel, line, html[idx:idx + 60].replace("\n", " ")))
+
+
 def check_meta_notes(rel, html):
     lowered = html.lower()
     for tell in META_TELLS:
@@ -90,6 +114,7 @@ def check_page(rel):
             fail("%s contains an invented profile URL %r" % (rel, bad))
 
     check_meta_notes(rel, html)
+    check_placeholders(rel, html)
 
     h1s = re.findall(r"<h1\b", html)
     if len(h1s) != 1:
@@ -128,6 +153,8 @@ def main():
     for rel in ARTICLE_PAGES:
         check_page(rel)
     # the homepage is not an article page, but the same rule applies to it
+    home = open(os.path.join(ROOT, "index.html"), encoding="utf-8").read()
+    check_placeholders("index.html", home)
     check_meta_notes("index.html",
                      open(os.path.join(ROOT, "index.html"), encoding="utf-8").read())
     check_service_worker()
