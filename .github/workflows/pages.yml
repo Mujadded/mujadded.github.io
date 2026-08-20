@@ -1,0 +1,69 @@
+name: Pages
+
+# Builds the site on every PR so a broken Jekyll build shows red HERE instead of
+# on the deploy path. On master it builds and then deploys - but only once the
+# repo's Pages source has actually been switched to "GitHub Actions" (see the
+# deploy job); until then the legacy branch deploy keeps publishing the site.
+on:
+  pull_request:
+  push:
+    branches: [master]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Repo checks
+        run: |
+          python3 tests/check_jekyll_build.py
+          python3 tests/check_homepage.py
+
+      - uses: actions/configure-pages@v5
+
+      - name: Build with Jekyll
+        uses: actions/jekyll-build-pages@v1
+
+      - name: Upload artifact
+        if: github.event_name == 'push'
+        uses: actions/upload-pages-artifact@v3
+
+  deploy:
+    if: github.event_name == 'push'
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      # The repo is currently Pages build_type "legacy" (source: branch master).
+      # Deploying from Actions requires Settings -> Pages -> Source = "GitHub
+      # Actions". Rather than fail every master run until someone flips that, ask
+      # the API: this job starts deploying by itself the moment it is flipped.
+      - name: Is Pages served from Actions yet?
+        id: pages
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          type=$(gh api "repos/${{ github.repository }}/pages" --jq .build_type 2>/dev/null || echo legacy)
+          echo "Pages build_type: $type"
+          echo "build_type=$type" >> "$GITHUB_OUTPUT"
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        if: steps.pages.outputs.build_type == 'workflow'
+        uses: actions/deploy-pages@v4
+
+      - name: Skipped
+        if: steps.pages.outputs.build_type != 'workflow'
+        run: echo "Pages still deploys from the master branch (legacy). Flip Settings -> Pages -> Source to 'GitHub Actions' to deploy from this workflow."

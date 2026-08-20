@@ -1,0 +1,22 @@
+# This site is hand-written static HTML — no front matter, no Liquid, no layouts.
+# Jekyll only needs to copy it through. But GitHub Pages loads
+# jekyll-optional-front-matter, which renders EVERY .md in the repo as a page, so
+# an internal doc that quotes Liquid syntax kills the whole site build. Excluding
+# the dev-doc directories stops that at the root. The docs stay in the repo; they
+# just aren't published.
+#
+# NOTE: setting `exclude` REPLACES the GitHub Pages defaults, so they are re-listed.
+exclude:
+  # GitHub Pages defaults - do not drop these.
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+  # Internal dev docs and unpublished drafts - kept in git, not served.
+  - docs/
+  - drafts/
+  - tests/
+  - development.txt
