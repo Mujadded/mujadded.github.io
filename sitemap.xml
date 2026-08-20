@@ -1,109 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Real pages only. Homepage section anchors are not separate documents and
+     were removed; blog.mjalif.com is a different host and cannot be listed in
+     this sitemap. -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 
-    <!-- Main Page -->
     <url>
         <loc>https://mjalif.com/</loc>
-        <lastmod>2024-12-13</lastmod>
+        <lastmod>2026-08-20</lastmod>
         <changefreq>monthly</changefreq>
         <priority>1.0</priority>
     </url>
 
-    <!-- About Section -->
-    <url>
-        <loc>https://mjalif.com/#about</loc>
-        <lastmod>2024-12-13</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <!-- Experience Section -->
-    <url>
-        <loc>https://mjalif.com/#experience</loc>
-        <lastmod>2024-12-13</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <!-- Skills Section -->
-    <url>
-        <loc>https://mjalif.com/#interests</loc>
-        <lastmod>2024-12-13</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.7</priority>
-    </url>
-
-    <!-- Achievements Section -->
-    <url>
-        <loc>https://mjalif.com/#work</loc>
-        <lastmod>2024-12-13</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.7</priority>
-    </url>
-
-    <!-- Publications Section -->
-    <url>
-        <loc>https://mjalif.com/#research</loc>
-        <lastmod>2024-12-13</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.9</priority>
-    </url>
-
-    <!-- Blog Section -->
-    <url>
-        <loc>https://mjalif.com/#writing</loc>
-        <lastmod>2024-12-13</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-    </url>
-
-    <!-- Contact Section -->
-    <url>
-        <loc>https://mjalif.com/#contact</loc>
-        <lastmod>2024-12-13</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.5</priority>
-    </url>
-
-    <!-- Case studies -->
-    <url>
-        <loc>https://mjalif.com/case-studies/</loc>
-        <lastmod>2026-01-27</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <url>
-        <loc>https://mjalif.com/case-studies/edge-cv-outdoor-inspection.html</loc>
-        <lastmod>2026-01-27</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.7</priority>
-    </url>
-
-    <!-- Posts -->
     <url>
         <loc>https://mjalif.com/posts/2026-08-20-lightweight-by-constraint.html</loc>
         <lastmod>2026-08-20</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.7</priority>
+        <changefreq>yearly</changefreq>
+        <priority>0.8</priority>
     </url>
 
     <url>
         <loc>https://mjalif.com/posts/2026-01-27-edge-cv-domain-shift.html</loc>
-        <lastmod>2026-01-27</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.7</priority>
+        <lastmod>2026-08-20</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.8</priority>
     </url>
 
-    <!-- External Blog -->
     <url>
-        <loc>https://blog.mjalif.com/</loc>
-        <lastmod>2024-12-13</lastmod>
-        <changefreq>weekly</changefreq>
+        <loc>https://mjalif.com/case-studies/</loc>
+        <lastmod>2026-08-20</lastmod>
+        <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
 
-</urlset> 
+    <url>
+        <loc>https://mjalif.com/case-studies/edge-cv-outdoor-inspection.html</loc>
+        <lastmod>2026-08-20</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.6</priority>
+    </url>
+
+</urlset>
