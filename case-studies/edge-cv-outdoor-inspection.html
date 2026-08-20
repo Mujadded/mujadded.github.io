@@ -80,32 +80,13 @@
   <main id="main">
     <article>
       <header class="cs-head">
-        <p class="kicker">Case study #1 (template) &middot; Computer vision &middot; Edge &middot; 27 Jan 2026</p>
+        <p class="kicker">Method note &middot; Computer vision &middot; Edge &middot; 27 Jan 2026</p>
         <h1>Edge CV for Outdoor Inspection Under Domain Shift</h1>
         <p class="standfirst">Edge CV for Outdoor Inspection Under Domain Shift (YOLO / RT-DETR + Jetson)</p>
       </header>
 
       <div class="stats-sec">
-        <p class="callout"><strong>Important:</strong> This is a <em>literature-based template</em> built from common patterns seen in real-world inspection CV. It is meant to be edited with your real project details. I&rsquo;ve kept placeholders like <code>[X]</code> so you can swap in numbers later.</p>
-
-        <dl class="stats">
-          <div class="stat lead">
-            <dd><span class="ph">[X]%</span></dd>
-            <dt>Reduction in false negatives, rain + motion blur</dt>
-          </div>
-          <div class="stat">
-            <dd><span class="ph">[Y] fps</span></dd>
-            <dt>Sustained throughput on Jetson</dt>
-          </div>
-          <div class="stat">
-            <dd><span class="ph">[X] ms</span></dd>
-            <dt>End-to-end latency budget per frame</dt>
-          </div>
-          <div class="stat">
-            <dd><span class="ph">[&mdash;]</span></dd>
-            <dt>Classes &mdash; replace with the real class list</dt>
-          </div>
-        </dl>
+        <p class="callout">A method write-up drawn from patterns common in real-world inspection CV, rather than a report on one project. It carries no project metrics.</p>
       </div>
 
       <div class="cs-body">
@@ -137,8 +118,7 @@
           <section>
             <h2>Approach &mdash; model choice (YOLO vs RT-DETR): why these</h2>
             <p>
-              You mentioned trying <strong>new YOLO</strong> and <strong>RT-DETR</strong>.
-              That pairing makes sense as a practical comparison:
+              <strong>YOLO</strong> and <strong>RT-DETR</strong> make sense as a practical comparison:
             </p>
             <ul class="bullets">
               <li><span><strong>YOLO family</strong> is typically strong for real-time deployment and tooling (export, TensorRT, batching, etc.).</span></li>
@@ -152,12 +132,6 @@
             </ul>
           </section>
 
-          <figure class="fig">
-            <div class="fig-ph" role="img" aria-label="Placeholder for annotated detection output from the inspection dataset">
-              <span>[PLACEHOLDER: annotated detection output, 16:9 &mdash; real frames with boxes, not stock imagery. Needs alt text.]</span>
-            </div>
-            <figcaption class="figcap">Figure 1 &mdash; [PLACEHOLDER: caption. Say what to look at and why it matters.]</figcaption>
-          </figure>
 
           <section>
             <h2>Results &mdash; metrics (what actually matters in inspection)</h2>
@@ -165,48 +139,12 @@
               For inspection, the business metric is usually "don&rsquo;t miss the defect". That means you should emphasize:
             </p>
             <ul class="bullets">
-              <li><span><strong>Recall / false negative rate</strong> at an operating point (e.g., at precision &ge; [X]%).</span></li>
+              <li><span><strong>Recall / false negative rate</strong> at an operating point.</span></li>
               <li><span><strong>Per-condition performance</strong> (night vs day, rain vs dry, high blur vs low blur).</span></li>
               <li><span><strong>Small-object slices</strong> (e.g., area &lt; 32&times;32 px) to avoid being fooled by aggregate mAP.</span></li>
               <li><span><strong>Latency / FPS</strong> on the target device, not on a desktop GPU.</span></li>
             </ul>
-            <p>
-              <strong>Template result statement:</strong> &ldquo;We reduced false negatives by [X]% in the hardest conditions (rain + motion blur) while maintaining &ge; [Y] FPS on Jetson.&rdquo;
-            </p>
 
-            <div class="table-wrap" style="margin-top:22px">
-              <table>
-                <caption>Table 1 &mdash; comparison to fill in once the runs exist. Every cell is a placeholder.</caption>
-                <thead>
-                  <tr>
-                    <th scope="col">Model</th>
-                    <th scope="col" class="num">mAP@50</th>
-                    <th scope="col" class="num">Recall</th>
-                    <th scope="col" class="num">FPS (Jetson)</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>[Baseline]</td>
-                    <td class="num">[&mdash;]</td>
-                    <td class="num">[&mdash;]</td>
-                    <td class="num">[&mdash;]</td>
-                  </tr>
-                  <tr class="pick">
-                    <td>[Chosen model]</td>
-                    <td class="num">[&mdash;]</td>
-                    <td class="num">[&mdash;]</td>
-                    <td class="num">[&mdash;]</td>
-                  </tr>
-                  <tr>
-                    <td>[Alternative]</td>
-                    <td class="num">[&mdash;]</td>
-                    <td class="num">[&mdash;]</td>
-                    <td class="num">[&mdash;]</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
           </section>
 
           <section>
@@ -215,17 +153,11 @@
               Edge deployment introduces constraints that often change the &ldquo;best&rdquo; model:
             </p>
             <ul class="bullets">
-              <li><span><strong>Latency budget</strong>: [X] ms per frame end-to-end (preprocess + inference + postprocess).</span></li>
+              <li><span><strong>Latency budget</strong>: a fixed end-to-end budget per frame (preprocess + inference + postprocess).</span></li>
               <li><span><strong>Memory limits</strong>: GPU memory and RAM are smaller; bigger backbones can thrash.</span></li>
               <li><span><strong>Precision tradeoffs</strong>: FP16/INT8 quantization can improve speed but may reduce small-object recall unless calibrated carefully.</span></li>
               <li><span><strong>Operational stability</strong>: thermal throttling and long-running performance matter.</span></li>
             </ul>
-            <div class="code-card" style="margin-top:20px">
-              <p class="code-head">export.sh &mdash; [PLACEHOLDER: replace with the real command or config]</p>
-              <div class="code-scroll"><pre><code>$ yolo export model=[weights].pt format=engine half=True
-$ python bench.py --engine [engine] --device [device] --warmup 50
-# latency p50 [&mdash;] ms  &middot;  p95 [&mdash;] ms  &middot;  [&mdash;] fps sustained</code></pre></div>
-            </div>
           </section>
 
           <section>
@@ -248,9 +180,6 @@ $ python bench.py --engine [engine] --device [device] --warmup 50
 
           <section>
             <h2>Reproducible demo (public/synthetic)</h2>
-            <p>
-              If the real dataset is private, a clean way to prove competency is a &ldquo;mini&rdquo; reproducible pipeline:
-            </p>
             <ol class="steps">
               <li><span class="n">01</span><span>Public dataset (or synthetic generator) that mimics: small objects + blur + low-light.</span></li>
               <li><span class="n">02</span><span>Two training runs: YOLO vs RT-DETR baseline.</span></li>
@@ -266,7 +195,6 @@ $ python bench.py --engine [engine] --device [device] --warmup 50
               <li><span>RT-DETR: &ldquo;Real-Time DEtection TRansformer&rdquo; (paper + official implementation).</span></li>
               <li><span>General literature on domain shift, dataset bias, and robustness evaluation in CV.</span></li>
             </ul>
-            <p style="margin-top:20px"><strong>Next edit step:</strong> replace every <code>[X]</code>/<code>[Y]</code> with your real numbers, and swap &ldquo;Classes: any&rdquo; with your actual class list.</p>
           </section>
         </div>
 
@@ -277,17 +205,15 @@ $ python bench.py --engine [engine] --device [device] --warmup 50
               <div><dt>Type</dt><dd>Images</dd></div>
               <div><dt>Source</dt><dd>Mixed (multiple cameras / environments)</dd></div>
               <div><dt>Labels</dt><dd>Bounding boxes</dd></div>
-              <div><dt>Classes</dt><dd>"Any" (replace with your real class list)</dd></div>
+              <div><dt>Classes</dt><dd>Not fixed &mdash; the approach is class-agnostic</dd></div>
               <div><dt>Messy factors</dt><dd>Weather, lighting, motion blur, occlusion, small objects, imbalance, label noise, synthetic&rarr;real shift</dd></div>
             </dl>
           </div>
           <div class="card">
             <h2>Project at a glance</h2>
             <dl>
-              <div><dt>Role</dt><dd class="ph">[PLACEHOLDER]</dd></div>
               <div><dt>Domain</dt><dd>Outdoor / industrial inspection</dd></div>
               <div><dt>Stack</dt><dd>YOLO, RT-DETR, ONNX/TensorRT, NVIDIA Jetson</dd></div>
-              <div><dt>Funding / partner</dt><dd class="ph">[PLACEHOLDER]</dd></div>
             </dl>
           </div>
           <div class="card">
