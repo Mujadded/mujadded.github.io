@@ -86,7 +86,7 @@
       </header>
 
       <div class="stats-sec">
-        <p class="callout"><strong>Important:</strong> This is a <em>literature-based template</em> built from common patterns seen in real-world inspection CV. It is meant to be edited with your real project details. I&rsquo;ve kept placeholders like <code>[X]</code> so you can swap in numbers later.</p>
+        <p class="callout"><strong>Important:</strong> This is a <em>literature-based template</em> built from common patterns seen in real-world inspection CV.</p>
 
         <dl class="stats">
           <div class="stat lead">
@@ -103,7 +103,7 @@
           </div>
           <div class="stat">
             <dd><span class="ph">[&mdash;]</span></dd>
-            <dt>Classes &mdash; replace with the real class list</dt>
+            <dt>Classes</dt>
           </div>
         </dl>
       </div>
@@ -137,8 +137,7 @@
           <section>
             <h2>Approach &mdash; model choice (YOLO vs RT-DETR): why these</h2>
             <p>
-              You mentioned trying <strong>new YOLO</strong> and <strong>RT-DETR</strong>.
-              That pairing makes sense as a practical comparison:
+              <strong>YOLO</strong> and <strong>RT-DETR</strong> make sense as a practical comparison:
             </p>
             <ul class="bullets">
               <li><span><strong>YOLO family</strong> is typically strong for real-time deployment and tooling (export, TensorRT, batching, etc.).</span></li>
@@ -266,7 +265,6 @@ $ python bench.py --engine [engine] --device [device] --warmup 50
               <li><span>RT-DETR: &ldquo;Real-Time DEtection TRansformer&rdquo; (paper + official implementation).</span></li>
               <li><span>General literature on domain shift, dataset bias, and robustness evaluation in CV.</span></li>
             </ul>
-            <p style="margin-top:20px"><strong>Next edit step:</strong> replace every <code>[X]</code>/<code>[Y]</code> with your real numbers, and swap &ldquo;Classes: any&rdquo; with your actual class list.</p>
           </section>
         </div>
 
@@ -277,7 +275,7 @@ $ python bench.py --engine [engine] --device [device] --warmup 50
               <div><dt>Type</dt><dd>Images</dd></div>
               <div><dt>Source</dt><dd>Mixed (multiple cameras / environments)</dd></div>
               <div><dt>Labels</dt><dd>Bounding boxes</dd></div>
-              <div><dt>Classes</dt><dd>"Any" (replace with your real class list)</dd></div>
+              <div><dt>Classes</dt><dd>"Any" <span class="flag">[NEEDS CLASS LIST]</span></dd></div>
               <div><dt>Messy factors</dt><dd>Weather, lighting, motion blur, occlusion, small objects, imbalance, label noise, synthetic&rarr;real shift</dd></div>
             </dl>
           </div>

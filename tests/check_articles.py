@@ -46,6 +46,30 @@ def fail(msg):
     errors.append(msg)
 
 
+# Meta-note tells. A note meant for the author ("I can turn this into a
+# LinkedIn version next week") once shipped to the live site because the port
+# preserved content verbatim and nobody separated article text from
+# author-to-author chatter. These patterns are never article content.
+# Intentional flags - [NEEDS DOI], [PLACEHOLDER: ...], [X] - are NOT leaks and
+# are deliberately absent from this list.
+META_TELLS = [
+    "i can turn this", "i&rsquo;ve kept", "i've kept", "let me know",
+    "if you want:", "next week", "you mentioned", "your real ",
+    "your project numbers", "your actual class", "next edit step",
+    "note to self", "todo:", "draft note", "for you next",
+]
+
+
+def check_meta_notes(rel, html):
+    lowered = html.lower()
+    for tell in META_TELLS:
+        idx = lowered.find(tell)
+        if idx != -1:
+            line = html[:idx].count("\n") + 1
+            fail("%s:%d reads like an author/assistant note, not article content: %r"
+                 % (rel, line, html[idx:idx + 70].replace("\n", " ")))
+
+
 def check_page(rel):
     path = os.path.join(ROOT, rel)
     if not os.path.exists(path):
@@ -64,6 +88,8 @@ def check_page(rel):
     for bad in INVENTED_URLS:
         if bad in html:
             fail("%s contains an invented profile URL %r" % (rel, bad))
+
+    check_meta_notes(rel, html)
 
     h1s = re.findall(r"<h1\b", html)
     if len(h1s) != 1:
@@ -101,6 +127,9 @@ def check_service_worker():
 def main():
     for rel in ARTICLE_PAGES:
         check_page(rel)
+    # the homepage is not an article page, but the same rule applies to it
+    check_meta_notes("index.html",
+                     open(os.path.join(ROOT, "index.html"), encoding="utf-8").read())
     check_service_worker()
 
     if errors:
