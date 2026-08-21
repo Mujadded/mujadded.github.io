@@ -205,6 +205,7 @@
               <li><span class="n">03</span><span>Export to ONNX/TensorRT and benchmark on Jetson (FPS, latency, memory).</span></li>
               <li><span class="n">04</span><span>Publish a concise README + one diagram showing the pipeline.</span></li>
             </ol>
+            <p class="callout">Built so far: step 01, scoped to dataset shift specifically rather than object detection. A small CPU-only demo that trains on synthetic shapes, measures how badly accuracy breaks under noise/blur/lighting shift, then shows shift-aware training recovering most of it. Public/synthetic data only, no client data, runs with one command: <a href="https://github.com/Mujadded/mujadded.github.io/tree/master/demos/dataset-shift-and-robustness">demos/dataset-shift-and-robustness</a>. Steps 02&ndash;04 (YOLO vs RT-DETR, Jetson/TensorRT export and benchmarking) remain roadmap, not built.</p>
           </section>
 
           <section>
