@@ -124,11 +124,23 @@ def check_page(rel):
     blocks = re.findall(r'<script type="application/ld\+json">(.*?)</script>', html, re.S)
     if not blocks:
         fail("%s has no JSON-LD structured data" % rel)
+    parsed = []
     for block in blocks:
         try:
-            json.loads(block)
+            parsed.append(json.loads(block))
         except ValueError as exc:
             fail("%s has JSON-LD that does not parse: %s" % (rel, exc))
+
+    # Article-type pages carry the rich-result recommended fields and a
+    # breadcrumb trail. Guards these so they cannot silently regress.
+    types = [d.get("@type") for d in parsed]
+    if any(t in ("Article", "BlogPosting") for t in types):
+        art = next(d for d in parsed if d.get("@type") in ("Article", "BlogPosting"))
+        for field in ("image", "dateModified"):
+            if not art.get(field):
+                fail("%s Article JSON-LD is missing %s" % (rel, field))
+        if "BreadcrumbList" not in types:
+            fail("%s has no BreadcrumbList JSON-LD" % rel)
 
     check_assets(rel, html)
 
