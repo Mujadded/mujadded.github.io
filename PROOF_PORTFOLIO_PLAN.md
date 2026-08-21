@@ -1,6 +1,6 @@
 # Proof Portfolio + Weekly Publishing (Plan)
 
-This repo is a static site. The homepage pulls “Latest Blog Posts” from `js/blogPosts.js`.
+This repo is a static site. The homepage’s writing list lives in `index.html` itself — see “Blog roll” below before editing it.
 
 ## What we’re building
 
@@ -29,21 +29,41 @@ Topics that compound for your niche:
 ## Repo conventions (minimal changes)
 
 ### Blog roll (homepage)
-- File: `js/blogPosts.js`
-- Add one new object at the top each week (keep newest first).
 
-**Template:**
-```js
-{
-  title: "…",
-  excerpt: "1–2 sentences",
-  date: "YYYY-MM-DD",
-  readTime: "X min read",
-  category: "AI & Computer Vision",
-  url: "https://…",
-  image: "https://…" // optional
-}
+- File: **`index.html`**, the `Notes and articles` list in `<section id="writing">`.
+- Add one `<li class="post">` at the top (newest first). The list holds five
+  entries; adding one pushes the oldest off the bottom.
+
+**Not `js/blogPosts.js`.** That file, and `js/main.js`, are leftovers from the
+pre-port site and nothing loads them. If an instruction anywhere sends you at
+`js/blogPosts.js` for the feed, it is out of date — including an earlier version
+of this document, which is what this note replaces.
+
+Verify it yourself rather than taking this on faith, because it will go stale
+too:
+
 ```
+grep -o '<script[^>]*src="[^"]*"' index.html    # only js/home.js is loaded
+```
+
+The tell that the old instruction had already gone wrong: the 20 Aug 2026 post
+appears in `index.html` and in `sitemap.xml`, and is absent from
+`js/blogPosts.js`. Someone had been editing the live page and the dead file had
+silently drifted behind.
+
+**Template** (external posts get the source and an arrow in the meta line;
+posts hosted here just say `mjalif.com`):
+
+```html
+<li class="post">
+  <a class="post-title" href="posts/YYYY-MM-DD-slug.html">Title in sentence case</a>
+  <p class="post-meta">20 Aug 2026 &middot; 8 min &middot; mjalif.com</p>
+</li>
+```
+
+A new post hosted in this repo also needs an entry in `sitemap.xml`, and a
+`sw.js` cache-version bump so returning visitors do not keep the old precached
+homepage.
 
 ### Case studies
 We’ll add:
