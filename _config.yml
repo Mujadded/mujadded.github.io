@@ -20,3 +20,6 @@ exclude:
   - drafts/
   - tests/
   - development.txt
+  # Runnable demo code, meant to be cloned and read on GitHub - its README
+  # would otherwise render as an unstyled Jekyll page (no layout applies).
+  - demos/
