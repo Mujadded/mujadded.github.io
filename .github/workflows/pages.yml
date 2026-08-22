@@ -23,14 +23,24 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          # check_sw_cache.py diffs against the commit before this change to
+          # catch a precached file that changed without a cache-version bump -
+          # needs real history, not the default single-commit checkout.
+          fetch-depth: 0
 
       - name: Repo checks
+        env:
+          # Base commit for check_sw_cache.py's version-bump diff: the PR's
+          # base for a pull_request run, the pre-push commit for a push run.
+          SW_CACHE_BASE: ${{ github.event_name == 'pull_request' && github.event.pull_request.base.sha || github.event.before }}
         run: |
           python3 tests/check_jekyll_build.py
           python3 tests/check_homepage.py
           python3 tests/check_articles.py
           python3 tests/check_seo.py
           python3 tests/check_prose.py
+          python3 tests/check_sw_cache.py
 
       - uses: actions/configure-pages@v5
 
