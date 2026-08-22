@@ -18,6 +18,11 @@ Two checks:
 Run: python3 tests/check_sw_cache.py
 Base commit for check 1 comes from $SW_CACHE_BASE if set (CI sets this from the
 PR/push event), else falls back to merge-base with origin/master, then HEAD~1.
+On a pull_request run a base should always resolve (GitHub provides one); if
+it doesn't, that's broken wiring and this fails loudly rather than skipping.
+Elsewhere (push, local dev, first-ever commit) an unresolvable base is a
+legitimate edge case - it's reported as a visible ::warning:: annotation and
+check 1 is skipped, not silently dropped.
 """
 import os
 import re
@@ -76,6 +81,12 @@ def resolve_base():
         return None
 
 
+def warn(msg):
+    """Visible on the PR itself (GitHub Actions annotation), not just stderr on
+    an otherwise-green job that nobody would open the logs to read."""
+    print("::warning::%s" % msg)
+
+
 def sw_versions_at(rev):
     """Version strings in sw.js at `rev`, or None if sw.js doesn't exist there."""
     try:
@@ -97,8 +108,19 @@ try:
 except subprocess.CalledProcessError:
     changed = None
 if changed is None:
-    print("WARN: no usable base commit (shallow clone, or first-ever push) - "
-          "skipping the version-bump check.", file=sys.stderr)
+    if os.environ.get("GITHUB_EVENT_NAME") == "pull_request":
+        # GitHub always provides a base sha for a pull_request run. Failing to
+        # resolve one here means the fetch-depth/SW_CACHE_BASE wiring in
+        # pages.yml broke, not a legitimate edge case - a silent skip here is
+        # exactly the "check that stops running and nobody notices" bug this
+        # guard exists to catch, so it fails loudly instead of skipping quietly.
+        check(False, "could not resolve a base commit on a pull_request run "
+                      "(one should always be available) - the version-bump "
+                      "check did not run; check pages.yml's fetch-depth and "
+                      "SW_CACHE_BASE wiring")
+    else:
+        warn("no usable base commit (shallow clone, or first-ever push) - "
+             "skipping the version-bump check.")
 else:
     shell_paths = {local_path(e) for e in entries if local_path(e)}
     touched = sorted(changed & shell_paths)
