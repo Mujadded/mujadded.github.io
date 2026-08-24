@@ -10,4 +10,4 @@ Allow: /
 Disallow: /admin/
 Disallow: /private/
 
-Sitemap: https://mjalif.com/sitemap.xml
+Sitemap: https://www.mjalif.com/sitemap.xml
