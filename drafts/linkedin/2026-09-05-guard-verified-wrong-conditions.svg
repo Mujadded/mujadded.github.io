@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 628" width="1200" height="628" role="img" aria-label="Diagram: a blanket || echo fallback masks a real test failure as success, and the first fix for it is itself silent when verified in a plain shell instead of the shell it actually runs under.">
+<title>A guard verified under different conditions than it runs in is not verified</title>
+<rect width="1200" height="628" fill="#0f172a"/>
+<text x="60" y="72" fill="#f8fafc" font-family="Georgia,serif" font-size="34" font-weight="bold">The guard I wrote to catch silent failures was itself silent</text>
+<line x1="60" y1="94" x2="1000" y2="94" stroke="#38bdf8" stroke-width="3"/>
+
+<text x="60" y="135" fill="#94a3b8" font-family="Helvetica,Arial,sans-serif" font-size="20" font-weight="bold">LAYER 1 — the original mask</text>
+
+<rect x="60" y="155" width="330" height="100" rx="12" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+<text x="225" y="192" fill="#f8fafc" font-family="Helvetica,Arial,sans-serif" font-size="20" text-anchor="middle" font-weight="bold">load test container</text>
+<text x="225" y="222" fill="#fca5a5" font-family="Helvetica,Arial,sans-serif" font-size="18" text-anchor="middle">dies instantly, no output</text>
+
+<path d="M395 205 L520 205" stroke="#64748b" stroke-width="3" marker-end="url(#a)"/>
+
+<rect x="530" y="155" width="330" height="100" rx="12" fill="#7f1d1d" stroke="#ef4444" stroke-width="2"/>
+<text x="695" y="192" fill="#fecaca" font-family="Helvetica,Arial,sans-serif" font-size="19" text-anchor="middle" font-weight="bold">|| echo "Test completed"</text>
+<text x="695" y="222" fill="#fca5a5" font-family="Helvetica,Arial,sans-serif" font-size="17" text-anchor="middle">catches ANY failure, prints fake success</text>
+
+<text x="900" y="185" fill="#f8fafc" font-family="Georgia,serif" font-size="21" font-weight="bold">Step: GREEN</text>
+<text x="900" y="216" fill="#38bdf8" font-family="Georgia,serif" font-size="19">zero measurements</text>
+
+<line x1="60" y1="285" x2="1140" y2="285" stroke="#334155" stroke-width="2" stroke-dasharray="4 6"/>
+
+<text x="60" y="325" fill="#94a3b8" font-family="Helvetica,Arial,sans-serif" font-size="20" font-weight="bold">LAYER 2 — the fix for layer 1, verified the wrong way</text>
+
+<rect x="60" y="345" width="330" height="120" rx="12" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+<text x="225" y="378" fill="#f8fafc" font-family="Helvetica,Arial,sans-serif" font-size="19" text-anchor="middle" font-weight="bold">tested in a plain shell</text>
+<text x="225" y="405" fill="#a7f3d0" font-family="Helvetica,Arial,sans-serif" font-size="18" text-anchor="middle">::error:: annotation prints</text>
+<text x="225" y="430" fill="#a7f3d0" font-family="Helvetica,Arial,sans-serif" font-size="18" text-anchor="middle">"looks verified"</text>
+
+<path d="M395 405 L520 405" stroke="#64748b" stroke-width="3" marker-end="url(#a)"/>
+
+<rect x="530" y="345" width="330" height="120" rx="12" fill="#7f1d1d" stroke="#ef4444" stroke-width="3"/>
+<text x="695" y="378" fill="#fecaca" font-family="Helvetica,Arial,sans-serif" font-size="19" text-anchor="middle" font-weight="bold">run under set -e + pipefail</text>
+<text x="695" y="405" fill="#fca5a5" font-family="Helvetica,Arial,sans-serif" font-size="18" text-anchor="middle">aborts at the assignment --</text>
+<text x="695" y="430" fill="#fca5a5" font-family="Helvetica,Arial,sans-serif" font-size="18" text-anchor="middle">the ::error:: line never runs</text>
+
+<text x="900" y="378" fill="#f8fafc" font-family="Georgia,serif" font-size="21" font-weight="bold">Step: fails --</text>
+<text x="900" y="409" fill="#38bdf8" font-family="Georgia,serif" font-size="19">but explains nothing</text>
+
+<defs><marker id="a" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#64748b"/></marker></defs>
+
+<rect x="60" y="500" width="1080" height="90" rx="12" fill="#064e3b" stroke="#10b981" stroke-width="2"/>
+<text x="600" y="535" fill="#a7f3d0" font-family="Georgia,serif" font-size="23" font-weight="bold" text-anchor="middle">A guard verified under different conditions than it runs in</text>
+<text x="600" y="568" fill="#6ee7b7" font-family="Georgia,serif" font-size="23" font-weight="bold" text-anchor="middle">is not verified.</text>
+</svg>
