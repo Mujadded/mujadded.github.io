@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 628" width="1200" height="628" role="img" aria-label="Diagram: a converter asked whether it succeeded reports success, while an independent reader finds no parseable file.">
+<title>Asking the writer vs. asking an independent reader</title>
+<rect width="1200" height="628" fill="#0f172a"/>
+<text x="60" y="80" fill="#f8fafc" font-family="Georgia,serif" font-size="42" font-weight="bold">"It logged success and wrote nothing"</text>
+<line x1="60" y1="104" x2="700" y2="104" stroke="#38bdf8" stroke-width="3"/>
+
+<rect x="60" y="160" width="330" height="150" rx="12" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+<text x="225" y="205" fill="#f8fafc" font-family="Helvetica,Arial,sans-serif" font-size="26" font-weight="bold" text-anchor="middle">convert()</text>
+<text x="225" y="243" fill="#94a3b8" font-family="Helvetica,Arial,sans-serif" font-size="20" text-anchor="middle">returns without raising</text>
+<text x="225" y="273" fill="#94a3b8" font-family="Helvetica,Arial,sans-serif" font-size="20" text-anchor="middle">logs "completed"</text>
+
+<path d="M400 235 L520 235" stroke="#64748b" stroke-width="3" marker-end="url(#a)"/>
+<defs><marker id="a" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#64748b"/></marker></defs>
+
+<rect x="530" y="180" width="230" height="110" rx="12" fill="#1e293b" stroke="#475569" stroke-width="2" stroke-dasharray="6 5"/>
+<text x="645" y="228" fill="#f8fafc" font-family="Helvetica,Arial,sans-serif" font-size="24" text-anchor="middle">output file</text>
+<text x="645" y="262" fill="#ef4444" font-family="Helvetica,Arial,sans-serif" font-size="22" text-anchor="middle" font-weight="bold">(absent)</text>
+
+<rect x="60" y="360" width="700" height="90" rx="12" fill="#7f1d1d" stroke="#ef4444" stroke-width="2"/>
+<text x="90" y="395" fill="#fecaca" font-family="Helvetica,Arial,sans-serif" font-size="21" font-weight="bold">Checks that ask the WRITER — all pass</text>
+<text x="90" y="428" fill="#fca5a5" font-family="Helvetica,Arial,sans-serif" font-size="19">no exception · success log · "the call returned" assertion</text>
+
+<rect x="60" y="480" width="700" height="90" rx="12" fill="#064e3b" stroke="#10b981" stroke-width="2"/>
+<text x="90" y="515" fill="#a7f3d0" font-family="Helvetica,Arial,sans-serif" font-size="21" font-weight="bold">Check that asks an INDEPENDENT READER — fails correctly</text>
+<text x="90" y="548" fill="#6ee7b7" font-family="Helvetica,Arial,sans-serif" font-size="19">tf.data.TFRecordDataset · h5py · numpy.load</text>
+
+<text x="810" y="400" fill="#f8fafc" font-family="Georgia,serif" font-size="27" font-weight="bold">A test that asks</text>
+<text x="810" y="437" fill="#f8fafc" font-family="Georgia,serif" font-size="27" font-weight="bold">the code whether</text>
+<text x="810" y="474" fill="#f8fafc" font-family="Georgia,serif" font-size="27" font-weight="bold">it worked is</text>
+<text x="810" y="511" fill="#38bdf8" font-family="Georgia,serif" font-size="27" font-weight="bold">a mirror.</text>
+</svg>

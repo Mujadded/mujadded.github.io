@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 628" width="1200" height="628" role="img" aria-label="Diagram: a cached amd64 image is reused on an arm64 runner without a platform check, while pull-always re-resolves the manifest for the host.">
+<title>Cache hit skips the platform check; --pull=always re-resolves it</title>
+<rect width="1200" height="628" fill="#0f172a"/>
+<text x="60" y="78" fill="#f8fafc" font-family="Georgia,serif" font-size="40" font-weight="bold">Three broken pipelines, one stale image</text>
+<line x1="60" y1="102" x2="840" y2="102" stroke="#38bdf8" stroke-width="3"/>
+
+<rect x="60" y="150" width="1080" height="200" rx="12" fill="#7f1d1d" stroke="#ef4444" stroke-width="2"/>
+<text x="90" y="192" fill="#fecaca" font-family="Helvetica,Arial,sans-serif" font-size="23" font-weight="bold">docker run alpine:latest      (cache hit — no platform check)</text>
+<rect x="90" y="215" width="250" height="100" rx="10" fill="#1e293b" stroke="#ef4444" stroke-width="2"/>
+<text x="215" y="255" fill="#f8fafc" font-family="Helvetica,Arial,sans-serif" font-size="21" text-anchor="middle">local cache</text>
+<text x="215" y="291" fill="#fca5a5" font-family="Helvetica,Arial,sans-serif" font-size="24" text-anchor="middle" font-weight="bold">amd64</text>
+<path d="M350 265 L470 265" stroke="#ef4444" stroke-width="3" marker-end="url(#c)"/>
+<rect x="480" y="215" width="250" height="100" rx="10" fill="#1e293b" stroke="#ef4444" stroke-width="2"/>
+<text x="605" y="255" fill="#f8fafc" font-family="Helvetica,Arial,sans-serif" font-size="21" text-anchor="middle">runner</text>
+<text x="605" y="291" fill="#fca5a5" font-family="Helvetica,Arial,sans-serif" font-size="24" text-anchor="middle" font-weight="bold">arm64</text>
+<text x="770" y="257" fill="#fecaca" font-family="Helvetica,Arial,sans-serif" font-size="22" font-weight="bold">exec /bin/sh:</text>
+<text x="770" y="290" fill="#fecaca" font-family="Helvetica,Arial,sans-serif" font-size="22" font-weight="bold">exec format error</text>
+
+<rect x="60" y="390" width="1080" height="180" rx="12" fill="#064e3b" stroke="#10b981" stroke-width="2"/>
+<text x="90" y="432" fill="#a7f3d0" font-family="Helvetica,Arial,sans-serif" font-size="23" font-weight="bold">docker run --pull=always alpine:latest      (manifest re-resolved)</text>
+<rect x="90" y="455" width="250" height="90" rx="10" fill="#1e293b" stroke="#10b981" stroke-width="2"/>
+<text x="215" y="490" fill="#f8fafc" font-family="Helvetica,Arial,sans-serif" font-size="21" text-anchor="middle">registry manifest</text>
+<text x="215" y="524" fill="#6ee7b7" font-family="Helvetica,Arial,sans-serif" font-size="20" text-anchor="middle">multi-arch</text>
+<path d="M350 500 L470 500" stroke="#10b981" stroke-width="3" marker-end="url(#d)"/>
+<rect x="480" y="455" width="250" height="90" rx="10" fill="#1e293b" stroke="#10b981" stroke-width="2"/>
+<text x="605" y="490" fill="#f8fafc" font-family="Helvetica,Arial,sans-serif" font-size="21" text-anchor="middle">runner</text>
+<text x="605" y="524" fill="#6ee7b7" font-family="Helvetica,Arial,sans-serif" font-size="24" text-anchor="middle" font-weight="bold">arm64</text>
+<text x="770" y="492" fill="#a7f3d0" font-family="Helvetica,Arial,sans-serif" font-size="22" font-weight="bold">no arch hardcoded,</text>
+<text x="770" y="525" fill="#a7f3d0" font-family="Helvetica,Arial,sans-serif" font-size="22" font-weight="bold">no cache assumed</text>
+<defs>
+<marker id="c" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#ef4444"/></marker>
+<marker id="d" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#10b981"/></marker>
+</defs>
+</svg>

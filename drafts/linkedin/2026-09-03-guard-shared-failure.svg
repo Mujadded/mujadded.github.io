@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 628" width="1200" height="628" role="img" aria-label="Diagram: the scan task and the guard that rescues stuck scans both depend on the same message broker, so a broker outage disables both.">
+<title>The guard shares a failure mode with the thing it guards</title>
+<rect width="1200" height="628" fill="#0f172a"/>
+<text x="60" y="78" fill="#f8fafc" font-family="Georgia,serif" font-size="40" font-weight="bold">A guard that cannot execute is no guard</text>
+<line x1="60" y1="102" x2="860" y2="102" stroke="#38bdf8" stroke-width="3"/>
+
+<rect x="80" y="170" width="300" height="120" rx="12" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+<text x="230" y="215" fill="#f8fafc" font-family="Helvetica,Arial,sans-serif" font-size="24" font-weight="bold" text-anchor="middle">scan task</text>
+<text x="230" y="252" fill="#94a3b8" font-family="Helvetica,Arial,sans-serif" font-size="19" text-anchor="middle">scans each upload</text>
+
+<rect x="80" y="400" width="300" height="140" rx="12" fill="#1e293b" stroke="#10b981" stroke-width="2"/>
+<text x="230" y="443" fill="#a7f3d0" font-family="Helvetica,Arial,sans-serif" font-size="24" font-weight="bold" text-anchor="middle">the guard</text>
+<text x="230" y="478" fill="#6ee7b7" font-family="Helvetica,Arial,sans-serif" font-size="18" text-anchor="middle">sweeps anything pending</text>
+<text x="230" y="504" fill="#6ee7b7" font-family="Helvetica,Arial,sans-serif" font-size="18" text-anchor="middle">too long — no list to keep</text>
+
+<rect x="530" y="270" width="280" height="150" rx="12" fill="#7f1d1d" stroke="#ef4444" stroke-width="3"/>
+<text x="670" y="330" fill="#fecaca" font-family="Helvetica,Arial,sans-serif" font-size="26" font-weight="bold" text-anchor="middle">message broker</text>
+<text x="670" y="372" fill="#fca5a5" font-family="Helvetica,Arial,sans-serif" font-size="30" font-weight="bold" text-anchor="middle">DOWN</text>
+
+<path d="M385 230 Q460 230 525 310" stroke="#ef4444" stroke-width="3" fill="none" marker-end="url(#b)"/>
+<path d="M385 465 Q460 465 525 390" stroke="#ef4444" stroke-width="3" fill="none" marker-end="url(#b)"/>
+<defs><marker id="b" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#ef4444"/></marker></defs>
+
+<text x="860" y="300" fill="#f8fafc" font-family="Georgia,serif" font-size="26" font-weight="bold">Both depend on</text>
+<text x="860" y="336" fill="#f8fafc" font-family="Georgia,serif" font-size="26" font-weight="bold">the same thing.</text>
+<text x="860" y="392" fill="#38bdf8" font-family="Georgia,serif" font-size="24">Ask what a guard</text>
+<text x="860" y="424" fill="#38bdf8" font-family="Georgia,serif" font-size="24">DEPENDS on —</text>
+<text x="860" y="456" fill="#38bdf8" font-family="Georgia,serif" font-size="24">not only what</text>
+<text x="860" y="488" fill="#38bdf8" font-family="Georgia,serif" font-size="24">it checks.</text>
+</svg>
