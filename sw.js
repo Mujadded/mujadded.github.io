@@ -1,4 +1,4 @@
-const CACHE_NAME = 'mj-alif-portfolio-v1.6.0';
+const CACHE_NAME = 'mj-alif-portfolio-v1.6.1';
 const APP_SHELL_CACHE = 'app-shell-v1.6.0';
 const RUNTIME_CACHE = 'runtime-v1.6.0';
 
